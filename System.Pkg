@@ -1,0 +1,13 @@
+package [core]/System v5.0.0
+
+requires ()
+provides (
+	Blink.Mod     FileDir.Mod        Kernel.Mod       ORC.Mod         RISC.Mod           Texts.Mod
+	BootLoad.Mod  Files.Mod          MacroTool.Mod    ORG.Mod         RS232.Mod          Tools.Mod
+	Checkers.Mod  Fonts.Mod          Math.Mod         ORP.Mod         SCC.Mod            Viewers.Mod
+	Curves.Mod    GraphicFrames.Mod  MenuViewers.Mod  ORS.Mod         Sierpinski.Mod
+	Display.Mod   Graphics.Mod       Modules.Mod      ORTool.Mod      SmallPrograms.Mod
+	Draw.Mod      GraphTool.Mod      Net.Mod          PCLink1.Mod     Stars.Mod
+	EBNF.Mod      Hilbert.Mod        Oberon.Mod       PIO.Mod         System.Mod
+	Edit.Mod      Input.Mod          ORB.Mod          Rectangles.Mod  TextFrames.Mod
+)
