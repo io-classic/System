@@ -1,0 +1,11 @@
+k,v1,v2
+package,Edit,v5.0.20190118
+from,github.com/io-core,whenever
+license,PROJECTOBERON,JG PDR NW
+r,[core]/Files,v5.0.0
+r,[core]/Modules,v5.0.0
+r,[io-core]/Oberon,v5.0.0
+p,Edit.Mod,0eadd23ec2b457f4b427398f6a3b77044ffcf34f1c077b7e9912600749dcfc0e
+p,Fonts.Mod,905340fe91261b4a292f5528846114099f8f25250b2cae64e9d5cd39736aa2de
+p,TextFrames.Mod,8de2e6b4461360cd3f0605a0a9c5057fbce77739593894a1aaf8ff625ec1e845
+p,Texts.Mod,16a4e0185784fcb508367a89e6c965d6fe72673abd2038b174bbe90d65aab168

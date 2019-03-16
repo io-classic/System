@@ -1,0 +1,15 @@
+k,v1,v2
+package,Draw,v5.0.20180827
+from,github.com/io-core,whenever
+license,PROJECTOBERON,NW
+r,[core]/Modules,v5.0.0
+r,[core]/Oberon,v5.0.0
+r,[core]/Edit,v5.0.0
+r,[core]/Files,v5.0.0
+p,Graphics.Mod,22cf2e57b1576966593a68d20f5cecdd6a3c43282658e1e8fb5f8af22d5246c4
+p,MacroTool.Mod,5f158470102b0e5a8a38659afe4b17b353fd46a07b457684a0e8f48f7fc463ef
+p,Draw.Mod,7009585c52f0bd07a67a5e3d9dbfe88a0079d07b630cba2723eed72bb9c70a24
+p,GraphicFrames.Mod,dfaa68c2d5a3313990ea10d055315b0c9a26cb987e72778026e6cba1b04bc92d
+p,GraphTool.Mod,cc5ebb6cec2845ef5f7066d052c22523ff92337d898eb8c5698d5bc4153fcd44
+p,Rectangles.Mod,e187550d5b645d61fc2e0a80ab98e6030e809724927385142c19f5dad4a11659
+p,Curves.Mod,4efa3b61094883b1ae9e2563bc4dbf8c56e59216fb6abb59b9293659d096bd29
