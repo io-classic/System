@@ -2,6 +2,6 @@ k,v1,v2
 package,Files,v5.0.20130815
 from,github.com/io-core,whenever
 license,PROJECTOBERON,NW
-r,[io-core]/Kernel,v5.0.0
+r,[core]/Kernel,v5.0.0
 p,FileDir.Mod,df0cb5feb860c37370b57009c21905a25886c057e02f266a0ebc94465e82f9ab
 p,Files.Mod,af20a42cac9e11b5b9d8e6036ca891ef6b3d7eb08747f027f52c2cb450fbf9b4

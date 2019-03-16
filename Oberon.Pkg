@@ -3,7 +3,7 @@ package,Oberon,v5.0.20190117
 from,github.com/io-core,whenever
 license,PROJECTOBERON,NW JG PDR
 r,[core]/Modules,v5.0.0
-r,[io-core]/Edit,v5.0.0
+r,[core]/Edit,v5.0.0
 r,[core]/Kernel,v5.0.0
 r,[core]/Files,v5.0.0
 p,MenuViewers.Mod,c91c52dd1441f545057467b6bc3122fa0a09550a0f8d7dc40e812c43f3602b7b
