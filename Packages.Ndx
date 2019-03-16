@@ -1,0 +1,13 @@
+package,license,version,location
+Edit,PROJECTOBERON,v5.1.0,github.com/iocore/Edit
+Files,PROJECTOBERON,v5.0.20130815,github.com/iocore/Files
+Kernel,PROJECTOBERON,v5.0.20140204,github.com/iocore/Kernel
+Mod,MIT,v0.1.0,github.com/iocore/Mod
+Modules,PROJECTOBERON,v5.0.20190108,github.com/iocore/Modules
+Attest,MIT,v0.1.0,github.com/iocore/Attest
+Crypto,MIT,v0.1.0,github.com/iocore/Crypto
+Draw,PROJECTOBERON,v5.0.0,github.com/iocore/Draw
+System,PROJECTOBERON,v5.1.0,github.com/iocore/System
+Build,PROJECTOBERON,v5.0.0,github.com/iocore/Build
+Oberon,PROJECTOBERON,v5.1.0,github.com/iocore/Oberon
+Paint,PROJECTOBERON,v1.0.0,github.com/iocore/Paint
