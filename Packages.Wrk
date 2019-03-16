@@ -4,4 +4,4 @@ workspace-packages-dirstyle,combined
 repo,io-core:github.com/io-core
 repo,io-orig:github.com/io-orig/System
 meta-repo,orig:io-orig
-meta-repo,core:io-core
+meta-repo,core:io-orig
