@@ -3,15 +3,14 @@ MODULE Input; (*NW 5.10.86 / 15.11.90 Ceres-2; PDR 21.4.12 / NW 15.5.2013 Ceres-
   IMPORT SYSTEM;
 
   CONST msAdr = -40; kbdAdr = -36;
+
+  TYPE
+
   VAR kbdCode: BYTE; (*last keyboard code read*)
     Recd, Up, Shift, Ctrl, Ext: BOOLEAN;
     KTabAdr: INTEGER;  (*keyboard code translation table*)
     MW, MH, MX, MY: INTEGER; (*mouse limits and coords*)
     MK: SET; (*mouse keys*)
-
-  TYPE
-
-  VAR
 
 (*FIFO implemented in hardware, because every read must be handled,
   including tracking the state of the Shift and Ctrl keys*)
