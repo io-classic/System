@@ -1,4 +1,4 @@
-MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*)
+MODULE ORP; (*N. Wirth 1.7.97 / 17.9.2018  Oberon compiler for RISC in Oberon-07*)
   IMPORT Texts, Oberon, ORS, ORB, ORG;
   (*Author: Niklaus Wirth, 2014.
     Parser of Oberon-RISC compiler. Uses Scanner ORS to obtain symbols (tokens),
@@ -110,7 +110,7 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
           END
         ELSE ORS.Mark("incompatible types")
         END
-      ELSIF ~guard THEN ORG.TypeTest(x, NIL, FALSE, FALSE)
+      ELSIF ~guard THEN ORG.MakeConstItem(x, ORB.boolType, 1)
       END
     ELSE ORS.Mark("type mismatch")
     END ;
@@ -225,7 +225,7 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     IF sym # ORS.rparen THEN
       Parameter(par); n := 1;
       WHILE sym <= ORS.comma DO
-        Check(ORS.comma, "comma?");
+        Check(sym, "comma?");
         IF par # NIL THEN par := par.next END ;
         INC(n); Parameter(par)
       END ;
@@ -889,44 +889,40 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
         ORS.Get(sym)
       ELSE ORS.Mark("no proc id")
       END
-    ELSE ORS.Mark("proc id expected")
     END
   END ProcedureDecl;
 
-  PROCEDURE Import;
-    VAR impid, impid1: ORS.Ident;
-  BEGIN
-    IF sym = ORS.ident THEN
-      ORS.CopyId(impid); ORS.Get(sym);
-      IF sym = ORS.becomes THEN
-        ORS.Get(sym);
-        IF sym = ORS.ident THEN ORS.CopyId(impid1); ORS.Get(sym)
-        ELSE ORS.Mark("id expected"); impid1 := impid
-        END
-      ELSE impid1 := impid
-      END ;
-      ORB.Import(impid, impid1)
-    ELSE ORS.Mark("id expected")
-    END
-  END Import;
-
   PROCEDURE Module;
     VAR key: LONGINT;
+      impid, impid1: ORS.Ident;
   BEGIN Texts.WriteString(W, "  compiling "); ORS.Get(sym);
     IF sym = ORS.module THEN
       ORS.Get(sym);
-      IF sym = ORS.times THEN version := 0; dc := 8; Texts.Write(W, "*"); ORS.Get(sym) ELSE dc := 0; version := 1 END ;
+      IF sym = ORS.times THEN version := 0; Texts.Write(W, "*"); ORS.Get(sym) ELSE version := 1 END ;
       ORB.Init; ORB.OpenScope;
       IF sym = ORS.ident THEN
         ORS.CopyId(modid); ORS.Get(sym);
         Texts.WriteString(W, modid); Texts.Append(Oberon.Log, W.buf)
       ELSE ORS.Mark("identifier expected")
       END ;
-      Check(ORS.semicolon, "no ;"); level := 0; exno := 1; key := 0;
+      Check(ORS.semicolon, "no ;"); level := 0; dc := 0; exno := 1; key := 0;
       IF sym = ORS.import THEN
-        ORS.Get(sym); Import;
-        WHILE sym = ORS.comma DO ORS.Get(sym); Import END ;
-        Check(ORS.semicolon, "; missing")
+        ORS.Get(sym);
+        WHILE sym = ORS.ident DO
+          ORS.CopyId(impid); ORS.Get(sym);
+          IF sym = ORS.becomes THEN
+            ORS.Get(sym);
+            IF sym = ORS.ident THEN ORS.CopyId(impid1); ORS.Get(sym)
+            ELSE ORS.Mark("id expected")
+            END
+          ELSE impid1 := impid
+          END ;
+          ORB.Import(impid, impid1);
+          IF sym = ORS.comma THEN ORS.Get(sym)
+          ELSIF sym = ORS.ident THEN ORS.Mark("comma missing")
+          END
+        END ;
+        Check(ORS.semicolon, "no ;")
       END ;
       ORG.Open(version); Declarations(dc); ORG.SetDataSize((dc + 3) DIV 4 * 4);
       WHILE sym = ORS.procedure DO ProcedureDecl; Check(ORS.semicolon, "no ;") END ;
@@ -994,7 +990,7 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     Oberon.Collect(0)
   END Compile;
 
-BEGIN Texts.OpenWriter(W); Texts.WriteString(W, "OR Compiler  8.3.2020");
+BEGIN Texts.OpenWriter(W); Texts.WriteString(W, "OR Compiler  17.9.2018");
   Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
   NEW(dummy); dummy.class := ORB.Var; dummy.type := ORB.intType;
   expression := expression0; Type := Type0; FormalType := FormalType0
