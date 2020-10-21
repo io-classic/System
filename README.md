@@ -271,6 +271,212 @@ Package provides the compiler and associated program building and debugging tool
   Init*(T: Texts.Text; pos: LONGINT)
 
 ```
+
+
+#### [MODULE ODP](https://github.com/io-orig/System/blob/main/ODP.md) [(source)](https://github.com/io-orig/System/blob/main/ODP.Mod)
+
+  **imports:** ` Texts Oberon ORS ORB ODG`
+
+**Procedures:**
+```
+  Generate*
+
+```
+
+
+#### [MODULE ODG](https://github.com/io-orig/System/blob/main/ODG.md) [(source)](https://github.com/io-orig/System/blob/main/ODG.Mod)
+
+  **imports:** ` SYSTEM Files ORS ORB`
+
+**Procedures:**
+```
+  CheckRegs*
+
+  FixOne*(at: LONGINT)
+
+  FixLink*(L: LONGINT)
+
+  MakeConstItem*(VAR x: Item; typ: ORB.Type; val: LONGINT)
+
+  MakeRealItem*(VAR x: Item; val: REAL)
+
+  MakeStringItem*(VAR x: Item; len: LONGINT) (*copies string from ORS-buffer to ORG-string array*)
+
+  MakeItem*(VAR x: Item; y: ORB.Object; curlev: LONGINT)
+
+  Field*(VAR x: Item; y: ORB.Object)   (* x := x.y *)
+
+  Index*(VAR x, y: Item)   (* x := x[y] *)
+
+  DeRef*(VAR x: Item)
+
+  BuildTD*(T: ORB.Type; VAR dc: LONGINT)
+
+  TypeTest*(VAR x: Item; T: ORB.Type; varpar, isguard: BOOLEAN)
+
+  Not*(VAR x: Item)   (* x :=  x *)
+
+  And1*(VAR x: Item)   (* x := x & *)
+
+  And2*(VAR x, y: Item)
+
+  Or1*(VAR x: Item)   (* x := x OR *)
+
+  Or2*(VAR x, y: Item)
+
+  Neg*(VAR x: Item)   (* x := -x *)
+
+  AddOp*(op: LONGINT; VAR x, y: Item)   (* x := x +- y *)
+
+  MulOp*(VAR x, y: Item)   (* x := x * y *)
+
+  DivOp*(op: LONGINT; VAR x, y: Item)   (* x := x op y *)
+
+  RealOp*(op: INTEGER; VAR x, y: Item)   (* x := x op y *)
+
+  Singleton*(VAR x: Item)  (* x := {x} *)
+
+  Set*(VAR x, y: Item)   (* x := {x .. y} *)
+
+  In*(VAR x, y: Item)  (* x := x IN y *)
+
+  SetOp*(op: LONGINT; VAR x, y: Item)   (* x := x op y *)
+
+  IntRelation*(op: INTEGER; VAR x, y: Item)   (* x := x < y *)
+
+  RealRelation*(op: INTEGER; VAR x, y: Item)   (* x := x < y *)
+
+  StringRelation*(op: INTEGER; VAR x, y: Item)   (* x := x < y *)
+
+  StrToChar*(VAR x: Item)
+
+  Store*(VAR x, y: Item) (* x := y *)
+
+  StoreStruct*(VAR x, y: Item) (* x := y, frame = 0 *)
+
+  CopyString*(VAR x, y: Item)  (* x := y *) 
+
+  OpenArrayParam*(VAR x: Item)
+
+  VarParam*(VAR x: Item; ftype: ORB.Type)
+
+  ValueParam*(VAR x: Item)
+
+  StringParam*(VAR x: Item)
+
+  For0*(VAR x, y: Item)
+
+  For1*(VAR x, y, z, w: Item; VAR L: LONGINT)
+
+  For2*(VAR x, y, w: Item)
+
+  Here*(): LONGINT
+
+  FJump*(VAR L: LONGINT)
+
+  CFJump*(VAR x: Item)
+
+  BJump*(L: LONGINT)
+
+  CBJump*(VAR x: Item; L: LONGINT)
+
+  Fixup*(VAR x: Item)
+
+  PrepCall*(VAR x: Item; VAR r: LONGINT)
+
+  Call*(VAR x: Item; r: LONGINT)
+
+  Enter*(parblksize, locblksize: LONGINT; int: BOOLEAN)
+
+  Return*(form: INTEGER; VAR x: Item; size: LONGINT; int: BOOLEAN)
+
+  Increment*(upordown: LONGINT; VAR x, y: Item)
+
+  Include*(inorex: LONGINT; VAR x, y: Item)
+
+  Assert*(VAR x: Item)
+
+  New*(VAR x: Item)
+
+  Pack*(VAR x, y: Item)
+
+  Unpk*(VAR x, y: Item)
+
+  Led*(VAR x: Item)
+
+  Get*(VAR x, y: Item)
+
+  Put*(VAR x, y: Item)
+
+  Copy*(VAR x, y, z: Item)
+
+  LDPSR*(VAR x: Item)
+
+  LDREG*(VAR x, y: Item)
+
+  Abs*(VAR x: Item)
+
+  Odd*(VAR x: Item)
+
+  Floor*(VAR x: Item)
+
+  Float*(VAR x: Item)
+
+  Ord*(VAR x: Item)
+
+  Len*(VAR x: Item)
+
+  Shift*(fct: LONGINT; VAR x, y: Item)
+
+  ADC*(VAR x, y: Item)
+
+  SBC*(VAR x, y: Item)
+
+  UML*(VAR x, y: Item)
+
+  Bit*(VAR x, y: Item)
+
+  Register*(VAR x: Item)
+
+  H*(VAR x: Item)
+
+  Adr*(VAR x: Item)
+
+  Condition*(VAR x: Item)
+
+  Open*(v: INTEGER)
+
+  SetDataSize*(dc: LONGINT)
+
+  Header*
+
+  Close*(VAR modid: ORS.Ident; key, nofent: LONGINT)
+
+```
+
+
+#### [MODULE ORL](https://github.com/io-orig/System/blob/main/ORL.md) [(source)](https://github.com/io-orig/System/blob/main/ORL.Mod)
+Module ORL links modules to create bin files that may be placed in the boot sectors of an Oberon disk image
+
+ORL uses SYSTEM, Kernel, Files, Modules, Texts, Oberon
+
+
+
+  **imports:** ` SYSTEM Kernel Files Modules Texts Oberon`
+
+**Procedures:**
+```
+  Link*  (*link multiple object files together and create a single boot file M.bin from them*)
+
+  Load*  (*load prelinked boot file M.bin onto the boot area of the local disk*)
+
+  RelocateLoaded*(start, dst: INTEGER)  (*relocate prelinked binary loaded at Mem[start] for execution at dst*)
+
+  Relocate*  (*relocate prelinked binary M.bin for execution at destadr and write result to output file R.bin*)
+
+  Execute*  (*load and execute prelinked binary M.bin*)
+
+```
 ## Draw
 Package provides line-oriented drawing primitives and a vector drawing tool.
 
@@ -1048,10 +1254,6 @@ Package prepares the user interface and manages viewers for the user.
 
 
 #### [MODULE BootLoad](https://github.com/io-orig/System/blob/main/BootLoad.md) [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod)
-
-  **imports:** ` SYSTEM`
-
-  **imports:** ` SYSTEM`
 
   **imports:** ` SYSTEM`
 
