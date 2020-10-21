@@ -9,6 +9,10 @@ MODULE Input; (*NW 5.10.86 / 15.11.90 Ceres-2; PDR 21.4.12 / NW 15.5.2013 Ceres-
     MW, MH, MX, MY: INTEGER; (*mouse limits and coords*)
     MK: SET; (*mouse keys*)
 
+  TYPE
+
+  VAR
+
 (*FIFO implemented in hardware, because every read must be handled,
   including tracking the state of the Shift and Ctrl keys*)
 
