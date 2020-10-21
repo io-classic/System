@@ -2,6 +2,7 @@ k,v1,v2
 package,Draw,v5.0.20180827
 from,github.com/io-core,whenever
 license,PROJECTOBERON,NW
+doc,stdlib,provides line-oriented drawing primitives and a vector drawing tool.
 r,[core]/Modules,v5.0.0
 r,[core]/Oberon,v5.0.0
 r,[core]/Edit,v5.0.0

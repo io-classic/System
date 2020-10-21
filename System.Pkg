@@ -2,6 +2,7 @@ k,v1,v2
 package,System,v5.0.20160620
 from,github.com/io-core,
 license,PROJECTOBERON,NW PR JG
+doc,core,prepares the user interface and manages viewers for the user.
 r,[core]/Kernel,v5.0.0
 r,[core]/Files,v5.0.0
 r,[core]/Modules,v5.0.0

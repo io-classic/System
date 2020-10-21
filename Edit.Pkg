@@ -2,6 +2,7 @@ k,v1,v2
 package,Edit,v5.0.20190118
 from,github.com/io-core,whenever
 license,PROJECTOBERON,JG PDR NW
+doc,core,manages the text and font handling in Oberon.
 r,[core]/Files,v5.0.0
 r,[core]/Modules,v5.0.0
 r,[core]/Oberon,v5.0.0

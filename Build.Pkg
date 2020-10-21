@@ -2,6 +2,7 @@ k,v1,v2
 package,Build,v5.0.20190301
 from,github.com/io-core,
 license,PROJECTOBERON,NW
+doc,core,provides the compiler and associated program building and debugging tools for Oberon.
 r,[core]/Oberon,v5.0.0
 r,[core]/Edit,v5.0.0
 r,[core]/Files,v5.0.0

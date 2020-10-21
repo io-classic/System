@@ -2,4 +2,5 @@ k,v1,v2
 package,Kernel,v5.0.20140204
 from,github.com/io-core,whenever
 license,PROJECTOBERON,NW
+doc,core,handles basic os functionality including device access and garbage collection.
 p,Kernel.Mod,f4664a05c5a5197a22e4dbc2ae9171af36633a469c5873fb31f9e3a732225a39
