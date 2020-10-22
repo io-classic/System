@@ -2,21 +2,21 @@
 
 | Package |          |
 | ------- | -------- |
-| [Kernel](https://github.com/io-orig/System#Kernel) | handles basic os functionality including device access and garbage collection. |
+| [Kernel](README.md#the-Kernel-package) | handles basic os functionality including device access and garbage collection. |
 |   | [Kernel.Mod](Kernel.Mod)  |
-| [Files](https://github.com/io-orig/System#Files) | handles persistent storage and the file and directory interface of Oberon. |
+| [Files](README.md#the-Files-package) | handles persistent storage and the file and directory interface of Oberon. |
 |   | [FileDir.Mod](FileDir.Mod) [Files.Mod](Files.Mod)  |
-| [Modules](https://github.com/io-orig/System#Modules) | manages compiled module loading and unloading in Oberon. |
+| [Modules](README.md#the-Modules-package) | manages compiled module loading and unloading in Oberon. |
 |   | [Modules.Mod](Modules.Mod)  |
-| [Oberon](https://github.com/io-orig/System#Oberon) | implements the user-interaction functionality and the task loop of the system. |
+| [Oberon](README.md#the-Oberon-package) | implements the user-interaction functionality and the task loop of the system. |
 |   | [Oberon.Mod](Oberon.Mod) [MenuViewers.Mod](MenuViewers.Mod) [Viewers.Mod](Viewers.Mod) [Input.Mod](Input.Mod) [Display.Mod](Display.Mod)  |
-| [Edit](https://github.com/io-orig/System#Edit) | manages the text and font handling in Oberon. |
+| [Edit](README.md#the-Edit-package) | manages the text and font handling in Oberon. |
 |   | [Edit.Mod](Edit.Mod) [Fonts.Mod](Fonts.Mod) [TextFrames.Mod](TextFrames.Mod) [Texts.Mod](Texts.Mod)  |
-| [Draw](https://github.com/io-orig/System#Draw) | provides line-oriented drawing primitives and a vector drawing tool. |
+| [Draw](README.md#the-Draw-package) | provides line-oriented drawing primitives and a vector drawing tool. |
 |   | [Draw.Mod](Draw.Mod) [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [GraphicFrames.Mod](GraphicFrames.Mod) [GraphTool.Mod](GraphTool.Mod) [Rectangles.Mod](Rectangles.Mod) [Curves.Mod](Curves.Mod)  |
-| [System](https://github.com/io-orig/System#System) | prepares the user interface and manages viewers for the user. |
+| [System](README.md#the-System-package) | prepares the user interface and manages viewers for the user. |
 |   | [System.Mod](System.Mod) [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.Mod](PIO.Mod) [BootLoad.Mod](BootLoad.Mod) [Tools.Mod](Tools.Mod) [PCLink1.Mod](PCLink1.Mod) [RS232.Mod](RS232.Mod) [Net.Mod](Net.Mod) [SCC.Mod](SCC.Mod) [Batch.Mod](Batch.Mod)  |
-| [Build](https://github.com/io-orig/System#Build) | provides the compiler and associated program building and debugging tools for Oberon. |
+| [Build](README.md#the-Build-package) | provides the compiler and associated program building and debugging tools for Oberon. |
 |   | [ORP.Mod](ORP.Mod) [ORG.Mod](ORG.Mod) [ORB.Mod](ORB.Mod) [ORS.Mod](ORS.Mod) [ORTool.Mod](ORTool.Mod) [ORC.Mod](ORC.Mod) [ODP.Mod](ODP.Mod) [ODG.Mod](ODG.Mod) [ORL.Mod](ORL.Mod)  |
 
 ## The Kernel Package
