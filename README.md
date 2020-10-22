@@ -36,7 +36,11 @@ The Kernel package manages:
 
 USAGE:
 ```
-Kernel.Collect 
+i:=Kernel.Time();
+
+Kernel.Install(SYSTEM.ADR(Abort), 0);
+
+Kernel.GetSector(secno*29, buf);
 ```
 
 ### _Modules in this package:_
