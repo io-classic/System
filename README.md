@@ -477,13 +477,6 @@ ORL uses SYSTEM, Kernel, Files, Modules, Texts, Oberon
   Execute*  (*load and execute prelinked binary M.bin*)
 
 ```
-
-
-#### [MODULE ORX](https://github.com/io-orig/System/blob/main/ORX.md) [(source)](https://github.com/io-orig/System/blob/main/ORX.Mod)
-
-**Procedures:**
-```
-```
 ## Draw
 Package provides line-oriented drawing primitives and a vector drawing tool.
 
