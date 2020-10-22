@@ -2,7 +2,7 @@
 ### _Package Overview:_
 Integrated Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
 
- * A recursive-descent parser of the Oberon-2i language, ORP
+ * A recursive-descent parser of the Oberon language, ORP
  * A generator of target-specific opcodes (RISC5), ORG
  * A symbol table and frame tracker, ORB
  * A scanner and tokenizer, ORS

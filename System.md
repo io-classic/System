@@ -430,95 +430,95 @@ END System.
 ## Procedures:
 ---
 
-`  PROCEDURE GetArg(VAR S: Texts.Scanner);` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L21)
+`  PROCEDURE GetArg(VAR S: Texts.Scanner);` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L25)
 
 
-`  PROCEDURE EndLine;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L30)
+`  PROCEDURE EndLine;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L34)
 
 
-`  PROCEDURE SetUser*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L36)
+`  PROCEDURE SetUser*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L40)
 
 
-`  PROCEDURE SetFont*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L47)
+`  PROCEDURE SetFont*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L51)
 
 
-`  PROCEDURE SetColor*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L53)
+`  PROCEDURE SetColor*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L57)
 
 
-`  PROCEDURE SetOffset*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L59)
+`  PROCEDURE SetOffset*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L63)
 
 
-`  PROCEDURE Date*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L65)
+`  PROCEDURE Date*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L69)
 
 
-`  PROCEDURE Collect*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L79)
+`  PROCEDURE Collect*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L83)
 
 
-`  PROCEDURE Open*;  (*open viewer in system track*)` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L85)
+`  PROCEDURE Open*;  (*open viewer in system track*)` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L89)
 
 
-`  PROCEDURE Clear*;  (*clear Log*)` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L98)
+`  PROCEDURE Clear*;  (*clear Log*)` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L102)
 
 
-`  PROCEDURE Close*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L106)
+`  PROCEDURE Close*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L110)
 
 
-`  PROCEDURE CloseTrack*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L115)
+`  PROCEDURE CloseTrack*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L119)
 
 
-`  PROCEDURE Recall*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L120)
+`  PROCEDURE Recall*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L124)
 
 
-`  PROCEDURE Copy*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L128)
+`  PROCEDURE Copy*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L132)
 
 
-`  PROCEDURE Grow*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L135)
+`  PROCEDURE Grow*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L139)
 
 
-`  PROCEDURE Free1(VAR S: Texts.Scanner);` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L152)
+`  PROCEDURE Free1(VAR S: Texts.Scanner);` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L156)
 
 
-`  PROCEDURE Free*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L159)
+`  PROCEDURE Free*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L163)
 
 
-`  PROCEDURE FreeFonts*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L176)
+`  PROCEDURE FreeFonts*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L180)
 
 
-`  PROCEDURE List(name: FileDir.FileName; adr: LONGINT; VAR cont: BOOLEAN);` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L182)
+`  PROCEDURE List(name: FileDir.FileName; adr: LONGINT; VAR cont: BOOLEAN);` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L186)
 
 
-`  PROCEDURE Directory*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L212)
+`  PROCEDURE Directory*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L216)
 
 
-`  PROCEDURE CopyFiles*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L242)
+`  PROCEDURE CopyFiles*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L246)
 
 
-`  PROCEDURE RenameFiles*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L270)
+`  PROCEDURE RenameFiles*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L274)
 
 
-`  PROCEDURE DeleteFiles*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L292)
+`  PROCEDURE DeleteFiles*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L296)
 
 
-`  PROCEDURE Watch*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L306)
+`  PROCEDURE Watch*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L310)
 
 
-`  PROCEDURE ShowModules*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L317)
+`  PROCEDURE ShowModules*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L321)
 
 
-`  PROCEDURE ShowCommands*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L338)
+`  PROCEDURE ShowCommands*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L342)
 
 
-`  PROCEDURE ShowFonts*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L365)
+`  PROCEDURE ShowFonts*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L369)
 
 
-`  PROCEDURE OpenViewers;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L374)
+`  PROCEDURE OpenViewers;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L378)
 
 
-`  PROCEDURE ExtendDisplay*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L389)
+`  PROCEDURE ExtendDisplay*;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L393)
 
 
-`  PROCEDURE Trap(VAR a: INTEGER; b: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L405)
+`  PROCEDURE Trap(VAR a: INTEGER; b: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L409)
 
 
-`  PROCEDURE Abort;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L418)
+`  PROCEDURE Abort;` [(source)](https://github.com/io-orig/System/blob/main/System.Mod#L422)
 

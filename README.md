@@ -13,9 +13,9 @@
 | [Edit](https://github.com/io-orig/System#Edit) | manages the text and font handling in Oberon. |
 |   | [Edit.Mod](Edit.Mod) [Fonts.Mod](Fonts.Mod) [TextFrames.Mod](TextFrames.Mod) [Texts.Mod](Texts.Mod)  |
 | [Draw](https://github.com/io-orig/System#Draw) | provides line-oriented drawing primitives and a vector drawing tool. |
-|   | [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod](Draw.Mod) [GraphicFrames.Mod](GraphicFrames.Mod) [GraphTool.Mod](GraphTool.Mod) [Rectangles.Mod](Rectangles.Mod) [Curves.Mod](Curves.Mod)  |
+|   | [Draw.Mod](Draw.Mod) [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [GraphicFrames.Mod](GraphicFrames.Mod) [GraphTool.Mod](GraphTool.Mod) [Rectangles.Mod](Rectangles.Mod) [Curves.Mod](Curves.Mod)  |
 | [System](https://github.com/io-orig/System#System) | prepares the user interface and manages viewers for the user. |
-|   | [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.Mod](PIO.Mod) [BootLoad.Mod](BootLoad.Mod) [System.Mod](System.Mod) [Tools.Mod](Tools.Mod) [PCLink1.Mod](PCLink1.Mod) [RS232.Mod](RS232.Mod) [Net.Mod](Net.Mod) [SCC.Mod](SCC.Mod) [Batch.Mod](Batch.Mod)  |
+|   | [System.Mod](System.Mod) [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.Mod](PIO.Mod) [BootLoad.Mod](BootLoad.Mod) [Tools.Mod](Tools.Mod) [PCLink1.Mod](PCLink1.Mod) [RS232.Mod](RS232.Mod) [Net.Mod](Net.Mod) [SCC.Mod](SCC.Mod) [Batch.Mod](Batch.Mod)  |
 | [Build](https://github.com/io-orig/System#Build) | provides the compiler and associated program building and debugging tools for Oberon. |
 |   | [ORP.Mod](ORP.Mod) [ORG.Mod](ORG.Mod) [ORB.Mod](ORB.Mod) [ORS.Mod](ORS.Mod) [ORTool.Mod](ORTool.Mod) [ORC.Mod](ORC.Mod) [ODP.Mod](ODP.Mod) [ODG.Mod](ODG.Mod) [ORL.Mod](ORL.Mod)  |
 
@@ -149,7 +149,7 @@ A pattern is an array of bytes; the first is its width (< 32), the second its he
 
 ## The Edit Package
 
-## Package Overview:
+### _Package Overview:_
 The Edit package provides:
 
 * The 'text' abstraction for manipulating textual content
@@ -157,14 +157,14 @@ The Edit package provides:
 * The Edit tool for interacting with documents
 * The font mechanism in Oberon
 
-## Package Use:
+### _Package Use:_
 
 USAGE:
 ```
 Edit.Open example.txt
 ```
 
-## Modules in this package:
+### Modules in this package:_
 
 #### MODULE Edit [_doc_](https://github.com/io-orig/System/blob/main/Edit.md) [_src_](https://github.com/io-orig/System/blob/main/Edit.Mod)
 Module Edit provides document editing capability.
@@ -198,6 +198,25 @@ Module Texts defines the 'text' abstract data type used pervasively in the Obero
 
 ## The Draw Package
 
+### _Package Overview:_
+The Draw package provides:
+
+
+### _Package Use:_
+
+USAGE:
+```
+Draw.Open example.x
+```
+
+### Modules in this package:_
+
+#### MODULE Draw [_doc_](https://github.com/io-orig/System/blob/main/Draw.md) [_src_](https://github.com/io-orig/System/blob/main/Draw.Mod)
+Module Edit provides document editing capability.
+
+
+  **imports:** ` Files Fonts Viewers Texts Oberon
+
 
 #### MODULE Graphics [_doc_](https://github.com/io-orig/System/blob/main/Graphics.md) [_src_](https://github.com/io-orig/System/blob/main/Graphics.Mod)
 
@@ -209,11 +228,6 @@ Module Texts defines the 'text' abstract data type used pervasively in the Obero
 
   **imports:** ` Texts Oberon Graphics GraphicFrames`
 
-
-
-#### MODULE Draw [_doc_](https://github.com/io-orig/System/blob/main/Draw.md) [_src_](https://github.com/io-orig/System/blob/main/Draw.Mod)
-
-  **imports:** ` Files Fonts Viewers Texts Oberon
 
 
 #### MODULE GraphicFrames [_doc_](https://github.com/io-orig/System/blob/main/GraphicFrames.md) [_src_](https://github.com/io-orig/System/blob/main/GraphicFrames.Mod)
@@ -239,6 +253,19 @@ Module Texts defines the 'text' abstract data type used pervasively in the Obero
   **imports:** ` Display Files Oberon Graphics GraphicFrames`
 
 ## The System Package
+
+### _Package Overview:_
+The System package collects the expected set of modules and tools that allows the Oberon user to perform typical computing tasks.
+
+### _Package Use:_
+
+### _Modules in this package:_
+
+#### MODULE System [_doc_](https://github.com/io-orig/System/blob/main/System.md) [_src_](https://github.com/io-orig/System/blob/main/System.Mod)
+Module System presents the Oberon user with tools and commands for interacting Displays and Tracks and Files and other miscelaneous features.
+
+
+  **imports:** ` SYSTEM Kernel FileDir Files Modules
 
 
 #### MODULE Blink [_doc_](https://github.com/io-orig/System/blob/main/Blink.md) [_src_](https://github.com/io-orig/System/blob/main/Blink.Mod)
@@ -273,15 +300,6 @@ Module BootLoad compiles to a binary to be placed in the firmware of a system th
 
   **imports:** ` SYSTEM`
 
-
-The System package collects the expected set of modules and tools that allows the Oberon user to perform typical computing tasks.
-
-
-#### MODULE System [_doc_](https://github.com/io-orig/System/blob/main/System.md) [_src_](https://github.com/io-orig/System/blob/main/System.Mod)
-Module System presents the Oberon user with tools and commands for interacting Displays and Tracks and Files and other miscelaneous features.
-
-
-  **imports:** ` SYSTEM Kernel FileDir Files Modules
 
 
 #### MODULE Tools [_doc_](https://github.com/io-orig/System/blob/main/Tools.md) [_src_](https://github.com/io-orig/System/blob/main/Tools.Mod)
@@ -337,7 +355,7 @@ Module Batch provides for automatic sequential execution of Oberon commands.
 ### _Package Overview:_
 Integrated Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
 
- * A recursive-descent parser of the Oberon-2i language, ORP
+ * A recursive-descent parser of the Oberon language, ORP
  * A generator of target-specific opcodes (RISC5), ORG
  * A symbol table and frame tracker, ORB
  * A scanner and tokenizer, ORS

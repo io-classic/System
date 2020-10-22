@@ -1,6 +1,10 @@
 (* begin-package-description
+### _Package Overview:_
 The System package collects the expected set of modules and tools that allows the Oberon user to perform typical computing tasks.
 
+### _Package Use:_
+
+### _Modules in this package:_
 end-package-description *)
 
 (* begin-module-use-description

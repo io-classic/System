@@ -1,3 +1,22 @@
+(* begin-package-description
+### _Package Overview:_
+The Draw package provides:
+
+
+### _Package Use:_
+
+USAGE:
+```
+Draw.Open example.x
+```
+
+### Modules in this package:_
+end-package-description *)
+
+(* begin-module-use-description
+Module Edit provides document editing capability.
+
+end-module-use-description *)
 MODULE Draw; (*NW 29.6.88 / 12.11.94 / 18.11.2013*)
 
   IMPORT Files, Fonts, Viewers, Texts, Oberon,
