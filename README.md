@@ -1,15 +1,22 @@
 # Packages
 
-| Package | Includes |
 | ------- | -------- |
-| [Kernel](https://github.com/io-orig/System#Kernel) | Kernel  |
-| [Files](https://github.com/io-orig/System#Files) | FileDir Files  |
-| [Modules](https://github.com/io-orig/System#Modules) | Modules  |
-| [Oberon](https://github.com/io-orig/System#Oberon) | MenuViewers Oberon Input Display Viewers  |
-| [Edit](https://github.com/io-orig/System#Edit) | Edit Fonts TextFrames Texts  |
-| [Draw](https://github.com/io-orig/System#Draw) | Graphics MacroTool Draw GraphicFrames GraphTool Rectangles Curves  |
-| [System](https://github.com/io-orig/System#System) | Blink Math RISC PIO BootLoad System Tools PCLink1 RS232 Net SCC Batch  |
-| [Build](https://github.com/io-orig/System#Build) | ORTool ORB ORC ORG ORP ORS ODP ODG ORL  |
+| [Kernel](https://github.com/io-orig/System#Kernel) | description |
+| Modules:  | Kernel  |
+| [Files](https://github.com/io-orig/System#Files) | description |
+| Modules:  | FileDir Files  |
+| [Modules](https://github.com/io-orig/System#Modules) | description |
+| Modules:  | Modules  |
+| [Oberon](https://github.com/io-orig/System#Oberon) | description |
+| Modules:  | MenuViewers Oberon Input Display Viewers  |
+| [Edit](https://github.com/io-orig/System#Edit) | description |
+| Modules:  | Edit Fonts TextFrames Texts  |
+| [Draw](https://github.com/io-orig/System#Draw) | description |
+| Modules:  | Graphics MacroTool Draw GraphicFrames GraphTool Rectangles Curves  |
+| [System](https://github.com/io-orig/System#System) | description |
+| Modules:  | Blink Math RISC PIO BootLoad System Tools PCLink1 RS232 Net SCC Batch  |
+| [Build](https://github.com/io-orig/System#Build) | description |
+| Modules:  | ORTool ORB ORC ORG ORP ORS ODP ODG ORL  |
 
 ## Kernel
 Package handles basic os functionality including device access and garbage collection.
