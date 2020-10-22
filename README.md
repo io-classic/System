@@ -3,21 +3,21 @@
 | Package |          |
 | ------- | -------- |
 | [Kernel](README.md#the-Kernel-package) | handles basic os functionality including device access and garbage collection. |
-|   | [Kernel.Mod](README.md#Kernel.Mod-doc-src)  |
+|   | [Kernel.Mod](README.md#KernelMod-doc-src)  |
 | [Files](README.md#the-Files-package) | handles persistent storage and the file and directory interface of Oberon. |
-|   | [FileDir.Mod](README.md#FileDir.Mod-doc-src) [Files.Mod](README.md#Files.Mod-doc-src)  |
+|   | [FileDir.Mod](README.md#FileDirMod-doc-src) [Files.Mod](README.md#FilesMod-doc-src)  |
 | [Modules](README.md#the-Modules-package) | manages compiled module loading and unloading in Oberon. |
-|   | [Modules.Mod](README.md#Modules.Mod-doc-src)  |
+|   | [Modules.Mod](README.md#ModulesMod-doc-src)  |
 | [Oberon](README.md#the-Oberon-package) | implements the user-interaction functionality and the task loop of the system. |
-|   | [Oberon.Mod](README.md#Oberon.Mod-doc-src) [MenuViewers.Mod](README.md#MenuViewers.Mod-doc-src) [Viewers.Mod](README.md#Viewers.Mod-doc-src) [Input.Mod](README.md#Input.Mod-doc-src) [Display.Mod](README.md#Display.Mod-doc-src)  |
+|   | [Oberon.Mod](README.md#OberonMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [Viewers.Mod](README.md#ViewersMod-doc-src) [Input.Mod](README.md#InputMod-doc-src) [Display.Mod](README.md#DisplayMod-doc-src)  |
 | [Edit](README.md#the-Edit-package) | manages the text and font handling in Oberon. |
-|   | [Edit.Mod](README.md#Edit.Mod-doc-src) [Fonts.Mod](README.md#Fonts.Mod-doc-src) [TextFrames.Mod](README.md#TextFrames.Mod-doc-src) [Texts.Mod](README.md#Texts.Mod-doc-src)  |
+|   | [Edit.Mod](README.md#EditMod-doc-src) [Fonts.Mod](README.md#FontsMod-doc-src) [TextFrames.Mod](README.md#TextFramesMod-doc-src) [Texts.Mod](README.md#TextsMod-doc-src)  |
 | [Draw](README.md#the-Draw-package) | provides line-oriented drawing primitives and a vector drawing tool. |
-|   | [Draw.Mod](README.md#Draw.Mod-doc-src) [Graphics.Mod](README.md#Graphics.Mod-doc-src) [MacroTool.Mod](README.md#MacroTool.Mod-doc-src) [GraphicFrames.Mod](README.md#GraphicFrames.Mod-doc-src) [GraphTool.Mod](README.md#GraphTool.Mod-doc-src) [Rectangles.Mod](README.md#Rectangles.Mod-doc-src) [Curves.Mod](README.md#Curves.Mod-doc-src)  |
+|   | [Draw.Mod](README.md#DrawMod-doc-src) [Graphics.Mod](README.md#GraphicsMod-doc-src) [MacroTool.Mod](README.md#MacroToolMod-doc-src) [GraphicFrames.Mod](README.md#GraphicFramesMod-doc-src) [GraphTool.Mod](README.md#GraphToolMod-doc-src) [Rectangles.Mod](README.md#RectanglesMod-doc-src) [Curves.Mod](README.md#CurvesMod-doc-src)  |
 | [System](README.md#the-System-package) | prepares the user interface and manages viewers for the user. |
-|   | [System.Mod](README.md#System.Mod-doc-src) [Blink.Mod](README.md#Blink.Mod-doc-src) [Math.Mod](README.md#Math.Mod-doc-src) [RISC.Mod](README.md#RISC.Mod-doc-src) [PIO.Mod](README.md#PIO.Mod-doc-src) [BootLoad.Mod](README.md#BootLoad.Mod-doc-src) [Tools.Mod](README.md#Tools.Mod-doc-src) [PCLink1.Mod](README.md#PCLink1.Mod-doc-src) [RS232.Mod](README.md#RS232.Mod-doc-src) [Net.Mod](README.md#Net.Mod-doc-src) [SCC.Mod](README.md#SCC.Mod-doc-src) [Batch.Mod](README.md#Batch.Mod-doc-src)  |
+|   | [System.Mod](README.md#SystemMod-doc-src) [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [BootLoad.Mod](README.md#BootLoadMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  |
 | [Build](README.md#the-Build-package) | provides the compiler and associated program building and debugging tools for Oberon. |
-|   | [ORP.Mod](README.md#ORP.Mod-doc-src) [ORG.Mod](README.md#ORG.Mod-doc-src) [ORB.Mod](README.md#ORB.Mod-doc-src) [ORS.Mod](README.md#ORS.Mod-doc-src) [ORTool.Mod](README.md#ORTool.Mod-doc-src) [ORC.Mod](README.md#ORC.Mod-doc-src) [ODP.Mod](README.md#ODP.Mod-doc-src) [ODG.Mod](README.md#ODG.Mod-doc-src) [ORL.Mod](README.md#ORL.Mod-doc-src)  |
+|   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORL.Mod](README.md#ORLMod-doc-src)  |
 
 ---
 ## The Kernel Package

@@ -6,7 +6,7 @@ echo >> README.md
 echo "| Package |          |" >> README.md
 echo "| ------- | -------- |" >> README.md
 for j in `tail -n +2 Packages.Ndx | awk -F ',' '{print $1}'`; do
-	mods=`grep '^p,' "$j.Pkg" | awk -F',' '{print "["$2"]("$2")"}' | tr '\n' ' ' | sed -e 's/\[\.Mod//g'`
+	mods=`grep '^p,' "$j.Pkg" | awk -F',' '{print "["$2"](README.md#"$2"-doc-src)"}' | tr '\n' ' ' | sed -e 's/.Mod-doc-src/Mod-doc-src/g'`
 	pkgdesc=`grep '^doc' "$j.Pkg" | awk -F',' '{print $3}'`
 	echo "| [$j](README.md#the-$j-package) | $pkgdesc |" >> README.md
 	echo "|   | $mods |" >> README.md
@@ -34,7 +34,7 @@ echo >> README.md
 			echo  > $snam.md
                         awk '/end-package-description/{p=0};p;/begin-package-description/{p=1}' $snam.Mod >> README.md
                         echo  >> README.md
-			echo "#### MODULE $snam [_doc_](https://github.com/io-orig/System/blob/main/$snam.md) [_src_](https://github.com/io-orig/System/blob/main/$snam.Mod)" >> README.md
+			echo "#### $snam.Mod [_doc_](https://github.com/io-orig/System/blob/main/$snam.md) [_src_](https://github.com/io-orig/System/blob/main/$snam.Mod)" >> README.md
                         awk '/end-module-use-description/{p=0};p;/begin-module-use-description/{p=1}' $snam.Mod >> README.md
 			echo "## [MODULE $snam](https://github.com/io-core/$nam/blob/main/$snam.Mod)" >> $snam.md
                         awk '/end-module-develop-description/{p=0};p;/begin-module-develop-description/{p=1}' $snam.Mod >> $snam.md
