@@ -1,16 +1,16 @@
 (* begin-package-description
-### Package Overview:
+### _Package Overview:_
 The Kernel package abstracts the hardware of the computing platform for the rest of Oberon.
 
 
-## Package Use:
+### _Package Use:_
 
 USAGE:
 ```
 Kernel.Collect 
 ```
 
-## Modules in this package:
+### _Modules in this package:_
 end-package-description *)
 
 (* begin-module-use-description

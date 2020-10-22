@@ -21,18 +21,18 @@
 
 ## The Kernel Package
 
-### Package Overview:
+### _Package Overview:_
 The Kernel package abstracts the hardware of the computing platform for the rest of Oberon.
 
 
-## Package Use:
+### _Package Use:_
 
 USAGE:
 ```
 Kernel.Collect 
 ```
 
-## Modules in this package:
+### _Modules in this package:_
 
 #### MODULE Kernel [_doc_](https://github.com/io-orig/System/blob/main/Kernel.md) [_src_](https://github.com/io-orig/System/blob/main/Kernel.Mod)
 Module Kernel provides hardware abstraction for Oberon.
@@ -362,7 +362,7 @@ ORG uses SYSTEM, Files, ORS, ORB
   **imports:** ` SYSTEM Files ORS ORB`
 
 
-## Package Overview:
+### _Package Overview:_
 Integrated Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
 
  * A recursive-descent parser of the Oberon-2i language, ORP
@@ -373,10 +373,10 @@ Integrated Oberon uses a one-pass compiler with four parts, each depending on th
 In addition, several tools link and examine the binary modules produced by the compiler:
 
  * A linker and loader, ORL
- * A binary modifier, ORX
+ * A bootload firmware generator, ORF
  * A tool for examining modules, ORTool
 
-## Package Use:
+### _Package Use:_
 
 To compile the inner core:
 ```
@@ -403,7 +403,7 @@ To Examine the binary of the compiled example:
 ORTool.DecObj Sierpinski.rsc
 ```
 
-## Modules in this package:
+### _Modules in this package:_
 
 #### MODULE ORP [_doc_](https://github.com/io-orig/System/blob/main/ORP.md) [_src_](https://github.com/io-orig/System/blob/main/ORP.Mod)
 
