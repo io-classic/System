@@ -133,21 +133,36 @@
 
 `  PROCEDURE PutSector*(dst: INTEGER; VAR src: Sector);` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L350)
 
+## ---------- Time and Clock Operations
+---
+**Time** gets the current timer value.
 
-`  PROCEDURE Time*(): INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L358)
+`  PROCEDURE Time*(): INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L364)
 
+---
+**Clock** gets the current clock value.
 
-`  PROCEDURE Clock*(): INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L363)
+`  PROCEDURE Clock*(): INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L373)
 
+---
+**SetClock** sets the clock.
 
-`  PROCEDURE SetClock*(dt: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L367)
+`  PROCEDURE SetClock*(dt: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L381)
 
+## ---------- Trap and Fault Handling
+---
+**Install** constructs a branch instruction to the specified trap handler and places it.
 
-`  PROCEDURE Install*(Padr, at: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L371)
+`  PROCEDURE Install*(Padr, at: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L393)
 
+---
+**Trap** is a temporary trap handler used in system initialization that either allocates memory (trap 0) or 
+emits the trap number on the LEDs and goes into an infinite loop.
 
-`  PROCEDURE Trap(VAR a: INTEGER; b: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L375)
+`  PROCEDURE Trap(VAR a: INTEGER; b: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L402)
 
+---
+**Init** is called by Modules on system startup to install a temporary trap handler and then initialize memory and the sector map. 
 
-`  PROCEDURE Init*;` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L383)
+`  PROCEDURE Init*;` [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod#L414)
 

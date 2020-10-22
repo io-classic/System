@@ -353,25 +353,52 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     WriteSD(dst, SYSTEM.ADR(src)); WriteSD(dst+1, SYSTEM.ADR(src)+512)
   END PutSector;
 
-(*-------- Miscellaneous procedures----------*)
+  (* begin-section-description
+## ---------- Time and Clock Operations
+  end-section-description *)
 
+  (* begin-procedure-description
+---
+**Time** gets the current timer value.
+  end-procedure-description *)
   PROCEDURE Time*(): INTEGER;
     VAR t: INTEGER;
   BEGIN SYSTEM.GET(timer, t); RETURN t
   END Time;
 
+  (* begin-procedure-description
+---
+**Clock** gets the current clock value.
+  end-procedure-description *)
   PROCEDURE Clock*(): INTEGER;
   BEGIN RETURN clock
   END Clock;
 
+  (* begin-procedure-description
+---
+**SetClock** sets the clock.
+  end-procedure-description *)
   PROCEDURE SetClock*(dt: INTEGER);
   BEGIN clock := dt
   END SetClock;
 
+  (* begin-section-description
+## ---------- Trap and Fault Handling
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**Install** constructs a branch instruction to the specified trap handler and places it.
+  end-procedure-description *)
   PROCEDURE Install*(Padr, at: INTEGER);
   BEGIN SYSTEM.PUT(at, 0E7000000H + (Padr - at) DIV 4 -1)
   END Install;
 
+  (* begin-procedure-description
+---
+**Trap** is a temporary trap handler used in system initialization that either allocates memory (trap 0) or 
+emits the trap number on the LEDs and goes into an infinite loop.
+  end-procedure-description *)
   PROCEDURE Trap(VAR a: INTEGER; b: INTEGER);
     VAR u, v, w: INTEGER;
   BEGIN u := SYSTEM.REG(15); SYSTEM.GET(u - 4, v); w := v DIV 10H MOD 10H; (*trap number*)
@@ -380,6 +407,10 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     END
   END Trap;
 
+  (* begin-procedure-description
+---
+**Init** is called by Modules on system startup to install a temporary trap handler and then initialize memory and the sector map. 
+  end-procedure-description *)
   PROCEDURE Init*;
   BEGIN Install(SYSTEM.ADR(Trap), 20H);  (*install temporary trap*)
     SYSTEM.GET(12, MemLim); SYSTEM.GET(24, heapOrg);
