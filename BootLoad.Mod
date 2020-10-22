@@ -24,9 +24,13 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
 
   VAR
 
+  (* begin-section-description
+## ---------- Boot Via RS232 Serial
+  end-section-description *)
+
   (* begin-procedure-description
 ---
-**RecInt** get a 32-bit binary value from the serial line.
+**RecInt** gets a 32-bit binary value from the serial line.
   end-procedure-description *)
   PROCEDURE RecInt(VAR x: INTEGER);
     VAR z, y, i: INTEGER;
@@ -40,7 +44,7 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
 
   (* begin-procedure-description
 ---
-**LoadFromLine** Load the binary image of the inner core of Oberon from the serial line.
+**LoadFromLine** Loads the binary image of the inner core of Oberon from the serial line.
   end-procedure-description *)
   PROCEDURE LoadFromLine;
     VAR len, adr, dat: INTEGER;
@@ -53,12 +57,12 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
   END LoadFromLine;
 
   (* begin-section-description
-## ---------- disk
+## ---------- Boot Via SPI SD Card
   end-section-description *)
 
   (* begin-procedure-description
 ---
-**SPIIdle** send n FFs slowly with no card selected.
+**SPIIdle** sends n FFs slowly with no card selected.
   end-procedure-description *)
   PROCEDURE SPIIdle(n: INTEGER); (*send n FFs slowly with no card selected*)
   BEGIN SYSTEM.PUT(spiCtrl, 0);
@@ -69,7 +73,7 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
 
   (* begin-procedure-description
 ---
-**SPI** send&rcv byte slowly with card selected.
+**SPI** Delivers a value to SPI data on CARD0 and waits for acceptance.
   end-procedure-description *)
   PROCEDURE SPI(n: INTEGER); (*send&rcv byte slowly with card selected*)
   BEGIN SYSTEM.PUT(spiCtrl, CARD0); SYSTEM.PUT(spiData, n);
@@ -78,7 +82,7 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
 
   (* begin-procedure-description
 ---
-**SPICmd** Send an SPI command.
+**SPICmd** Synchronously ends an SPI command and its argument.
   end-procedure-description *)
   PROCEDURE SPICmd(n, arg: INTEGER);
     VAR i, data, crc: INTEGER;
@@ -94,7 +98,7 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
 
   (* begin-procedure-description
 ---
-**InitSPI** Initialize the SPI interface.
+**InitSPI** Initializes the SPI interface.
   end-procedure-description *)
   PROCEDURE InitSPI;
     VAR res, data: INTEGER;
@@ -115,7 +119,7 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
 
   (* begin-procedure-description
 ---
-**SDShift** Interrogate SPI card.
+**SDShift** Interrogates an SPI storage card.
   end-procedure-description *)
   PROCEDURE SDShift(VAR n: INTEGER);
     VAR data: INTEGER;
@@ -127,7 +131,7 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
 
   (* begin-procedure-description
 ---
-**ReadSD** Retrieve one block from the SD card via SPI.
+**ReadSD** Retrieves one block from the SD card via SPI.
   end-procedure-description *)
   PROCEDURE ReadSD(src, dst: INTEGER);
     VAR i, data: INTEGER;
@@ -145,7 +149,7 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
 
   (* begin-procedure-description
 ---
-**LoadFromDisk** Retreive the Innner Core of Oberon from the SD Card.
+**LoadFromDisk** Retreives the Innner Core of Oberon from the SD Card.
   end-procedure-description *)
   PROCEDURE LoadFromDisk;
     VAR src, dst, adr, lim: INTEGER;
