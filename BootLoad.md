@@ -70,7 +70,7 @@
       SPICmd(41, LSL(1(*HCS*), 30));
       SYSTEM.GET(spiData, res);
       SPI(-1); SPI(-1); SPI(-1); (*flush response*)
-      SPIIdle(10000)
+      SPIIdle(10) (*was 10000*)
     UNTIL res = 0;
     (*CMD16 set block size as a precaution (should default)*)
     SPICmd(16, 512); SPIIdle(1)

@@ -1,6 +1,6 @@
 MODULE ORF;  (*Oberon Firmware Generator for RISC / AP 13.6.20 Extended Oberon / CP 22.10.20 WriteFile reverted to po2013 format*)
   IMPORT Files, Texts, Oberon;
-  CONST CR = 0DX; noerr = 0; badfile = 4;  (*copied from Modules for use as cross development tool*)
+  CONST CR = 0DX; NL = 0AX; noerr = 0; badfile = 4;  (*copied from Modules for use as cross development tool*)
 
   TYPE Writer = PROCEDURE(VAR R: Files.Rider; x: LONGINT);
 
@@ -16,7 +16,7 @@ MODULE ORF;  (*Oberon Firmware Generator for RISC / AP 13.6.20 Extended Oberon /
       x := x DIV 10H; INC(i)
     UNTIL i = 8;
     REPEAT DEC(i); Files.Write(R, a[i]) UNTIL i = 0 ;
-    Files.Write(R, CR)
+    Files.Write(R, NL)
   END WriteHex;
 
   PROCEDURE OutCode(VAR R, R1: Files.Rider; write: Writer; VAR codelen, entry, res: INTEGER);
@@ -31,8 +31,7 @@ MODULE ORF;  (*Oberon Firmware Generator for RISC / AP 13.6.20 Extended Oberon /
     Files.ReadInt(R, n); (*variable space*)
     Files.ReadInt(R, n); Files.Set(R, F, Files.Pos(R) + n); (*strings*)
     Files.ReadInt(R, codelen); n := 0;
-    WHILE ~R.eof & (n < codelen) DO Files.ReadInt(R, data); write(R1, data); INC(n) END ; (*write code*)
-    Files.ReadString(R, name);
+    WHILE ~R.eof  & (n < codelen)  DO Files.ReadInt(R, data); write(R1, data); INC(n) END ; (*write code*)
     res := noerr;
   END OutCode;
 
