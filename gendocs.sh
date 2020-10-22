@@ -20,7 +20,7 @@ echo >> README.md
 		nam=`echo $ref | awk -F'/' '{print $1}'` 
 		
 		
-		
+		echo "---" >> README.md
                 echo "## The $nam Package" >> README.md
 	#	echo "This package $pkgdesc" >> README.md
 	#	echo >> README.md
