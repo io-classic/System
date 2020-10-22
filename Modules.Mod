@@ -1,6 +1,16 @@
 (* begin-package-description
+### _Package Overview:_
 The Modules package manages the module heap, the loading and unloading of packages, etc.
 
+
+### _Package Use:_
+
+USAGE:
+```
+Modules.Load("something",M)
+```
+
+### _Modules in this package:_
 end-package-description *)
 
 (* begin-module-use-description

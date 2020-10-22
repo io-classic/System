@@ -1,18 +1,18 @@
 (* begin-package-description
-## Overview
+### _Package Overview:_
 The Files package provides:
 
 * Directory operations
 * File i/o
 
-## Examples
+### _Package Use:_
 
 USAGE:
 ```
 F := Files.New("newfile.txt")
 ```
 
-## Modules
+### _Modules in this package:_
 end-package-description *)
 
 (* begin-module-use-description

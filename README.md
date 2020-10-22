@@ -9,7 +9,7 @@
 | [Modules](https://github.com/io-orig/System#Modules) | manages compiled module loading and unloading in Oberon. |
 |   | [Modules.Mod](Modules.Mod)  |
 | [Oberon](https://github.com/io-orig/System#Oberon) | implements the user-interaction functionality and the task loop of the system. |
-|   | [MenuViewers.Mod](MenuViewers.Mod) [Oberon.Mod](Oberon.Mod) [Input.Mod](Input.Mod) [Display.Mod](Display.Mod) [Viewers.Mod](Viewers.Mod)  |
+|   | [Oberon.Mod](Oberon.Mod) [MenuViewers.Mod](MenuViewers.Mod) [Viewers.Mod](Viewers.Mod) [Input.Mod](Input.Mod) [Display.Mod](Display.Mod)  |
 | [Edit](https://github.com/io-orig/System#Edit) | manages the text and font handling in Oberon. |
 |   | [Edit.Mod](Edit.Mod) [Fonts.Mod](Fonts.Mod) [TextFrames.Mod](TextFrames.Mod) [Texts.Mod](Texts.Mod)  |
 | [Draw](https://github.com/io-orig/System#Draw) | provides line-oriented drawing primitives and a vector drawing tool. |
@@ -42,20 +42,20 @@ Module Kernel provides hardware abstraction for Oberon.
 
 ## The Files Package
 
-## Overview
+### _Package Overview:_
 The Files package provides:
 
 * Directory operations
 * File i/o
 
-## Examples
+### _Package Use:_
 
 USAGE:
 ```
 F := Files.New("newfile.txt")
 ```
 
-## Modules
+### _Modules in this package:_
 
 #### MODULE FileDir [_doc_](https://github.com/io-orig/System/blob/main/FileDir.md) [_src_](https://github.com/io-orig/System/blob/main/FileDir.Mod)
 Module FileDir manages the on-disk representation if directories.
@@ -75,8 +75,18 @@ Module Files manages the on-disk representation of files and the file api presen
 
 ## The Modules Package
 
+### _Package Overview:_
 The Modules package manages the module heap, the loading and unloading of packages, etc.
 
+
+### _Package Use:_
+
+USAGE:
+```
+Modules.Load("something",M)
+```
+
+### _Modules in this package:_
 
 #### MODULE Modules [_doc_](https://github.com/io-orig/System/blob/main/Modules.md) [_src_](https://github.com/io-orig/System/blob/main/Modules.Mod)
 Module Modules is the heart of how separately compiled Oberon programs are loaded and linked.
@@ -85,6 +95,18 @@ Module Modules is the heart of how separately compiled Oberon programs are loade
   **imports:** ` SYSTEM Files`
 
 ## The Oberon Package
+
+
+#### MODULE Oberon [_doc_](https://github.com/io-orig/System/blob/main/Oberon.md) [_src_](https://github.com/io-orig/System/blob/main/Oberon.Mod)
+### _Package Overview:_
+Module Oberon establishes the messaging and callback system for implementing the extensible user interface of Oberon.
+
+### _Package Use:_
+
+### _Modules in this package:_
+
+  **imports:** ` SYSTEM Kernel Files Modules Input Display Viewers Fonts Texts`
+
 
 
 #### MODULE MenuViewers [_doc_](https://github.com/io-orig/System/blob/main/MenuViewers.md) [_src_](https://github.com/io-orig/System/blob/main/MenuViewers.Mod)
@@ -98,14 +120,11 @@ MenuViewers uses Input, Display, Viewers, Oberon
 
 
 
-#### MODULE Oberon [_doc_](https://github.com/io-orig/System/blob/main/Oberon.md) [_src_](https://github.com/io-orig/System/blob/main/Oberon.Mod)
-Module Oberon establishes the messaging and callback system for implementing the extensible user interface of Oberon.
-
-Oberon uses SYSTEM, Kernel, Files, Modules, Input, Display, Viewers, Fonts, Texts
+#### MODULE Viewers [_doc_](https://github.com/io-orig/System/blob/main/Viewers.md) [_src_](https://github.com/io-orig/System/blob/main/Viewers.Mod)
+Module Viewers implements base functionaltiy which may be extended for interacting with a pane or 'Viewer' in Oberon.
 
 
-
-  **imports:** ` SYSTEM Kernel Files Modules Input Display Viewers Fonts Texts`
+  **imports:** ` Display`
 
 
 
@@ -127,14 +146,6 @@ A pattern is an array of bytes; the first is its width (< 32), the second its he
 
 
   **imports:** ` SYSTEM`
-
-
-
-#### MODULE Viewers [_doc_](https://github.com/io-orig/System/blob/main/Viewers.md) [_src_](https://github.com/io-orig/System/blob/main/Viewers.Mod)
-Module Viewers implements base functionaltiy which may be extended for interacting with a pane or 'Viewer' in Oberon.
-
-
-  **imports:** ` Display`
 
 ## The Edit Package
 

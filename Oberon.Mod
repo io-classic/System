@@ -1,9 +1,10 @@
 (* begin-module-use-description
+### _Package Overview:_
 Module Oberon establishes the messaging and callback system for implementing the extensible user interface of Oberon.
 
-Oberon uses SYSTEM, Kernel, Files, Modules, Input, Display, Viewers, Fonts, Texts
+### _Package Use:_
 
-
+### _Modules in this package:_
 end-module-use-description *)
 MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
   IMPORT SYSTEM, Kernel, Files, Modules, Input, Display, Viewers, Fonts, Texts;
