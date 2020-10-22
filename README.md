@@ -1,5 +1,14 @@
 # Packages
 
+*  Kernel
+*  Files
+*  Modules
+*  Oberon
+*  Edit
+*  Draw
+*  System
+*  Build
+
 ## Kernel
 Package handles basic os functionality including device access and garbage collection.
 
