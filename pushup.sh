@@ -2,5 +2,9 @@
 git add *.Mod
 git add *.Pkg
 git add *.md
-git commit -m 'sync local to upstream'
+cmt=$1
+if [ "$1" eq "" ]; then
+	cmt='sync local to upstream'
+fi
+git commit -m "$cmt"
 git push origin

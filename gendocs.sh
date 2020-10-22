@@ -4,7 +4,7 @@ echo "# Packages" > README.md
 echo >> README.md
 
 
-	for j in `ls *.Pkg 2>/dev/null`; do 
+	for j in `tail -n +2 Packages.Ndx | awk -F ',' '{print $1".Pkg"}'`; do 
 		k=`grep '^doc' $j | awk -F',' '{print $2}'`
 		pkgdesc=`grep '^doc' $j | awk -F',' '{print $3}'`
 		ref=`echo $j | sed -e 's/\(.*\).Pkg/\1/g'` 
