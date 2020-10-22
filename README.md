@@ -1,13 +1,12 @@
-# Packages
-
-*  [Kernel](https://github.com/io-orig/System#Kernel)
-*  [Files](https://github.com/io-orig/System#Files)
-*  [Modules](https://github.com/io-orig/System#Modules)
-*  [Oberon](https://github.com/io-orig/System#Oberon)
-*  [Edit](https://github.com/io-orig/System#Edit)
-*  [Draw](https://github.com/io-orig/System#Draw)
-*  [System](https://github.com/io-orig/System#System)
-*  [Build](https://github.com/io-orig/System#Build)
++---------+----------+
+| [Kernel](https://github.com/io-orig/System#Kernel) | modules |
+| [Files](https://github.com/io-orig/System#Files) | modules |
+| [Modules](https://github.com/io-orig/System#Modules) | modules |
+| [Oberon](https://github.com/io-orig/System#Oberon) | modules |
+| [Edit](https://github.com/io-orig/System#Edit) | modules |
+| [Draw](https://github.com/io-orig/System#Draw) | modules |
+| [System](https://github.com/io-orig/System#System) | modules |
+| [Build](https://github.com/io-orig/System#Build) | modules |
 
 ## Kernel
 Package handles basic os functionality including device access and garbage collection.
