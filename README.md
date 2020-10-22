@@ -20,10 +20,6 @@
 |   | [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mod](ORG.Mod) [ORP.Mod](ORP.Mod) [ORS.Mod](ORS.Mod) [ODP.Mod](ODP.Mod) [ODG.Mod](ODG.Mod) [ORL.Mod](ORL.Mod)  |
 
 ## The Kernel Package
-This package handles basic os functionality including device access and garbage collection.
-
-includes: [Kernel.Mod](Kernel.Mod)  
-
 
 ## Package Overview:
 The Kernel package abstracts the hardware of the computing platform for the rest of Oberon.
@@ -48,10 +44,6 @@ Module Kernel provides hardware abstraction for Oberon.
   **imports:** ` SYSTEM`
 
 ## The Files Package
-This package handles persistent storage and the file and directory interface of Oberon.
-
-includes: [FileDir.Mod](FileDir.Mod) [Files.Mod](Files.Mod)  
-
 
 ## Overview
 The Files package provides:
@@ -85,10 +77,6 @@ Module Files manages the on-disk representation of files and the file api presen
   **imports:** ` SYSTEM Kernel FileDir`
 
 ## The Modules Package
-This package manages compiled module loading and unloading in Oberon.
-
-includes: [Modules.Mod](Modules.Mod)  
-
 
 The Modules package manages the module heap, the loading and unloading of packages, etc.
 
@@ -100,10 +88,6 @@ Module Modules is the heart of how separately compiled Oberon programs are loade
   **imports:** ` SYSTEM Files`
 
 ## The Oberon Package
-This package implements the user-interaction functionality and the task loop of the system.
-
-includes: [MenuViewers.Mod](MenuViewers.Mod) [Oberon.Mod](Oberon.Mod) [Input.Mod](Input.Mod) [Display.Mod](Display.Mod) [Viewers.Mod](Viewers.Mod)  
-
 
 
 #### MODULE MenuViewers [_doc_](https://github.com/io-orig/System/blob/main/MenuViewers.md) [_src_](https://github.com/io-orig/System/blob/main/MenuViewers.Mod)
@@ -156,10 +140,6 @@ Module Viewers implements base functionaltiy which may be extended for interacti
   **imports:** ` Display`
 
 ## The Edit Package
-This package manages the text and font handling in Oberon.
-
-includes: [Edit.Mod](Edit.Mod) [Fonts.Mod](Fonts.Mod) [TextFrames.Mod](TextFrames.Mod) [Texts.Mod](Texts.Mod)  
-
 
 ## Package Overview:
 The Edit package provides:
@@ -209,10 +189,6 @@ Module Texts defines the 'text' abstract data type used pervasively in the Obero
   **imports:** ` Files Fonts`
 
 ## The Draw Package
-This package provides line-oriented drawing primitives and a vector drawing tool.
-
-includes: [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod](Draw.Mod) [GraphicFrames.Mod](GraphicFrames.Mod) [GraphTool.Mod](GraphTool.Mod) [Rectangles.Mod](Rectangles.Mod) [Curves.Mod](Curves.Mod)  
-
 
 
 #### MODULE Graphics [_doc_](https://github.com/io-orig/System/blob/main/Graphics.md) [_src_](https://github.com/io-orig/System/blob/main/Graphics.Mod)
@@ -255,10 +231,6 @@ includes: [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod]
   **imports:** ` Display Files Oberon Graphics GraphicFrames`
 
 ## The System Package
-This package prepares the user interface and manages viewers for the user.
-
-includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.Mod](PIO.Mod) [BootLoad.Mod](BootLoad.Mod) [System.Mod](System.Mod) [Tools.Mod](Tools.Mod) [PCLink1.Mod](PCLink1.Mod) [RS232.Mod](RS232.Mod) [Net.Mod](Net.Mod) [SCC.Mod](SCC.Mod) [Batch.Mod](Batch.Mod)  
-
 
 
 #### MODULE Blink [_doc_](https://github.com/io-orig/System/blob/main/Blink.md) [_src_](https://github.com/io-orig/System/blob/main/Blink.Mod)
@@ -353,10 +325,6 @@ Module Batch provides for automatic sequential execution of Oberon commands.
   **imports:** ` Kernel FileDir Files Display Texts TextFrames Viewers Oberon`
 
 ## The Build Package
-This package provides the compiler and associated program building and debugging tools for Oberon.
-
-includes: [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mod](ORG.Mod) [ORP.Mod](ORP.Mod) [ORS.Mod](ORS.Mod) [ODP.Mod](ODP.Mod) [ODG.Mod](ODG.Mod) [ORL.Mod](ORL.Mod)  
-
 
 
 #### MODULE ORTool [_doc_](https://github.com/io-orig/System/blob/main/ORTool.md) [_src_](https://github.com/io-orig/System/blob/main/ORTool.Mod)
