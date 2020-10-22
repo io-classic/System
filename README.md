@@ -2,8 +2,8 @@
 
 | Package |          |
 | ------- | -------- |
-| [Kernel](README.md#the-Kernel-package) | handles basic os functionality including device access and garbage collection. |
-|   | [Kernel.Mod](README.md#KernelMod-doc-src)  |
+| [Kernel](README.md#the-Kernel-package) | handles basic os functionality including startup |
+|   | [Kernel.Mod](README.md#KernelMod-doc-src) [BootLoad.Mod](README.md#BootLoadMod-doc-src)  |
 | [Files](README.md#the-Files-package) | handles persistent storage and the file and directory interface of Oberon. |
 |   | [FileDir.Mod](README.md#FileDirMod-doc-src) [Files.Mod](README.md#FilesMod-doc-src)  |
 | [Modules](README.md#the-Modules-package) | manages compiled module loading and unloading in Oberon. |
@@ -19,11 +19,11 @@
 | [Build](README.md#the-Build-package) | provides the compiler and associated program building and debugging tools for Oberon. |
 |   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORL.Mod](README.md#ORLMod-doc-src)  |
 | [Extras](README.md#the-Extras-package) | contains extra modules demonstrating Oberon. |
-|   | [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [Sierpinski.Mod](README.md#SierpinskiMod-doc-src) [Hilbert.Mod](README.md#HilbertMod-doc-src) [Checkers.Mod](README.md#CheckersMod-doc-src) [BootLoad.Mod](README.md#BootLoadMod-doc-src)  |
+|   | [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [Sierpinski.Mod](README.md#SierpinskiMod-doc-src) [Hilbert.Mod](README.md#HilbertMod-doc-src) [Checkers.Mod](README.md#CheckersMod-doc-src)  |
 
 ---
 ## The Kernel Package
-includes: [Kernel.Mod](README.md#KernelMod-doc-src)  
+includes: [Kernel.Mod](README.md#KernelMod-doc-src) [BootLoad.Mod](README.md#BootLoadMod-doc-src)  
 
 ### _Package Overview:_
 The Kernel package abstracts the hardware of the computing platform for the rest of Oberon.
@@ -40,6 +40,14 @@ Kernel.Collect
 
 #### Kernel.Mod [_doc_](https://github.com/io-orig/System/blob/main/Kernel.md) [_src_](https://github.com/io-orig/System/blob/main/Kernel.Mod)
 Module Kernel provides hardware abstraction for Oberon.
+
+
+  **imports:** ` SYSTEM`
+
+
+
+#### BootLoad.Mod [_doc_](https://github.com/io-orig/System/blob/main/BootLoad.md) [_src_](https://github.com/io-orig/System/blob/main/BootLoad.Mod)
+Module BootLoad compiles to a binary to be placed in the firmware of a system that will boot to Oberon.
 
 
   **imports:** ` SYSTEM`
@@ -474,7 +482,7 @@ ORL uses SYSTEM, Kernel, Files, Modules, Texts, Oberon
 
 ---
 ## The Extras Package
-includes: [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [Sierpinski.Mod](README.md#SierpinskiMod-doc-src) [Hilbert.Mod](README.md#HilbertMod-doc-src) [Checkers.Mod](README.md#CheckersMod-doc-src) [BootLoad.Mod](README.md#BootLoadMod-doc-src)  
+includes: [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [Sierpinski.Mod](README.md#SierpinskiMod-doc-src) [Hilbert.Mod](README.md#HilbertMod-doc-src) [Checkers.Mod](README.md#CheckersMod-doc-src)  
 
 ### _Package Overview:_
 The Extras package provides:
@@ -525,12 +533,4 @@ Module Math provides standard math functions in Oberon.
 #### Checkers.Mod [_doc_](https://github.com/io-orig/System/blob/main/Checkers.md) [_src_](https://github.com/io-orig/System/blob/main/Checkers.Mod)
 
   **imports:** ` SYSTEM Display Viewers Oberon MenuViewers TextFrames`
-
-
-
-#### BootLoad.Mod [_doc_](https://github.com/io-orig/System/blob/main/BootLoad.md) [_src_](https://github.com/io-orig/System/blob/main/BootLoad.Mod)
-Module BootLoad compiles to a binary to be placed in the firmware of a system that will boot to Oberon.
-
-
-  **imports:** ` SYSTEM`
 
