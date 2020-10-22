@@ -22,6 +22,8 @@
 ## Kernel
 Package handles basic os functionality including device access and garbage collection.
 
+includes: [Kernel.Mod](Kernel.Mod)  
+
 
 
 #### [MODULE Kernel](https://github.com/io-orig/System/blob/main/Kernel.md) [(source)](https://github.com/io-orig/System/blob/main/Kernel.Mod)
@@ -61,6 +63,8 @@ Package handles basic os functionality including device access and garbage colle
 ```
 ## Files
 Package handles persistent storage and the file and directory interface of Oberon.
+
+includes: [FileDir.Mod](FileDir.Mod) [Files.Mod](Files.Mod)  
 
 
 
@@ -153,6 +157,8 @@ Package handles persistent storage and the file and directory interface of Obero
 ## Modules
 Package manages compiled module loading and unloading in Oberon.
 
+includes: [Modules.Mod](Modules.Mod)  
+
 
 
 #### [MODULE Modules](https://github.com/io-orig/System/blob/main/Modules.md) [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod)
@@ -172,6 +178,8 @@ Package manages compiled module loading and unloading in Oberon.
 ```
 ## Oberon
 Package implements the user-interaction functionality and the task loop of the system.
+
+includes: [MenuViewers.Mod](MenuViewers.Mod) [Oberon.Mod](Oberon.Mod) [Input.Mod](Input.Mod) [Display.Mod](Display.Mod) [Viewers.Mod](Viewers.Mod)  
 
 
 
@@ -332,6 +340,8 @@ Package implements the user-interaction functionality and the task loop of the s
 ```
 ## Edit
 Package manages the text and font handling in Oberon.
+
+includes: [Edit.Mod](Edit.Mod) [Fonts.Mod](Fonts.Mod) [TextFrames.Mod](TextFrames.Mod) [Texts.Mod](Texts.Mod)  
 
 
 
@@ -521,6 +531,8 @@ Package manages the text and font handling in Oberon.
 ```
 ## Draw
 Package provides line-oriented drawing primitives and a vector drawing tool.
+
+includes: [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod](Draw.Mod) [GraphicFrames.Mod](GraphicFrames.Mod) [GraphTool.Mod](GraphTool.Mod) [Rectangles.Mod](Rectangles.Mod) [Curves.Mod](Curves.Mod)  
 
 
 
@@ -736,6 +748,8 @@ Package provides line-oriented drawing primitives and a vector drawing tool.
 ```
 ## System
 Package prepares the user interface and manages viewers for the user.
+
+includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.Mod](PIO.Mod) [BootLoad.Mod](BootLoad.Mod) [System.Mod](System.Mod) [Tools.Mod](Tools.Mod) [PCLink1.Mod](PCLink1.Mod) [RS232.Mod](RS232.Mod) [Net.Mod](Net.Mod) [SCC.Mod](SCC.Mod) [Batch.Mod](Batch.Mod)  
 
 
 
@@ -1002,6 +1016,8 @@ Module Batch provides for automatic sequential execution of Oberon commands.
 ```
 ## Build
 Package provides the compiler and associated program building and debugging tools for Oberon.
+
+includes: [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mod](ORG.Mod) [ORP.Mod](ORP.Mod) [ORS.Mod](ORS.Mod) [ODP.Mod](ODP.Mod) [ODG.Mod](ODG.Mod) [ORL.Mod](ORL.Mod)  
 
 
 
