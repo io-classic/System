@@ -17,7 +17,7 @@
 | [System](https://github.com/io-orig/System#System) | prepares the user interface and manages viewers for the user. |
 |   | [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.Mod](PIO.Mod) [BootLoad.Mod](BootLoad.Mod) [System.Mod](System.Mod) [Tools.Mod](Tools.Mod) [PCLink1.Mod](PCLink1.Mod) [RS232.Mod](RS232.Mod) [Net.Mod](Net.Mod) [SCC.Mod](SCC.Mod) [Batch.Mod](Batch.Mod)  |
 | [Build](https://github.com/io-orig/System#Build) | provides the compiler and associated program building and debugging tools for Oberon. |
-|   | [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mod](ORG.Mod) [ORP.Mod](ORP.Mod) [ORS.Mod](ORS.Mod) [ODP.Mod](ODP.Mod) [ODG.Mod](ODG.Mod) [ORL.Mod](ORL.Mod)  |
+|   | [ORP.Mod](ORP.Mod) [ORG.Mod](ORG.Mod) [ORB.Mod](ORB.Mod) [ORS.Mod](ORS.Mod) [ORTool.Mod](ORTool.Mod) [ORC.Mod](ORC.Mod) [ODP.Mod](ODP.Mod) [ODG.Mod](ODG.Mod) [ORL.Mod](ORL.Mod)  |
 
 ## The Kernel Package
 
@@ -323,45 +323,6 @@ Module Batch provides for automatic sequential execution of Oberon commands.
 
 ## The Build Package
 
-
-#### MODULE ORTool [_doc_](https://github.com/io-orig/System/blob/main/ORTool.md) [_src_](https://github.com/io-orig/System/blob/main/ORTool.Mod)
-Module ORTool provides symbol file, module file, and loaded module reporting tools.
-
-ORTool uses SYSTEM, Files, Modules, Texts, Oberon, ORB
-
-
-
-  **imports:** ` SYSTEM Files Texts Oberon ORB`
-
-
-
-#### MODULE ORB [_doc_](https://github.com/io-orig/System/blob/main/ORB.md) [_src_](https://github.com/io-orig/System/blob/main/ORB.Mod)
-Module ORB manages the symbol table for the Oberon compiler and reads and writes 'smb' files
-
-ORB uses Files, ORS
-
-
-
-  **imports:** ` Files ORS`
-
-
-
-#### MODULE ORC [_doc_](https://github.com/io-orig/System/blob/main/ORC.md) [_src_](https://github.com/io-orig/System/blob/main/ORC.Mod)
-
-  **imports:** ` SYSTEM Files Texts Oberon V24`
-
-
-
-#### MODULE ORG [_doc_](https://github.com/io-orig/System/blob/main/ORG.md) [_src_](https://github.com/io-orig/System/blob/main/ORG.Mod)
-Module ORG generates the processor-specific instructions for executing an Oberon program. 
-
-ORG uses SYSTEM, Files, ORS, ORB
-
-
-
-  **imports:** ` SYSTEM Files ORS ORB`
-
-
 ### _Package Overview:_
 Integrated Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
 
@@ -414,6 +375,28 @@ Module ORP reads the source code of an Oberon program and produces an executable
 
 
 
+#### MODULE ORG [_doc_](https://github.com/io-orig/System/blob/main/ORG.md) [_src_](https://github.com/io-orig/System/blob/main/ORG.Mod)
+Module ORG generates the processor-specific instructions for executing an Oberon program. 
+
+ORG uses SYSTEM, Files, ORS, ORB
+
+
+
+  **imports:** ` SYSTEM Files ORS ORB`
+
+
+
+#### MODULE ORB [_doc_](https://github.com/io-orig/System/blob/main/ORB.md) [_src_](https://github.com/io-orig/System/blob/main/ORB.Mod)
+Module ORB manages the symbol table for the Oberon compiler and reads and writes 'smb' files
+
+ORB uses Files, ORS
+
+
+
+  **imports:** ` Files ORS`
+
+
+
 #### MODULE ORS [_doc_](https://github.com/io-orig/System/blob/main/ORS.md) [_src_](https://github.com/io-orig/System/blob/main/ORS.Mod)
 Module ORS does lexical analysis of the Oberon source code and defines symbols and operations
 
@@ -422,6 +405,23 @@ ORS uses SYSTEM, Texts, Oberon
 
 
   **imports:** ` SYSTEM Texts Oberon`
+
+
+
+#### MODULE ORTool [_doc_](https://github.com/io-orig/System/blob/main/ORTool.md) [_src_](https://github.com/io-orig/System/blob/main/ORTool.Mod)
+Module ORTool provides symbol file, module file, and loaded module reporting tools.
+
+ORTool uses SYSTEM, Files, Modules, Texts, Oberon, ORB
+
+
+
+  **imports:** ` SYSTEM Files Texts Oberon ORB`
+
+
+
+#### MODULE ORC [_doc_](https://github.com/io-orig/System/blob/main/ORC.md) [_src_](https://github.com/io-orig/System/blob/main/ORC.Mod)
+
+  **imports:** ` SYSTEM Files Texts Oberon V24`
 
 
 
