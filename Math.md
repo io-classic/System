@@ -143,17 +143,17 @@ END Math.
 ## Procedures:
 ---
 
-`  PROCEDURE sqrt*(x: REAL): REAL;` [(source)](https://github.com/io-orig/System/blob/main/Math.Mod#L3)
+`  PROCEDURE sqrt*(x: REAL): REAL;` [(source)](https://github.com/io-orig/System/blob/main/Math.Mod#L7)
 
 
-`  PROCEDURE exp*(x: REAL): REAL;` [(source)](https://github.com/io-orig/System/blob/main/Math.Mod#L22)
+`  PROCEDURE exp*(x: REAL): REAL;` [(source)](https://github.com/io-orig/System/blob/main/Math.Mod#L26)
 
 
-`  PROCEDURE ln*(x: REAL): REAL;` [(source)](https://github.com/io-orig/System/blob/main/Math.Mod#L39)
+`  PROCEDURE ln*(x: REAL): REAL;` [(source)](https://github.com/io-orig/System/blob/main/Math.Mod#L43)
 
 
-`  PROCEDURE sin*(x: REAL): REAL;` [(source)](https://github.com/io-orig/System/blob/main/Math.Mod#L57)
+`  PROCEDURE sin*(x: REAL): REAL;` [(source)](https://github.com/io-orig/System/blob/main/Math.Mod#L61)
 
 
-`  PROCEDURE cos*(x: REAL): REAL;` [(source)](https://github.com/io-orig/System/blob/main/Math.Mod#L85)
+`  PROCEDURE cos*(x: REAL): REAL;` [(source)](https://github.com/io-orig/System/blob/main/Math.Mod#L89)
 

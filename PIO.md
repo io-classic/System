@@ -56,14 +56,14 @@ END PIO.
 ## Procedures:
 ---
 
-`  PROCEDURE del(i: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/PIO.Mod#L11)
+`  PROCEDURE del(i: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/PIO.Mod#L15)
 
 
-`  PROCEDURE Send*(x: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/PIO.Mod#L16)
+`  PROCEDURE Send*(x: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/PIO.Mod#L20)
 
 
-`  PROCEDURE Receive*(VAR x: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/PIO.Mod#L25)
+`  PROCEDURE Receive*(VAR x: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/PIO.Mod#L29)
 
 
-`  PROCEDURE Reset*;` [(source)](https://github.com/io-orig/System/blob/main/PIO.Mod#L37)
+`  PROCEDURE Reset*;` [(source)](https://github.com/io-orig/System/blob/main/PIO.Mod#L41)
 

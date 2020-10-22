@@ -14,26 +14,26 @@
 ## Procedures:
 ---
 
-`  PROCEDURE OpenViewer(T: Texts.Text; title: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L5)
+`  PROCEDURE OpenViewer(T: Texts.Text; title: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L9)
 
 
-`  PROCEDURE Clear*;  (*used to clear output*)` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L14)
+`  PROCEDURE Clear*;  (*used to clear output*)` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L18)
 
 
-`  PROCEDURE Recall*;` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L19)
+`  PROCEDURE Recall*;` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L23)
 
 
-`  PROCEDURE Inspect*;` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L27)
+`  PROCEDURE Inspect*;` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L31)
 
 
-`  PROCEDURE Sector*;` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L42)
+`  PROCEDURE Sector*;` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L46)
 
 
-`  PROCEDURE ShowFile*;` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L59)
+`  PROCEDURE ShowFile*;` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L63)
 
 
-`  PROCEDURE Convert*;   (*convert selected text to txt-format*)` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L79)
+`  PROCEDURE Convert*;   (*convert selected text to txt-format*)` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L83)
 
 
-`  PROCEDURE Id*;` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L103)
+`  PROCEDURE Id*;` [(source)](https://github.com/io-orig/System/blob/main/Tools.Mod#L107)
 

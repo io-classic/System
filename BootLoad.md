@@ -131,29 +131,29 @@ END BootLoad.
 ## Procedures:
 ---
 
-`  PROCEDURE RecInt(VAR x: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L11)
+`  PROCEDURE RecInt(VAR x: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L19)
 
 
-`  PROCEDURE LoadFromLine;` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L21)
+`  PROCEDURE LoadFromLine;` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L29)
 
 
-`  PROCEDURE SPIIdle(n: INTEGER); (*send n FFs slowly with no card selected*)` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L33)
+`  PROCEDURE SPIIdle(n: INTEGER); (*send n FFs slowly with no card selected*)` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L41)
 
 
-`  PROCEDURE SPI(n: INTEGER); (*send&rcv byte slowly with card selected*)` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L40)
+`  PROCEDURE SPI(n: INTEGER); (*send&rcv byte slowly with card selected*)` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L48)
 
 
-`  PROCEDURE SPICmd(n, arg: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L45)
+`  PROCEDURE SPICmd(n, arg: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L53)
 
 
-`  PROCEDURE InitSPI;` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L57)
+`  PROCEDURE InitSPI;` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L65)
 
 
-`  PROCEDURE SDShift(VAR n: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L74)
+`  PROCEDURE SDShift(VAR n: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L82)
 
 
-`  PROCEDURE ReadSD(src, dst: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L82)
+`  PROCEDURE ReadSD(src, dst: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L90)
 
 
-`  PROCEDURE LoadFromDisk;` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L96)
+`  PROCEDURE LoadFromDisk;` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L104)
 

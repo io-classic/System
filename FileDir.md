@@ -83,41 +83,41 @@
 ## Procedures:
 ---
 
-`  PROCEDURE Search*(name: FileName; VAR A: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L57)
+`  PROCEDURE Search*(name: FileName; VAR A: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L80)
 
 
-`  PROCEDURE insert(name: FileName;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L74)
+`  PROCEDURE insert(name: FileName;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L97)
 
 
-`  PROCEDURE Insert*(name: FileName; fad: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L134)
+`  PROCEDURE Insert*(name: FileName; fad: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L157)
 
 
-`  PROCEDURE underflow(VAR c: DirPage;  (*ancestor page*)` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L149)
+`  PROCEDURE underflow(VAR c: DirPage;  (*ancestor page*)` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L172)
 
 
-`  PROCEDURE delete(name: FileName;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L198)
+`  PROCEDURE delete(name: FileName;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L221)
 
 
-`    PROCEDURE del(VAR a: DirPage; R: INTEGER; dpg1: DiskAdr; VAR h: BOOLEAN);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L209)
+`    PROCEDURE del(VAR a: DirPage; R: INTEGER; dpg1: DiskAdr; VAR h: BOOLEAN);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L232)
 
 
-`  PROCEDURE Delete*(name: FileName; VAR fad: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L244)
+`  PROCEDURE Delete*(name: FileName; VAR fad: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L267)
 
 
-`  PROCEDURE enumerate(prefix:   ARRAY OF CHAR;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L258)
+`  PROCEDURE enumerate(prefix:   ARRAY OF CHAR;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L281)
 
 
-`  PROCEDURE Enumerate*(prefix: ARRAY OF CHAR; proc: EntryHandler);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L284)
+`  PROCEDURE Enumerate*(prefix: ARRAY OF CHAR; proc: EntryHandler);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L307)
 
 
-`PROCEDURE Init*;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L291)
+`PROCEDURE Init*;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L314)
 
 
-`    PROCEDURE MarkSectors(VAR A: ARRAY OF DiskAdr; k: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L295)
+`    PROCEDURE MarkSectors(VAR A: ARRAY OF DiskAdr; k: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L318)
 
 
-`      PROCEDURE sift(VAR A: ARRAY OF DiskAdr; L, R: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L300)
+`      PROCEDURE sift(VAR A: ARRAY OF DiskAdr; L, R: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L323)
 
 
-`    PROCEDURE TraverseDir(VAR A: ARRAY OF DiskAdr; VAR k: INTEGER; dpg: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L334)
+`    PROCEDURE TraverseDir(VAR A: ARRAY OF DiskAdr; VAR k: INTEGER; dpg: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L357)
 

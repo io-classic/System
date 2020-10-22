@@ -37,41 +37,41 @@
 ## Procedures:
 ---
 
-`  PROCEDURE Copy (V: Viewer; VAR V1: Viewer);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L17)
+`  PROCEDURE Copy (V: Viewer; VAR V1: Viewer);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L24)
 
 
-`  PROCEDURE Draw (V: Viewers.Viewer);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L25)
+`  PROCEDURE Draw (V: Viewers.Viewer);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L32)
 
 
-`  PROCEDURE Extend (V: Viewer; newY: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L33)
+`  PROCEDURE Extend (V: Viewer; newY: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L40)
 
 
-`  PROCEDURE Reduce (V: Viewer; newY: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L44)
+`  PROCEDURE Reduce (V: Viewer; newY: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L51)
 
 
-`  PROCEDURE Grow (V: Viewer; oldH: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L48)
+`  PROCEDURE Grow (V: Viewer; oldH: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L55)
 
 
-`  PROCEDURE Shrink (V: Viewer; newH: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L58)
+`  PROCEDURE Shrink (V: Viewer; newH: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L65)
 
 
-`  PROCEDURE Adjust (F: Display.Frame; id, dY, Y, H: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L62)
+`  PROCEDURE Adjust (F: Display.Frame; id, dY, Y, H: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L69)
 
 
-`  PROCEDURE Restore (V: Viewer);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L67)
+`  PROCEDURE Restore (V: Viewer);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L74)
 
 
-`  PROCEDURE Modify (V: Viewer; Y, H: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L81)
+`  PROCEDURE Modify (V: Viewer; Y, H: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L88)
 
 
-`  PROCEDURE Change (V: Viewer; X, Y: INTEGER; Keys: SET);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L105)
+`  PROCEDURE Change (V: Viewer; X, Y: INTEGER; Keys: SET);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L112)
 
 
-`  PROCEDURE Suspend (V: Viewer);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L161)
+`  PROCEDURE Suspend (V: Viewer);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L168)
 
 
-`  PROCEDURE Handle* (V: Display.Frame; VAR M: Display.FrameMsg);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L168)
+`  PROCEDURE Handle* (V: Display.Frame; VAR M: Display.FrameMsg);` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L175)
 
 
-`  PROCEDURE New* (Menu, Main: Display.Frame; menuH, X, Y: INTEGER): Viewer; ` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L201)
+`  PROCEDURE New* (Menu, Main: Display.Frame; menuH, X, Y: INTEGER): Viewer; ` [(source)](https://github.com/io-orig/System/blob/main/MenuViewers.Mod#L208)
 

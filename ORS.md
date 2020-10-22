@@ -1,6 +1,22 @@
 
 ## [MODULE ORS](https://github.com/io-core/Build/blob/main/ORS.Mod)
 
+(NW 19.9.93 / 20.3.2017  Scanner in Oberon-07)
+
+**ORS** is called from ORP, ORG, and ORB and converts the source text to symbols for their consumption.
+
+Oberon Scanner does lexical analysis. Input is Oberon-Text, output is
+sequence of symbols, i.e identifiers, numbers, strings, and special symbols.
+Recognises all Oberon keywords and skips comments. The keywords are recorded in a table.
+
+`Get(sym)` delivers next symbol from input text with Reader R.
+
+`Mark(msg)` records error and delivers error message with Writer W.
+
+If Get delivers ident, then the identifier (a string) is in variable id, 
+if int or char in ival, if real in rval, and if string in str (and slen) 
+
+
   ## Imports:
 ` SYSTEM Texts Oberon`
 
@@ -44,38 +60,38 @@
 ## Procedures:
 ---
 
-`  PROCEDURE CopyId*(VAR ident: Ident);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L50)
+`  PROCEDURE CopyId*(VAR ident: Ident);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L75)
 
 
-`  PROCEDURE Pos*(): LONGINT;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L54)
+`  PROCEDURE Pos*(): LONGINT;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L79)
 
 
-`  PROCEDURE Mark*(msg: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L58)
+`  PROCEDURE Mark*(msg: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L83)
 
 
-`  PROCEDURE Identifier(VAR sym: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L68)
+`  PROCEDURE Identifier(VAR sym: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L93)
 
 
-`  PROCEDURE String;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L83)
+`  PROCEDURE String;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L108)
 
 
-`  PROCEDURE HexString;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L95)
+`  PROCEDURE HexString;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L120)
 
 
-`  PROCEDURE Ten(e: LONGINT): REAL;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L115)
+`  PROCEDURE Ten(e: LONGINT): REAL;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L140)
 
 
-`  PROCEDURE Number(VAR sym: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L125)
+`  PROCEDURE Number(VAR sym: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L150)
 
 
-`  PROCEDURE comment;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L194)
+`  PROCEDURE comment;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L219)
 
 
-`  PROCEDURE Get*(VAR sym: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L208)
+`  PROCEDURE Get*(VAR sym: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L233)
 
 
-`  PROCEDURE Init*(T: Texts.Text; pos: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L263)
+`  PROCEDURE Init*(T: Texts.Text; pos: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L288)
 
 
-`  PROCEDURE EnterKW(sym: INTEGER; name: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L267)
+`  PROCEDURE EnterKW(sym: INTEGER; name: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L292)
 

@@ -37,14 +37,14 @@
 ## Procedures:
 ---
 
-`PROCEDURE GetPat*(fnt: Font; ch: CHAR; VAR dx, x, y, w, h, patadr: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Fonts.Mod#L25)
+`PROCEDURE GetPat*(fnt: Font; ch: CHAR; VAR dx, x, y, w, h, patadr: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Fonts.Mod#L29)
 
 
-`PROCEDURE This*(name: ARRAY OF CHAR): Font;` [(source)](https://github.com/io-orig/System/blob/main/Fonts.Mod#L33)
+`PROCEDURE This*(name: ARRAY OF CHAR): Font;` [(source)](https://github.com/io-orig/System/blob/main/Fonts.Mod#L37)
 
 
-`  PROCEDURE RdInt16(VAR R: Files.Rider; VAR b0: BYTE);` [(source)](https://github.com/io-orig/System/blob/main/Fonts.Mod#L45)
+`  PROCEDURE RdInt16(VAR R: Files.Rider; VAR b0: BYTE);` [(source)](https://github.com/io-orig/System/blob/main/Fonts.Mod#L49)
 
 
-`PROCEDURE Free*;  (*remove all but first two from font list*)` [(source)](https://github.com/io-orig/System/blob/main/Fonts.Mod#L104)
+`PROCEDURE Free*;  (*remove all but first two from font list*)` [(source)](https://github.com/io-orig/System/blob/main/Fonts.Mod#L108)
 

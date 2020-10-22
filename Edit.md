@@ -249,38 +249,38 @@ END Edit.
 ## Procedures:
 ---
 
-`  PROCEDURE Max(i, j: LONGINT): LONGINT;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L13)
+`  PROCEDURE Max(i, j: LONGINT): LONGINT;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L36)
 
 
-`  PROCEDURE Open*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L19)
+`  PROCEDURE Open*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L42)
 
 
-`  PROCEDURE Store*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L39)
+`  PROCEDURE Store*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L62)
 
 
-`    PROCEDURE Backup (VAR name: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L47)
+`    PROCEDURE Backup (VAR name: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L70)
 
 
-`  PROCEDURE CopyLooks*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L73)
+`  PROCEDURE CopyLooks*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L96)
 
 
-`  PROCEDURE ChangeFont*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L90)
+`  PROCEDURE ChangeFont*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L113)
 
 
-`  PROCEDURE ChangeColor*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L102)
+`  PROCEDURE ChangeColor*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L125)
 
 
-`  PROCEDURE ChangeOffset*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L114)
+`  PROCEDURE ChangeOffset*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L137)
 
 
-`  PROCEDURE Search*;  (*uses global variables M, pat, d for Boyer-Moore search*)` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L126)
+`  PROCEDURE Search*;  (*uses global variables M, pat, d for Boyer-Moore search*)` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L149)
 
 
-`    PROCEDURE Forward(n: INTEGER; VAR R: Texts.Reader; VAR buf: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L134)
+`    PROCEDURE Forward(n: INTEGER; VAR R: Texts.Reader; VAR buf: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L157)
 
 
-`  PROCEDURE Locate*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L175)
+`  PROCEDURE Locate*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L198)
 
 
-`  PROCEDURE Recall*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L200)
+`  PROCEDURE Recall*;` [(source)](https://github.com/io-orig/System/blob/main/Edit.Mod#L223)
 
