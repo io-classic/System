@@ -2,22 +2,22 @@
 
 | Package |          |
 | ------- | -------- |
-| [Kernel](https://github.com/io-orig/System#Kernel) | description |
-| Modules:  | Kernel  |
-| [Files](https://github.com/io-orig/System#Files) | description |
-| Modules:  | FileDir Files  |
-| [Modules](https://github.com/io-orig/System#Modules) | description |
-| Modules:  | Modules  |
-| [Oberon](https://github.com/io-orig/System#Oberon) | description |
-| Modules:  | MenuViewers Oberon Input Display Viewers  |
-| [Edit](https://github.com/io-orig/System#Edit) | description |
-| Modules:  | Edit Fonts TextFrames Texts  |
-| [Draw](https://github.com/io-orig/System#Draw) | description |
-| Modules:  | Graphics MacroTool Draw GraphicFrames GraphTool Rectangles Curves  |
-| [System](https://github.com/io-orig/System#System) | description |
-| Modules:  | Blink Math RISC PIO BootLoad System Tools PCLink1 RS232 Net SCC Batch  |
-| [Build](https://github.com/io-orig/System#Build) | description |
-| Modules:  | ORTool ORB ORC ORG ORP ORS ODP ODG ORL  |
+| [Kernel](https://github.com/io-orig/System#Kernel) | handles basic os functionality including device access and garbage collection. |
+| includes:  | Kernel  |
+| [Files](https://github.com/io-orig/System#Files) | handles persistent storage and the file and directory interface of Oberon. |
+| includes:  | FileDir Files  |
+| [Modules](https://github.com/io-orig/System#Modules) | manages compiled module loading and unloading in Oberon. |
+| includes:  | Modules  |
+| [Oberon](https://github.com/io-orig/System#Oberon) | implements the user-interaction functionality and the task loop of the system. |
+| includes:  | MenuViewers Oberon Input Display Viewers  |
+| [Edit](https://github.com/io-orig/System#Edit) | manages the text and font handling in Oberon. |
+| includes:  | Edit Fonts TextFrames Texts  |
+| [Draw](https://github.com/io-orig/System#Draw) | provides line-oriented drawing primitives and a vector drawing tool. |
+| includes:  | Graphics MacroTool Draw GraphicFrames GraphTool Rectangles Curves  |
+| [System](https://github.com/io-orig/System#System) | prepares the user interface and manages viewers for the user. |
+| includes:  | Blink Math RISC PIO BootLoad System Tools PCLink1 RS232 Net SCC Batch  |
+| [Build](https://github.com/io-orig/System#Build) | provides the compiler and associated program building and debugging tools for Oberon. |
+| includes:  | ORTool ORB ORC ORG ORP ORS ODP ODG ORL  |
 
 ## Kernel
 Package handles basic os functionality including device access and garbage collection.
