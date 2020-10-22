@@ -19,8 +19,8 @@
 | [Build](https://github.com/io-orig/System#Build) | provides the compiler and associated program building and debugging tools for Oberon. |
 |   | [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mod](ORG.Mod) [ORP.Mod](ORP.Mod) [ORS.Mod](ORS.Mod) [ODP.Mod](ODP.Mod) [ODG.Mod](ODG.Mod) [ORL.Mod](ORL.Mod)  |
 
-## Kernel
-Package handles basic os functionality including device access and garbage collection.
+## The Kernel Package
+This package handles basic os functionality including device access and garbage collection.
 
 includes: [Kernel.Mod](Kernel.Mod)  
 
@@ -61,8 +61,8 @@ includes: [Kernel.Mod](Kernel.Mod)
   Init*
 
 ```
-## Files
-Package handles persistent storage and the file and directory interface of Oberon.
+## The Files Package
+This package handles persistent storage and the file and directory interface of Oberon.
 
 includes: [FileDir.Mod](FileDir.Mod) [Files.Mod](Files.Mod)  
 
@@ -154,8 +154,8 @@ includes: [FileDir.Mod](FileDir.Mod) [Files.Mod](Files.Mod)
   RestoreList* (*after mark phase of garbage collection*)
 
 ```
-## Modules
-Package manages compiled module loading and unloading in Oberon.
+## The Modules Package
+This package manages compiled module loading and unloading in Oberon.
 
 includes: [Modules.Mod](Modules.Mod)  
 
@@ -176,8 +176,8 @@ includes: [Modules.Mod](Modules.Mod)
   Init*
 
 ```
-## Oberon
-Package implements the user-interaction functionality and the task loop of the system.
+## The Oberon Package
+This package implements the user-interaction functionality and the task loop of the system.
 
 includes: [MenuViewers.Mod](MenuViewers.Mod) [Oberon.Mod](Oberon.Mod) [Input.Mod](Input.Mod) [Display.Mod](Display.Mod) [Viewers.Mod](Viewers.Mod)  
 
@@ -338,8 +338,8 @@ includes: [MenuViewers.Mod](MenuViewers.Mod) [Oberon.Mod](Oberon.Mod) [Input.Mod
   Broadcast* (VAR M: Display.FrameMsg)
 
 ```
-## Edit
-Package manages the text and font handling in Oberon.
+## The Edit Package
+This package manages the text and font handling in Oberon.
 
 includes: [Edit.Mod](Edit.Mod) [Fonts.Mod](Fonts.Mod) [TextFrames.Mod](TextFrames.Mod) [Texts.Mod](Texts.Mod)  
 
@@ -529,8 +529,8 @@ includes: [Edit.Mod](Edit.Mod) [Fonts.Mod](Fonts.Mod) [TextFrames.Mod](TextFrame
   WriteClock* (VAR W: Writer; d: LONGINT)
 
 ```
-## Draw
-Package provides line-oriented drawing primitives and a vector drawing tool.
+## The Draw Package
+This package provides line-oriented drawing primitives and a vector drawing tool.
 
 includes: [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod](Draw.Mod) [GraphicFrames.Mod](GraphicFrames.Mod) [GraphTool.Mod](GraphTool.Mod) [Rectangles.Mod](Rectangles.Mod) [Curves.Mod](Curves.Mod)  
 
@@ -746,8 +746,8 @@ includes: [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod]
   MakeEllipse*  (*command*)
 
 ```
-## System
-Package prepares the user interface and manages viewers for the user.
+## The System Package
+This package prepares the user interface and manages viewers for the user.
 
 includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.Mod](PIO.Mod) [BootLoad.Mod](BootLoad.Mod) [System.Mod](System.Mod) [Tools.Mod](Tools.Mod) [PCLink1.Mod](PCLink1.Mod) [RS232.Mod](RS232.Mod) [Net.Mod](Net.Mod) [SCC.Mod](SCC.Mod) [Batch.Mod](Batch.Mod)  
 
@@ -1014,8 +1014,8 @@ Module Batch provides for automatic sequential execution of Oberon commands.
   Run*
 
 ```
-## Build
-Package provides the compiler and associated program building and debugging tools for Oberon.
+## The Build Package
+This package provides the compiler and associated program building and debugging tools for Oberon.
 
 includes: [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mod](ORG.Mod) [ORP.Mod](ORP.Mod) [ORS.Mod](ORS.Mod) [ODP.Mod](ODP.Mod) [ODG.Mod](ODG.Mod) [ORL.Mod](ORL.Mod)  
 
