@@ -21,12 +21,9 @@
 
 ## The Kernel Package
 
-## Package Overview:
+### Package Overview:
 The Kernel package abstracts the hardware of the computing platform for the rest of Oberon.
 
-The current Kernel package contains two modules:
-* Kernel - core abstractions
-* Disk - a device driver for SPI flash storage
 
 ## Package Use:
 
