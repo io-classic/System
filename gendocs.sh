@@ -2,7 +2,10 @@
 
 echo "# Packages" > README.md
 echo >> README.md
-
+for j in `tail -n +2 Packages.Ndx | awk -F ',' '{print $1}'`; do
+	echo "*  [$j](https://github.com/io-orig/System#$j)" >> README.md
+done
+echo >> README.md
 
 	for j in `tail -n +2 Packages.Ndx | awk -F ',' '{print $1".Pkg"}'`; do 
 		k=`grep '^doc' $j | awk -F',' '{print $2}'`
