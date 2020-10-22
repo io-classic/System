@@ -34,7 +34,7 @@ echo >> README.md
 			echo  > $snam.md
                         awk '/end-package-description/{p=0};p;/begin-package-description/{p=1}' $snam.Mod >> README.md
                         echo  >> README.md
-			echo "#### [MODULE $snam](https://github.com/io-orig/System/blob/main/$snam.md) [(source)](https://github.com/io-orig/System/blob/main/$snam.Mod)" >> README.md
+			echo "#### MODULE $snam [_doc_](https://github.com/io-orig/System/blob/main/$snam.md) [_src_](https://github.com/io-orig/System/blob/main/$snam.Mod)" >> README.md
                         awk '/end-module-use-description/{p=0};p;/begin-module-use-description/{p=1}' $snam.Mod >> README.md
 			echo "## [MODULE $snam](https://github.com/io-core/$nam/blob/main/$snam.Mod)" >> $snam.md
                         awk '/end-module-develop-description/{p=0};p;/begin-module-develop-description/{p=1}' $snam.Mod >> $snam.md

@@ -26,7 +26,7 @@ includes: [Kernel.Mod](Kernel.Mod)
 
 
 
-#### MODULE Kernel [/doc/](https://github.com/io-orig/System/blob/main/Kernel.md) [/src/](https://github.com/io-orig/System/blob/main/Kernel.Mod)
+#### MODULE Kernel [_doc_](https://github.com/io-orig/System/blob/main/Kernel.md) [_src_](https://github.com/io-orig/System/blob/main/Kernel.Mod)
 
   **imports:** ` SYSTEM`
 
@@ -68,7 +68,7 @@ includes: [FileDir.Mod](FileDir.Mod) [Files.Mod](Files.Mod)
 
 
 
-#### MODULE FileDir [/doc/](https://github.com/io-orig/System/blob/main/FileDir.md) [/src/](https://github.com/io-orig/System/blob/main/FileDir.Mod)
+#### MODULE FileDir [_doc_](https://github.com/io-orig/System/blob/main/FileDir.md) [_src_](https://github.com/io-orig/System/blob/main/FileDir.Mod)
 
   **imports:** ` SYSTEM Kernel`
 
@@ -87,7 +87,7 @@ includes: [FileDir.Mod](FileDir.Mod) [Files.Mod](Files.Mod)
 ```
 
 
-#### MODULE Files [/doc/](https://github.com/io-orig/System/blob/main/Files.md) [/src/](https://github.com/io-orig/System/blob/main/Files.Mod)
+#### MODULE Files [_doc_](https://github.com/io-orig/System/blob/main/Files.md) [_src_](https://github.com/io-orig/System/blob/main/Files.Mod)
 
   **imports:** ` SYSTEM Kernel FileDir`
 
@@ -161,7 +161,7 @@ includes: [Modules.Mod](Modules.Mod)
 
 
 
-#### MODULE Modules [/doc/](https://github.com/io-orig/System/blob/main/Modules.md) [/src/](https://github.com/io-orig/System/blob/main/Modules.Mod)
+#### MODULE Modules [_doc_](https://github.com/io-orig/System/blob/main/Modules.md) [_src_](https://github.com/io-orig/System/blob/main/Modules.Mod)
 
   **imports:** ` SYSTEM Files`
 
@@ -183,7 +183,7 @@ includes: [MenuViewers.Mod](MenuViewers.Mod) [Oberon.Mod](Oberon.Mod) [Input.Mod
 
 
 
-#### MODULE MenuViewers [/doc/](https://github.com/io-orig/System/blob/main/MenuViewers.md) [/src/](https://github.com/io-orig/System/blob/main/MenuViewers.Mod)
+#### MODULE MenuViewers [_doc_](https://github.com/io-orig/System/blob/main/MenuViewers.md) [_src_](https://github.com/io-orig/System/blob/main/MenuViewers.Mod)
 
   **imports:** ` Input Display Viewers Oberon`
 
@@ -196,7 +196,7 @@ includes: [MenuViewers.Mod](MenuViewers.Mod) [Oberon.Mod](Oberon.Mod) [Input.Mod
 ```
 
 
-#### MODULE Oberon [/doc/](https://github.com/io-orig/System/blob/main/Oberon.md) [/src/](https://github.com/io-orig/System/blob/main/Oberon.Mod)
+#### MODULE Oberon [_doc_](https://github.com/io-orig/System/blob/main/Oberon.md) [_src_](https://github.com/io-orig/System/blob/main/Oberon.Mod)
 
   **imports:** ` SYSTEM Kernel Files Modules Input Display Viewers Fonts Texts`
 
@@ -269,7 +269,7 @@ includes: [MenuViewers.Mod](MenuViewers.Mod) [Oberon.Mod](Oberon.Mod) [Input.Mod
 ```
 
 
-#### MODULE Input [/doc/](https://github.com/io-orig/System/blob/main/Input.md) [/src/](https://github.com/io-orig/System/blob/main/Input.Mod)
+#### MODULE Input [_doc_](https://github.com/io-orig/System/blob/main/Input.md) [_src_](https://github.com/io-orig/System/blob/main/Input.Mod)
 
   **imports:** ` SYSTEM`
 
@@ -288,7 +288,7 @@ includes: [MenuViewers.Mod](MenuViewers.Mod) [Oberon.Mod](Oberon.Mod) [Input.Mod
 ```
 
 
-#### MODULE Display [/doc/](https://github.com/io-orig/System/blob/main/Display.md) [/src/](https://github.com/io-orig/System/blob/main/Display.Mod)
+#### MODULE Display [_doc_](https://github.com/io-orig/System/blob/main/Display.md) [_src_](https://github.com/io-orig/System/blob/main/Display.Mod)
 
   **imports:** ` SYSTEM`
 
@@ -309,7 +309,7 @@ includes: [MenuViewers.Mod](MenuViewers.Mod) [Oberon.Mod](Oberon.Mod) [Input.Mod
 ```
 
 
-#### MODULE Viewers [/doc/](https://github.com/io-orig/System/blob/main/Viewers.md) [/src/](https://github.com/io-orig/System/blob/main/Viewers.Mod)
+#### MODULE Viewers [_doc_](https://github.com/io-orig/System/blob/main/Viewers.md) [_src_](https://github.com/io-orig/System/blob/main/Viewers.Mod)
 
   **imports:** ` Display`
 
@@ -345,7 +345,7 @@ includes: [Edit.Mod](Edit.Mod) [Fonts.Mod](Fonts.Mod) [TextFrames.Mod](TextFrame
 
 
 
-#### MODULE Edit [/doc/](https://github.com/io-orig/System/blob/main/Edit.md) [/src/](https://github.com/io-orig/System/blob/main/Edit.Mod)
+#### MODULE Edit [_doc_](https://github.com/io-orig/System/blob/main/Edit.md) [_src_](https://github.com/io-orig/System/blob/main/Edit.Mod)
 
   **imports:** ` Files Fonts Texts Display Viewers Oberon MenuViewers TextFrames`
 
@@ -372,7 +372,7 @@ includes: [Edit.Mod](Edit.Mod) [Fonts.Mod](Fonts.Mod) [TextFrames.Mod](TextFrame
 ```
 
 
-#### MODULE Fonts [/doc/](https://github.com/io-orig/System/blob/main/Fonts.md) [/src/](https://github.com/io-orig/System/blob/main/Fonts.Mod)
+#### MODULE Fonts [_doc_](https://github.com/io-orig/System/blob/main/Fonts.md) [_src_](https://github.com/io-orig/System/blob/main/Fonts.Mod)
 
   **imports:** ` SYSTEM Files`
 
@@ -387,7 +387,7 @@ includes: [Edit.Mod](Edit.Mod) [Fonts.Mod](Fonts.Mod) [TextFrames.Mod](TextFrame
 ```
 
 
-#### MODULE TextFrames [/doc/](https://github.com/io-orig/System/blob/main/TextFrames.md) [/src/](https://github.com/io-orig/System/blob/main/TextFrames.Mod)
+#### MODULE TextFrames [_doc_](https://github.com/io-orig/System/blob/main/TextFrames.md) [_src_](https://github.com/io-orig/System/blob/main/TextFrames.Mod)
 
   **imports:** ` Modules Input Display Viewers Fonts Texts Oberon MenuViewers`
 
@@ -464,7 +464,7 @@ includes: [Edit.Mod](Edit.Mod) [Fonts.Mod](Fonts.Mod) [TextFrames.Mod](TextFrame
 ```
 
 
-#### MODULE Texts [/doc/](https://github.com/io-orig/System/blob/main/Texts.md) [/src/](https://github.com/io-orig/System/blob/main/Texts.Mod)
+#### MODULE Texts [_doc_](https://github.com/io-orig/System/blob/main/Texts.md) [_src_](https://github.com/io-orig/System/blob/main/Texts.Mod)
 
   **imports:** ` Files Fonts`
 
@@ -536,7 +536,7 @@ includes: [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod]
 
 
 
-#### MODULE Graphics [/doc/](https://github.com/io-orig/System/blob/main/Graphics.md) [/src/](https://github.com/io-orig/System/blob/main/Graphics.Mod)
+#### MODULE Graphics [_doc_](https://github.com/io-orig/System/blob/main/Graphics.md) [_src_](https://github.com/io-orig/System/blob/main/Graphics.Mod)
 
   **imports:** ` SYSTEM Files Modules Fonts (*Printer*) Texts Oberon`
 
@@ -611,7 +611,7 @@ includes: [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod]
 ```
 
 
-#### MODULE MacroTool [/doc/](https://github.com/io-orig/System/blob/main/MacroTool.md) [/src/](https://github.com/io-orig/System/blob/main/MacroTool.Mod)
+#### MODULE MacroTool [_doc_](https://github.com/io-orig/System/blob/main/MacroTool.md) [_src_](https://github.com/io-orig/System/blob/main/MacroTool.Mod)
 
   **imports:** ` Texts Oberon Graphics GraphicFrames`
 
@@ -628,7 +628,7 @@ includes: [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod]
 ```
 
 
-#### MODULE Draw [/doc/](https://github.com/io-orig/System/blob/main/Draw.md) [/src/](https://github.com/io-orig/System/blob/main/Draw.Mod)
+#### MODULE Draw [_doc_](https://github.com/io-orig/System/blob/main/Draw.md) [_src_](https://github.com/io-orig/System/blob/main/Draw.Mod)
 
   **imports:** ` Files Fonts Viewers Texts Oberon
 **Procedures:**
@@ -658,7 +658,7 @@ includes: [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod]
 ```
 
 
-#### MODULE GraphicFrames [/doc/](https://github.com/io-orig/System/blob/main/GraphicFrames.md) [/src/](https://github.com/io-orig/System/blob/main/GraphicFrames.Mod)
+#### MODULE GraphicFrames [_doc_](https://github.com/io-orig/System/blob/main/GraphicFrames.md) [_src_](https://github.com/io-orig/System/blob/main/GraphicFrames.Mod)
 
   **imports:** ` SYSTEM Display Viewers Input Fonts Texts Graphics Oberon MenuViewers`
 
@@ -701,7 +701,7 @@ includes: [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod]
 ```
 
 
-#### MODULE GraphTool [/doc/](https://github.com/io-orig/System/blob/main/GraphTool.md) [/src/](https://github.com/io-orig/System/blob/main/GraphTool.Mod)
+#### MODULE GraphTool [_doc_](https://github.com/io-orig/System/blob/main/GraphTool.md) [_src_](https://github.com/io-orig/System/blob/main/GraphTool.Mod)
 
   **imports:** ` Files Texts Oberon`
 
@@ -718,7 +718,7 @@ includes: [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod]
 ```
 
 
-#### MODULE Rectangles [/doc/](https://github.com/io-orig/System/blob/main/Rectangles.md) [/src/](https://github.com/io-orig/System/blob/main/Rectangles.Mod)
+#### MODULE Rectangles [_doc_](https://github.com/io-orig/System/blob/main/Rectangles.md) [_src_](https://github.com/io-orig/System/blob/main/Rectangles.Mod)
 
   **imports:** ` SYSTEM Display Files Input Texts Oberon Graphics GraphicFrames`
 
@@ -731,7 +731,7 @@ includes: [Graphics.Mod](Graphics.Mod) [MacroTool.Mod](MacroTool.Mod) [Draw.Mod]
 ```
 
 
-#### MODULE Curves [/doc/](https://github.com/io-orig/System/blob/main/Curves.md) [/src/](https://github.com/io-orig/System/blob/main/Curves.Mod)
+#### MODULE Curves [_doc_](https://github.com/io-orig/System/blob/main/Curves.md) [_src_](https://github.com/io-orig/System/blob/main/Curves.Mod)
 
   **imports:** ` Display Files Oberon Graphics GraphicFrames`
 
@@ -753,7 +753,7 @@ includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.
 
 
 
-#### MODULE Blink [/doc/](https://github.com/io-orig/System/blob/main/Blink.md) [/src/](https://github.com/io-orig/System/blob/main/Blink.Mod)
+#### MODULE Blink [_doc_](https://github.com/io-orig/System/blob/main/Blink.md) [_src_](https://github.com/io-orig/System/blob/main/Blink.Mod)
 
   **imports:** ` SYSTEM Oberon`
 
@@ -766,7 +766,7 @@ includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.
 ```
 
 
-#### MODULE Math [/doc/](https://github.com/io-orig/System/blob/main/Math.md) [/src/](https://github.com/io-orig/System/blob/main/Math.Mod)
+#### MODULE Math [_doc_](https://github.com/io-orig/System/blob/main/Math.md) [_src_](https://github.com/io-orig/System/blob/main/Math.Mod)
 
 **Procedures:**
 ```
@@ -783,7 +783,7 @@ includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.
 ```
 
 
-#### MODULE RISC [/doc/](https://github.com/io-orig/System/blob/main/RISC.md) [/src/](https://github.com/io-orig/System/blob/main/RISC.Mod)
+#### MODULE RISC [_doc_](https://github.com/io-orig/System/blob/main/RISC.md) [_src_](https://github.com/io-orig/System/blob/main/RISC.Mod)
 
   **imports:** ` SYSTEM Texts Oberon`
 
@@ -794,7 +794,7 @@ includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.
 ```
 
 
-#### MODULE PIO [/doc/](https://github.com/io-orig/System/blob/main/PIO.md) [/src/](https://github.com/io-orig/System/blob/main/PIO.Mod)
+#### MODULE PIO [_doc_](https://github.com/io-orig/System/blob/main/PIO.md) [_src_](https://github.com/io-orig/System/blob/main/PIO.Mod)
 
   **imports:** ` SYSTEM`
 
@@ -809,7 +809,7 @@ includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.
 ```
 
 
-#### MODULE BootLoad [/doc/](https://github.com/io-orig/System/blob/main/BootLoad.md) [/src/](https://github.com/io-orig/System/blob/main/BootLoad.Mod)
+#### MODULE BootLoad [_doc_](https://github.com/io-orig/System/blob/main/BootLoad.md) [_src_](https://github.com/io-orig/System/blob/main/BootLoad.Mod)
 
   **imports:** ` SYSTEM`
 
@@ -818,7 +818,7 @@ includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.
 ```
 
 
-#### MODULE System [/doc/](https://github.com/io-orig/System/blob/main/System.md) [/src/](https://github.com/io-orig/System/blob/main/System.Mod)
+#### MODULE System [_doc_](https://github.com/io-orig/System/blob/main/System.md) [_src_](https://github.com/io-orig/System/blob/main/System.Mod)
 
   **imports:** ` SYSTEM Kernel FileDir Files Modules
 **Procedures:**
@@ -874,7 +874,7 @@ includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.
 ```
 
 
-#### MODULE Tools [/doc/](https://github.com/io-orig/System/blob/main/Tools.md) [/src/](https://github.com/io-orig/System/blob/main/Tools.Mod)
+#### MODULE Tools [_doc_](https://github.com/io-orig/System/blob/main/Tools.md) [_src_](https://github.com/io-orig/System/blob/main/Tools.Mod)
 
   **imports:** ` SYSTEM Kernel Files Modules Input Texts Viewers MenuViewers TextFrames Oberon`
 
@@ -897,7 +897,7 @@ includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.
 ```
 
 
-#### MODULE PCLink1 [/doc/](https://github.com/io-orig/System/blob/main/PCLink1.md) [/src/](https://github.com/io-orig/System/blob/main/PCLink1.Mod)
+#### MODULE PCLink1 [_doc_](https://github.com/io-orig/System/blob/main/PCLink1.md) [_src_](https://github.com/io-orig/System/blob/main/PCLink1.Mod)
 
   **imports:** ` SYSTEM Files Texts Oberon`
 
@@ -910,7 +910,7 @@ includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.
 ```
 
 
-#### MODULE RS232 [/doc/](https://github.com/io-orig/System/blob/main/RS232.md) [/src/](https://github.com/io-orig/System/blob/main/RS232.Mod)
+#### MODULE RS232 [_doc_](https://github.com/io-orig/System/blob/main/RS232.md) [_src_](https://github.com/io-orig/System/blob/main/RS232.Mod)
 
   **imports:** ` SYSTEM`
 
@@ -941,7 +941,7 @@ includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.
 ```
 
 
-#### MODULE Net [/doc/](https://github.com/io-orig/System/blob/main/Net.md) [/src/](https://github.com/io-orig/System/blob/main/Net.Mod)
+#### MODULE Net [_doc_](https://github.com/io-orig/System/blob/main/Net.md) [_src_](https://github.com/io-orig/System/blob/main/Net.Mod)
 
   **imports:** ` SYSTEM SCC Files Viewers Texts TextFrames MenuViewers Oberon`
 
@@ -970,7 +970,7 @@ includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.
 ```
 
 
-#### MODULE SCC [/doc/](https://github.com/io-orig/System/blob/main/SCC.md) [/src/](https://github.com/io-orig/System/blob/main/SCC.Mod)
+#### MODULE SCC [_doc_](https://github.com/io-orig/System/blob/main/SCC.md) [_src_](https://github.com/io-orig/System/blob/main/SCC.Mod)
 
   **imports:** ` SYSTEM Kernel`
 
@@ -993,7 +993,7 @@ includes: [Blink.Mod](Blink.Mod) [Math.Mod](Math.Mod) [RISC.Mod](RISC.Mod) [PIO.
 ```
 
 
-#### MODULE Batch [/doc/](https://github.com/io-orig/System/blob/main/Batch.md) [/src/](https://github.com/io-orig/System/blob/main/Batch.Mod)
+#### MODULE Batch [_doc_](https://github.com/io-orig/System/blob/main/Batch.md) [_src_](https://github.com/io-orig/System/blob/main/Batch.Mod)
 Module Batch provides for automatic sequential execution of Oberon commands.
 
 
@@ -1021,7 +1021,7 @@ includes: [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mo
 
 
 
-#### MODULE ORTool [/doc/](https://github.com/io-orig/System/blob/main/ORTool.md) [/src/](https://github.com/io-orig/System/blob/main/ORTool.Mod)
+#### MODULE ORTool [_doc_](https://github.com/io-orig/System/blob/main/ORTool.md) [_src_](https://github.com/io-orig/System/blob/main/ORTool.Mod)
 
   **imports:** ` SYSTEM Files Texts Oberon ORB`
 
@@ -1034,7 +1034,7 @@ includes: [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mo
 ```
 
 
-#### MODULE ORB [/doc/](https://github.com/io-orig/System/blob/main/ORB.md) [/src/](https://github.com/io-orig/System/blob/main/ORB.Mod)
+#### MODULE ORB [_doc_](https://github.com/io-orig/System/blob/main/ORB.md) [_src_](https://github.com/io-orig/System/blob/main/ORB.Mod)
 
   **imports:** ` Files ORS`
 
@@ -1063,7 +1063,7 @@ includes: [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mo
 ```
 
 
-#### MODULE ORC [/doc/](https://github.com/io-orig/System/blob/main/ORC.md) [/src/](https://github.com/io-orig/System/blob/main/ORC.Mod)
+#### MODULE ORC [_doc_](https://github.com/io-orig/System/blob/main/ORC.md) [_src_](https://github.com/io-orig/System/blob/main/ORC.Mod)
 
   **imports:** ` SYSTEM Files Texts Oberon V24`
 
@@ -1088,7 +1088,7 @@ includes: [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mo
 ```
 
 
-#### MODULE ORG [/doc/](https://github.com/io-orig/System/blob/main/ORG.md) [/src/](https://github.com/io-orig/System/blob/main/ORG.Mod)
+#### MODULE ORG [_doc_](https://github.com/io-orig/System/blob/main/ORG.md) [_src_](https://github.com/io-orig/System/blob/main/ORG.Mod)
 
   **imports:** ` SYSTEM Files ORS ORB`
 
@@ -1259,7 +1259,7 @@ includes: [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mo
 ```
 
 
-#### MODULE ORP [/doc/](https://github.com/io-orig/System/blob/main/ORP.md) [/src/](https://github.com/io-orig/System/blob/main/ORP.Mod)
+#### MODULE ORP [_doc_](https://github.com/io-orig/System/blob/main/ORP.md) [_src_](https://github.com/io-orig/System/blob/main/ORP.Mod)
 
   **imports:** ` Texts Oberon ORS ORB ORG`
 
@@ -1270,7 +1270,7 @@ includes: [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mo
 ```
 
 
-#### MODULE ORS [/doc/](https://github.com/io-orig/System/blob/main/ORS.md) [/src/](https://github.com/io-orig/System/blob/main/ORS.Mod)
+#### MODULE ORS [_doc_](https://github.com/io-orig/System/blob/main/ORS.md) [_src_](https://github.com/io-orig/System/blob/main/ORS.Mod)
 
   **imports:** ` SYSTEM Texts Oberon`
 
@@ -1289,7 +1289,7 @@ includes: [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mo
 ```
 
 
-#### MODULE ODP [/doc/](https://github.com/io-orig/System/blob/main/ODP.md) [/src/](https://github.com/io-orig/System/blob/main/ODP.Mod)
+#### MODULE ODP [_doc_](https://github.com/io-orig/System/blob/main/ODP.md) [_src_](https://github.com/io-orig/System/blob/main/ODP.Mod)
 
   **imports:** ` Texts Oberon ORS ORB ODG`
 
@@ -1300,7 +1300,7 @@ includes: [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mo
 ```
 
 
-#### MODULE ODG [/doc/](https://github.com/io-orig/System/blob/main/ODG.md) [/src/](https://github.com/io-orig/System/blob/main/ODG.Mod)
+#### MODULE ODG [_doc_](https://github.com/io-orig/System/blob/main/ODG.md) [_src_](https://github.com/io-orig/System/blob/main/ODG.Mod)
 
   **imports:** ` SYSTEM Files ORS ORB`
 
@@ -1471,7 +1471,7 @@ includes: [ORTool.Mod](ORTool.Mod) [ORB.Mod](ORB.Mod) [ORC.Mod](ORC.Mod) [ORG.Mo
 ```
 
 
-#### MODULE ORL [/doc/](https://github.com/io-orig/System/blob/main/ORL.md) [/src/](https://github.com/io-orig/System/blob/main/ORL.Mod)
+#### MODULE ORL [_doc_](https://github.com/io-orig/System/blob/main/ORL.md) [_src_](https://github.com/io-orig/System/blob/main/ORL.Mod)
 Module ORL links modules to create bin files that may be placed in the boot sectors of an Oberon disk image
 
 ORL uses SYSTEM, Kernel, Files, Modules, Texts, Oberon
