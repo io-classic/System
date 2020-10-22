@@ -1,9 +1,9 @@
 package,license,version,location
+Kernel,PROJECTOBERON,v5.0.20140204,github.com/io-orig/System
+Files,PROJECTOBERON,v5.0.20130815,github.com/io-orig/System
 Modules,PROJECTOBERON,v5.0.20190108,github.com/io-orig/System
 Oberon,PROJECTOBERON,v5.0.20190117,github.com/io-orig/System
+Edit,PROJECTOBERON,v5.0.20190118,github.com/io-orig/System
+Draw,PROJECTOBERON,v5.0.20180827,github.com/io-orig/System
 System,PROJECTOBERON,v5.0.20160620,github.com/io-orig/System
 Build,PROJECTOBERON,v5.0.20190301,github.com/io-orig/System
-Draw,PROJECTOBERON,v5.0.20180827,github.com/io-orig/System
-Edit,PROJECTOBERON,v5.0.20190118,github.com/io-orig/System
-Files,PROJECTOBERON,v5.0.20130815,github.com/io-orig/System
-Kernel,PROJECTOBERON,v5.0.20140204,github.com/io-orig/System
