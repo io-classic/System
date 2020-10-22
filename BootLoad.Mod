@@ -1,3 +1,11 @@
+(* begin-module-use-description
+Module BootLoad compiles to a binary to be placed in the firmware of a system that will boot to Oberon.
+
+end-module-use-description *)
+
+(*  ORP.Compile @
+    ORX.WriteFile BootLoad.rsc 512 "D:/Verilog/RISC5/prom.mem"~ *)
+
 MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
   IMPORT SYSTEM;
   (* sw0: init SD; sw1: line|disk*)

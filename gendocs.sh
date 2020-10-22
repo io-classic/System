@@ -41,14 +41,15 @@ echo >> README.md
 			echo  >> README.md
 			echo  >> $snam.md
 			awk '/^ *IMPORT/{print}' $snam.Mod | sed -e 's/IMPORT/**imports\:** `/g' | tr -d ',' | sed -e 's/;/`\n/g' >> README.md
-			echo "**Procedures:**" >> README.md
-                        echo '```' >> README.md
-			echo "$snam.Mod" 
-			for p in `grep "PROCEDURE" $snam.Mod | grep '*;\|*(\|* (' | sed -e 's/ *PROCEDURE \(.*\);/\1/g'|tr ' ' '~'`; do
-				echo "  `echo $p | tr '~' ' '`" >> README.md
-			        echo  >> README.md	
-			done
-                        echo '```' >> README.md
+			
+		#	echo "**Procedures:**" >> README.md
+                #        echo '```' >> README.md
+		#	echo "$snam.Mod" 
+		#	for p in `grep "PROCEDURE" $snam.Mod | grep '*;\|*(\|* (' | sed -e 's/ *PROCEDURE \(.*\);/\1/g'|tr ' ' '~'`; do
+		#		echo "  `echo $p | tr '~' ' '`" >> README.md
+		#	        echo  >> README.md	
+		#	done
+                #        echo '```' >> README.md
 
 			awk '/^ *IMPORT/{print}' $snam.Mod | sed -e 's/IMPORT/## Imports\:\n`/g' | tr -d ',' | sed -e 's/;/`\n/g' >> $snam.md
 			awk '/^ *CONST/{f=1;count=1} f{ if(/^ *TYPE/){count--; if(count==0) exit}; print}' $snam.Mod | sed -e 's/^ *CONST/## Constants\:\n```\n/g' >> $snam.md

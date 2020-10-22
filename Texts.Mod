@@ -1,3 +1,7 @@
+(* begin-module-use-description
+Module Texts defines the 'text' abstract data type used pervasively in the Oberon system.
+
+end-module-use-description *)
 MODULE Texts; (*JG 21.11.90 / NW 11.7.90 / 24.12.95 / 22.11.10 / 18.11.2014 / 10.1.2019*)
   IMPORT Files, Fonts;
 

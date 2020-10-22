@@ -1,3 +1,7 @@
+(* begin-module-use-description
+Module Tools provides commands for inspecting memory, disk, etc.
+
+end-module-use-description *)
 MODULE Tools;   (*NW 22.2.2014*)
   IMPORT SYSTEM, Kernel, Files, Modules, Input, Texts, Viewers, MenuViewers, TextFrames, Oberon;
   VAR T: Texts.Text; V: MenuViewers.Viewer; W: Texts.Writer;

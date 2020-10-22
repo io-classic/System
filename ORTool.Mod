@@ -1,3 +1,10 @@
+(* begin-module-use-description
+Module ORTool provides symbol file, module file, and loaded module reporting tools.
+
+ORTool uses SYSTEM, Files, Modules, Texts, Oberon, ORB
+
+
+end-module-use-description *)
 MODULE ORTool;  (*NW 18.2.2013*)
   IMPORT SYSTEM, Files, Texts, Oberon, ORB;
   VAR W: Texts.Writer;

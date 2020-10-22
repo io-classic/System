@@ -1,3 +1,17 @@
+(* begin-module-use-description
+Module ORB manages the symbol table for the Oberon compiler and reads and writes 'smb' files
+
+ORB uses Files, ORS
+
+
+end-module-use-description *)
+(* begin-module-develop-description
+
+(NW 25.6.2014  / AP 4.3.2020 / 5.3.2019  in Oberon-07 / AP 24.4.20 Extended Oberon / CP 10.20 Integrated Oberon)
+
+**ORB** is called from ORP and ORG and tracks the state of identifiers and objects as code compilation progresses.
+
+end-module-develop-description *)
 MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
   IMPORT Files, ORS;
   (*Definition of data types Object and Type, which together form the data structure

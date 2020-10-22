@@ -1,3 +1,7 @@
+(* begin-module-use-description
+Module Net provides for client-server communication in Oberon.
+
+end-module-use-description *)
 MODULE Net; (*NW 3.7.88 / 25.8.91 / PR 7.8.13 / 9.12.13*)
   IMPORT SYSTEM, SCC, Files, Viewers, Texts, TextFrames, MenuViewers, Oberon;
 

@@ -1,3 +1,7 @@
+(* begin-module-use-description
+Module Fonts provides the glyphs used by the Text system and the Graphics system to represent characters.
+
+end-module-use-description *)
 MODULE Fonts; (*JG 18.11.90; PDR 8.6.12; NW 18.1.2019*)
   IMPORT SYSTEM, Files;
 

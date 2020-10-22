@@ -1,3 +1,10 @@
+(* begin-module-use-description
+Module Input reads keyboard and mouse raw data and returns ASCII values and mouse state to Oberon.
+
+Input uses SYSTEM
+
+
+end-module-use-description *)
 MODULE Input; (*NW 5.10.86 / 15.11.90 Ceres-2; PDR 21.4.12 / NW 15.5.2013 Ceres-4*)
 (* Adapted for a customizable framebuffer size -- see git history *)
   IMPORT SYSTEM;

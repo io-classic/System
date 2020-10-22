@@ -1,3 +1,7 @@
+(* begin-module-use-description
+Module SCC provides for wireless communication in RISC Oberon.
+
+end-module-use-description *)
 MODULE SCC; (*NW 13.11.87 / 22.8.90 Ceres-2; nRF24L01+ version PR 21.7.13 / 23.12.13*)
   IMPORT SYSTEM, Kernel;
 

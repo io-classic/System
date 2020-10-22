@@ -1,3 +1,10 @@
+(* begin-module-use-description
+Module MenuViewers implements the top-of-pane 'menu' functionality of the Oberon user interface. 
+
+MenuViewers uses Input, Display, Viewers, Oberon
+
+
+end-module-use-description *)
 MODULE MenuViewers; (*JG 26.8.90 / 16.9.93 / NW 10.3.2013*)
   IMPORT Input, Display, Viewers, Oberon;
 

@@ -1,3 +1,23 @@
+(* begin-module-use-description
+Module Display implements the drawing primitives for the frame buffer device in Oberon.
+
+A pattern is an array of bytes; the first is its width (< 32), the second its height, the rest the raster data.
+
+end-module-use-description *)
+(* begin-module-develop-description
+
+(NW 5.11.2013 / 17.1.2019 / AP 9.3.20 Extended Oberon / CP 10.20 Integrated Oberon)
+
+**Display** is the interface to the hardware framebuffer in Oberon.
+
+On initialization the origial base address is queried for a magic value to determine
+if the base has moved and if the resolution is something other than 1024x768.
+
+Only monochrome screens are implemented in this version of Display.Mod
+
+A pattern is an array of bytes; the first is its width (< 32), the second its height, the rest the raster data.
+
+end-module-develop-description *)
 MODULE Display;  (*NW 5.11.2013 / 17.1.2019*)
 (* Adapted for a customizable framebuffer size -- see git history *)
 

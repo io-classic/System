@@ -1,3 +1,12 @@
+(* begin-package-description
+The Modules package manages the module heap, the loading and unloading of packages, etc.
+
+end-package-description *)
+
+(* begin-module-use-description
+Module Modules is the heart of how separately compiled Oberon programs are loaded and linked.
+
+end-module-use-description *)
 MODULE Modules;  (*Link and load on RISC; NW 20.10.2013 / 8.1.2019*)
   IMPORT SYSTEM, Files;
   CONST versionkey = 1X; MT = 12; DescSize = 80;

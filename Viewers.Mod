@@ -1,3 +1,20 @@
+(* begin-module-use-description
+Module Viewers implements base functionaltiy which may be extended for interacting with a pane or 'Viewer' in Oberon.
+
+end-module-use-description *)
+(* begin-module-develop-description
+
+(JG 14.9.90 / NW 15.9.13 / AP 13.2.20 Extended Oberon)
+
+**Viewers** introduces the core functionality for graphical interaction in Oberon.
+
+Viewers operate on Frames, which are the arrangeable components of User interaction in Oberon.
+
+Viewers coordinate via messages. Extensions of `Viewer` will extend `ViewerMsg` for corresponding functionaltiy.
+
+Extensions of `Viewer` inherit the basic UI functionaltiy declared in this module, including the creation, expansion, closure, focus tracking, etc. of viewers.
+
+end-module-develop-description *)
 MODULE Viewers; (*JG 14.9.90 / NW 15.9.2013*)
   IMPORT Display;
 

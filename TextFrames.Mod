@@ -1,3 +1,7 @@
+(* begin-module-use-description
+Module TextFrames defines the messages and default handlers for text operations in panes in the Oberon user interface.
+
+end-module-use-description *)
 MODULE TextFrames; (*JG 8.10.90 / NW 10.5.2013 / 11.2.2017*)
   IMPORT Modules, Input, Display, Viewers, Fonts, Texts, Oberon, MenuViewers;
 

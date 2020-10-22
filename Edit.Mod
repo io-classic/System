@@ -1,3 +1,26 @@
+(* begin-package-description
+## Package Overview:
+The Edit package provides:
+
+* The 'text' abstraction for manipulating textual content
+* TextFrames for interacting with text via the GUI
+* The Edit tool for interacting with documents
+* The font mechanism in Oberon
+
+## Package Use:
+
+USAGE:
+```
+Edit.Open example.txt
+```
+
+## Modules in this package:
+end-package-description *)
+
+(* begin-module-use-description
+Module Edit provides document editing capability.
+
+end-module-use-description *)
 MODULE Edit; (*JG 2.11.90 / NW 28.11.2015*)
   IMPORT Files, Fonts, Texts, Display, Viewers, Oberon, MenuViewers, TextFrames;
 

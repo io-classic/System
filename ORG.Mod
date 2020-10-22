@@ -1,3 +1,17 @@
+(* begin-module-use-description
+Module ORG generates the processor-specific instructions for executing an Oberon program. 
+
+ORG uses SYSTEM, Files, ORS, ORB
+
+
+end-module-use-description *)
+(* begin-module-develop-description
+
+(N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / AP 1.9.20 Extended Oberon / CP 10.20 Integrated Oberon)
+
+**ORG** is called from ORP and generates machine code various Oberon-2i language constructs for the Oberon RISC5 architeture.
+
+end-module-develop-description *)
 MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC*)
   IMPORT SYSTEM, Files, ORS, ORB;
   (*Code generator for Oberon compiler for RISC processor.
