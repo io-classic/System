@@ -19,6 +19,7 @@
 | [Build](README.md#the-Build-package) | provides the compiler and associated program building and debugging tools for Oberon. |
 |   | [ORP.Mod](ORP.Mod) [ORG.Mod](ORG.Mod) [ORB.Mod](ORB.Mod) [ORS.Mod](ORS.Mod) [ORTool.Mod](ORTool.Mod) [ORC.Mod](ORC.Mod) [ODP.Mod](ODP.Mod) [ODG.Mod](ODG.Mod) [ORL.Mod](ORL.Mod)  |
 
+---
 ## The Kernel Package
 
 ### _Package Overview:_
@@ -40,6 +41,7 @@ Module Kernel provides hardware abstraction for Oberon.
 
   **imports:** ` SYSTEM`
 
+---
 ## The Files Package
 
 ### _Package Overview:_
@@ -73,6 +75,7 @@ Module Files manages the on-disk representation of files and the file api presen
 
   **imports:** ` SYSTEM Kernel FileDir`
 
+---
 ## The Modules Package
 
 ### _Package Overview:_
@@ -94,6 +97,7 @@ Module Modules is the heart of how separately compiled Oberon programs are loade
 
   **imports:** ` SYSTEM Files`
 
+---
 ## The Oberon Package
 
 
@@ -147,6 +151,7 @@ A pattern is an array of bytes; the first is its width (< 32), the second its he
 
   **imports:** ` SYSTEM`
 
+---
 ## The Edit Package
 
 ### _Package Overview:_
@@ -196,6 +201,7 @@ Module Texts defines the 'text' abstract data type used pervasively in the Obero
 
   **imports:** ` Files Fonts`
 
+---
 ## The Draw Package
 
 ### _Package Overview:_
@@ -252,6 +258,7 @@ Module Edit provides document editing capability.
 
   **imports:** ` Display Files Oberon Graphics GraphicFrames`
 
+---
 ## The System Package
 
 ### _Package Overview:_
@@ -350,6 +357,7 @@ Module Batch provides for automatic sequential execution of Oberon commands.
 
   **imports:** ` Kernel FileDir Files Display Texts TextFrames Viewers Oberon`
 
+---
 ## The Build Package
 
 ### _Package Overview:_

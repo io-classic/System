@@ -8,7 +8,7 @@ echo "| ------- | -------- |" >> README.md
 for j in `tail -n +2 Packages.Ndx | awk -F ',' '{print $1}'`; do
 	mods=`grep '^p,' "$j.Pkg" | awk -F',' '{print "["$2"]("$2")"}' | tr '\n' ' ' | sed -e 's/\[\.Mod//g'`
 	pkgdesc=`grep '^doc' "$j.Pkg" | awk -F',' '{print $3}'`
-	echo "| [$j](https://github.com/io-orig/System#$j) | $pkgdesc |" >> README.md
+	echo "| [$j](README.md#the-$j-package) | $pkgdesc |" >> README.md
 	echo "|   | $mods |" >> README.md
 done
 echo >> README.md
@@ -22,11 +22,11 @@ echo >> README.md
 		
 		
                 echo "## The $nam Package" >> README.md
-		echo "This package $pkgdesc" >> README.md
-		echo >> README.md
-	        mods=`grep '^p,' $j | awk -F',' '{print "["$2"]("$2")"}' | tr '\n' ' ' | sed -e 's/\[\.Mod//g'`
-		echo "includes: $mods " >> README.md
-		echo >> README.md
+	#	echo "This package $pkgdesc" >> README.md
+	#	echo >> README.md
+	#        mods=`grep '^p,' $j | awk -F',' '{print "["$2"]("$2")"}' | tr '\n' ' ' | sed -e 's/\[\.Mod//g'`
+	#	echo "includes: $mods " >> README.md
+	#	echo >> README.md
 
 		for l in `grep '^p,' $j | awk -F',' '{print $2}'`; do
 			snam=`echo $l | sed -e 's/\(.*\).Mod/\1/g'`
