@@ -169,7 +169,7 @@ USAGE:
 Edit.Open example.txt
 ```
 
-### Modules in this package:_
+### _Modules in this package:_
 
 #### Edit.Mod [_doc_](https://github.com/io-orig/System/blob/main/Edit.md) [_src_](https://github.com/io-orig/System/blob/main/Edit.Mod)
 Module Edit provides document editing capability.
@@ -215,7 +215,7 @@ USAGE:
 Draw.Open example.x
 ```
 
-### Modules in this package:_
+### _Modules in this package:_
 
 #### Draw.Mod [_doc_](https://github.com/io-orig/System/blob/main/Draw.md) [_src_](https://github.com/io-orig/System/blob/main/Draw.Mod)
 Module Edit provides document editing capability.

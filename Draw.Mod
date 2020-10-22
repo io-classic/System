@@ -10,7 +10,7 @@ USAGE:
 Draw.Open example.x
 ```
 
-### Modules in this package:_
+### _Modules in this package:_
 end-package-description *)
 
 (* begin-module-use-description
