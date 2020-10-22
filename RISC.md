@@ -1,5 +1,5 @@
 
-## [MODULE RISC](https://github.com/io-core/System/blob/main/RISC.Mod)
+## [MODULE RISC](https://github.com/io-core/Extras/blob/main/RISC.Mod)
 
   ## Imports:
 ` SYSTEM Texts Oberon`

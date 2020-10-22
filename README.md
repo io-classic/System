@@ -15,9 +15,11 @@
 | [Draw](README.md#the-Draw-package) | provides line-oriented drawing primitives and a vector drawing tool. |
 |   | [Draw.Mod](README.md#DrawMod-doc-src) [Graphics.Mod](README.md#GraphicsMod-doc-src) [MacroTool.Mod](README.md#MacroToolMod-doc-src) [GraphicFrames.Mod](README.md#GraphicFramesMod-doc-src) [GraphTool.Mod](README.md#GraphToolMod-doc-src) [Rectangles.Mod](README.md#RectanglesMod-doc-src) [Curves.Mod](README.md#CurvesMod-doc-src)  |
 | [System](README.md#the-System-package) | prepares the user interface and manages viewers for the user. |
-|   | [System.Mod](README.md#SystemMod-doc-src) [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [BootLoad.Mod](README.md#BootLoadMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  |
+|   | [System.Mod](README.md#SystemMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  |
 | [Build](README.md#the-Build-package) | provides the compiler and associated program building and debugging tools for Oberon. |
 |   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORL.Mod](README.md#ORLMod-doc-src)  |
+| [Extras](README.md#the-Extras-package) | contains extra modules demonstrating Oberon. |
+|   | [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [Sierpinski.Mod](README.md#SierpinskiMod-doc-src) [Hilbert.Mod](README.md#HilbertMod-doc-src) [Checkers.Mod](README.md#CheckersMod-doc-src) [BootLoad.Mod](README.md#BootLoadMod-doc-src)  |
 
 ---
 ## The Kernel Package
@@ -266,7 +268,7 @@ Module Edit provides document editing capability.
 
 ---
 ## The System Package
-includes: [System.Mod](README.md#SystemMod-doc-src) [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [BootLoad.Mod](README.md#BootLoadMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  
+includes: [System.Mod](README.md#SystemMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  
 
 ### _Package Overview:_
 The System package collects the expected set of modules and tools that allows the Oberon user to perform typical computing tasks.
@@ -282,34 +284,8 @@ Module System presents the Oberon user with tools and commands for interacting D
   **imports:** ` SYSTEM Kernel FileDir Files Modules
 
 
-#### Blink.Mod [_doc_](https://github.com/io-orig/System/blob/main/Blink.md) [_src_](https://github.com/io-orig/System/blob/main/Blink.Mod)
-
-  **imports:** ` SYSTEM Oberon`
-
-
-
-#### Math.Mod [_doc_](https://github.com/io-orig/System/blob/main/Math.md) [_src_](https://github.com/io-orig/System/blob/main/Math.Mod)
-Module Math provides standard math functions in Oberon.
-
-
-
-
-#### RISC.Mod [_doc_](https://github.com/io-orig/System/blob/main/RISC.md) [_src_](https://github.com/io-orig/System/blob/main/RISC.Mod)
-
-  **imports:** ` SYSTEM Texts Oberon`
-
-
-
 #### PIO.Mod [_doc_](https://github.com/io-orig/System/blob/main/PIO.md) [_src_](https://github.com/io-orig/System/blob/main/PIO.Mod)
 Module PIO implements PIC input/output for RISC Oberon.
-
-
-  **imports:** ` SYSTEM`
-
-
-
-#### BootLoad.Mod [_doc_](https://github.com/io-orig/System/blob/main/BootLoad.md) [_src_](https://github.com/io-orig/System/blob/main/BootLoad.Mod)
-Module BootLoad compiles to a binary to be placed in the firmware of a system that will boot to Oberon.
 
 
   **imports:** ` SYSTEM`
@@ -495,4 +471,66 @@ ORL uses SYSTEM, Kernel, Files, Modules, Texts, Oberon
 
 
   **imports:** ` SYSTEM Kernel Files Modules Texts Oberon`
+
+---
+## The Extras Package
+includes: [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [Sierpinski.Mod](README.md#SierpinskiMod-doc-src) [Hilbert.Mod](README.md#HilbertMod-doc-src) [Checkers.Mod](README.md#CheckersMod-doc-src) [BootLoad.Mod](README.md#BootLoadMod-doc-src)  
+
+### _Package Overview:_
+The Extras package provides:
+
+Example modules demonstrating the use of Oberon.
+
+### _Package Use:_
+
+USAGE:
+```
+Blink.Run
+```
+
+### _Modules in this package:_
+
+#### Blink.Mod [_doc_](https://github.com/io-orig/System/blob/main/Blink.md) [_src_](https://github.com/io-orig/System/blob/main/Blink.Mod)
+Module Edit provides document editing capability.
+
+
+  **imports:** ` SYSTEM Oberon`
+
+
+
+#### Math.Mod [_doc_](https://github.com/io-orig/System/blob/main/Math.md) [_src_](https://github.com/io-orig/System/blob/main/Math.Mod)
+Module Math provides standard math functions in Oberon.
+
+
+
+
+#### RISC.Mod [_doc_](https://github.com/io-orig/System/blob/main/RISC.md) [_src_](https://github.com/io-orig/System/blob/main/RISC.Mod)
+
+  **imports:** ` SYSTEM Texts Oberon`
+
+
+
+#### Sierpinski.Mod [_doc_](https://github.com/io-orig/System/blob/main/Sierpinski.md) [_src_](https://github.com/io-orig/System/blob/main/Sierpinski.Mod)
+
+  **imports:** ` Display Viewers Oberon MenuViewers TextFrames`
+
+
+
+#### Hilbert.Mod [_doc_](https://github.com/io-orig/System/blob/main/Hilbert.md) [_src_](https://github.com/io-orig/System/blob/main/Hilbert.Mod)
+
+  **imports:** ` Display Viewers Texts Oberon MenuViewers TextFrames`
+
+
+
+#### Checkers.Mod [_doc_](https://github.com/io-orig/System/blob/main/Checkers.md) [_src_](https://github.com/io-orig/System/blob/main/Checkers.Mod)
+
+  **imports:** ` SYSTEM Display Viewers Oberon MenuViewers TextFrames`
+
+
+
+#### BootLoad.Mod [_doc_](https://github.com/io-orig/System/blob/main/BootLoad.md) [_src_](https://github.com/io-orig/System/blob/main/BootLoad.Mod)
+Module BootLoad compiles to a binary to be placed in the firmware of a system that will boot to Oberon.
+
+
+  **imports:** ` SYSTEM`
 

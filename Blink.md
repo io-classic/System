@@ -1,5 +1,5 @@
 
-## [MODULE Blink](https://github.com/io-core/System/blob/main/Blink.Mod)
+## [MODULE Blink](https://github.com/io-core/Extras/blob/main/Blink.Mod)
 
   ## Imports:
 ` SYSTEM Oberon`
@@ -19,11 +19,11 @@
 ## Procedures:
 ---
 
-`  PROCEDURE Run*;` [(source)](https://github.com/io-orig/System/blob/main/Blink.Mod#L6)
+`  PROCEDURE Run*;` [(source)](https://github.com/io-orig/System/blob/main/Blink.Mod#L26)
 
 
-`  PROCEDURE Stop*;` [(source)](https://github.com/io-orig/System/blob/main/Blink.Mod#L10)
+`  PROCEDURE Stop*;` [(source)](https://github.com/io-orig/System/blob/main/Blink.Mod#L30)
 
 
-`  PROCEDURE Tick;` [(source)](https://github.com/io-orig/System/blob/main/Blink.Mod#L14)
+`  PROCEDURE Tick;` [(source)](https://github.com/io-orig/System/blob/main/Blink.Mod#L34)
 

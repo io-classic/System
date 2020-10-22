@@ -1,0 +1,18 @@
+k,v1,v2
+package,System,v5.0.20160620
+from,github.com/io-core,
+license,PROJECTOBERON,NW PR JG
+doc,core,contains extra modules demonstrating Oberon.
+r,[core]/Kernel,v5.0.0
+r,[core]/Files,v5.0.0
+r,[core]/Modules,v5.0.0
+r,[core]/Oberon,v5.0.0
+r,[core]/Edit,v5.0.0
+r,[core]/Draw,v5.0.0
+p,Blink.Mod,5f8cc22f2e08a93fde241085fb76d187b84bbf9d2ef30aee9a64fd158a0a635b
+p,Math.Mod,aa1a5c2441053298408b0d2844e29470274860cb53b187b7a96eea8df262f014
+p,RISC.Mod,f4c2902238b46708cf2de5d80b148b74e75825c04994b02b04d6451f500d8e91
+p,Sierpinski.Mod,
+p,Hilbert.Mod,
+p,Checkers.Mod,
+p,BootLoad.Mod,6ac54523f2f3096cdf569fc5b76dd6e8e09496fe8389070bb83506d265fefbec
