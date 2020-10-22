@@ -2,47 +2,14 @@
 
 | Package | Includes |
 | ------- | -------- |
-| [Kernel](https://github.com/io-orig/System#Kernel) | Kernel.Mod |
-| [Files](https://github.com/io-orig/System#Files) | FileDir.Mod
-Files.Mod |
-| [Modules](https://github.com/io-orig/System#Modules) | Modules.Mod |
-| [Oberon](https://github.com/io-orig/System#Oberon) | MenuViewers.Mod
-Oberon.Mod
-Input.Mod
-Display.Mod
-Viewers.Mod |
-| [Edit](https://github.com/io-orig/System#Edit) | Edit.Mod
-Fonts.Mod
-TextFrames.Mod
-Texts.Mod |
-| [Draw](https://github.com/io-orig/System#Draw) | Graphics.Mod
-MacroTool.Mod
-Draw.Mod
-GraphicFrames.Mod
-GraphTool.Mod
-Rectangles.Mod
-Curves.Mod |
-| [System](https://github.com/io-orig/System#System) | Blink.Mod
-Math.Mod
-RISC.Mod
-PIO.Mod
-BootLoad.Mod
-System.Mod
-Tools.Mod
-PCLink1.Mod
-RS232.Mod
-Net.Mod
-SCC.Mod
-Batch.Mod |
-| [Build](https://github.com/io-orig/System#Build) | ORTool.Mod
-ORB.Mod
-ORC.Mod
-ORG.Mod
-ORP.Mod
-ORS.Mod
-ODP.Mod
-ODG.Mod
-ORL.Mod |
+| [Kernel](https://github.com/io-orig/System#Kernel) | Kernel.Mod  |
+| [Files](https://github.com/io-orig/System#Files) | FileDir.Mod Files.Mod  |
+| [Modules](https://github.com/io-orig/System#Modules) | Modules.Mod  |
+| [Oberon](https://github.com/io-orig/System#Oberon) | MenuViewers.Mod Oberon.Mod Input.Mod Display.Mod Viewers.Mod  |
+| [Edit](https://github.com/io-orig/System#Edit) | Edit.Mod Fonts.Mod TextFrames.Mod Texts.Mod  |
+| [Draw](https://github.com/io-orig/System#Draw) | Graphics.Mod MacroTool.Mod Draw.Mod GraphicFrames.Mod GraphTool.Mod Rectangles.Mod Curves.Mod  |
+| [System](https://github.com/io-orig/System#System) | Blink.Mod Math.Mod RISC.Mod PIO.Mod BootLoad.Mod System.Mod Tools.Mod PCLink1.Mod RS232.Mod Net.Mod SCC.Mod Batch.Mod  |
+| [Build](https://github.com/io-orig/System#Build) | ORTool.Mod ORB.Mod ORC.Mod ORG.Mod ORP.Mod ORS.Mod ODP.Mod ODG.Mod ORL.Mod  |
 
 ## Kernel
 Package handles basic os functionality including device access and garbage collection.
