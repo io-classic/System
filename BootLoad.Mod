@@ -2,20 +2,32 @@
 Module BootLoad compiles to a binary to be placed in the firmware of a system that will boot to Oberon.
 
 end-module-use-description *)
+(* begin-module-develop-description
 
-(*  ORP.Compile @
-    ORX.WriteFile BootLoad.rsc 512 "D:/Verilog/RISC5/prom.mem"~ *)
+(NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line)
 
+    ORP.Compile @
+    ORX.WriteFile BootLoad.rsc 512 "D:/Verilog/RISC5/prom.mem"~ 
+
+end-module-develop-description *)
 MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
   IMPORT SYSTEM;
   (* sw0: init SD; sw1: line|disk*)
-  CONST MT = 12; SP = 14; LNK = 15;
+  CONST 
+    MT = 12; SP = 14; LNK = 15;
     MTOrg = 20H; MemLim = 0E7EF0H; stackOrg = 80000H;
     swi = -60; led = -60; rsData = -56; rsCtrl = -52;
     spiData = -48; spiCtrl = -44;
     CARD0 = 1; SPIFAST = 4;
     FSoffset = 80000H;   (*block offset*)
+  TYPE
 
+  VAR
+
+  (* begin-procedure-description
+---
+**RecInt** get a 32-bit binary value from the serial line.
+  end-procedure-description *)
   PROCEDURE RecInt(VAR x: INTEGER);
     VAR z, y, i: INTEGER;
   BEGIN z := 0;  i := 4;
@@ -26,6 +38,10 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
     x := z
   END RecInt;
 
+  (* begin-procedure-description
+---
+**LoadFromLine** Load the binary image of the inner core of Oberon from the serial line.
+  end-procedure-description *)
   PROCEDURE LoadFromLine;
     VAR len, adr, dat: INTEGER;
   BEGIN RecInt(len);
@@ -36,8 +52,14 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
     END
   END LoadFromLine;
 
-(* ---------- disk ------------*)
+  (* begin-section-description
+## ---------- disk
+  end-section-description *)
 
+  (* begin-procedure-description
+---
+**SPIIdle** send n FFs slowly with no card selected.
+  end-procedure-description *)
   PROCEDURE SPIIdle(n: INTEGER); (*send n FFs slowly with no card selected*)
   BEGIN SYSTEM.PUT(spiCtrl, 0);
     WHILE n > 0 DO DEC(n); SYSTEM.PUT(spiData, -1);
@@ -45,11 +67,19 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
     END
   END SPIIdle;
 
+  (* begin-procedure-description
+---
+**SPI** send&rcv byte slowly with card selected.
+  end-procedure-description *)
   PROCEDURE SPI(n: INTEGER); (*send&rcv byte slowly with card selected*)
   BEGIN SYSTEM.PUT(spiCtrl, CARD0); SYSTEM.PUT(spiData, n);
     REPEAT UNTIL SYSTEM.BIT(spiCtrl, 0)
   END SPI;
 
+  (* begin-procedure-description
+---
+**SPICmd** Send an SPI command.
+  end-procedure-description *)
   PROCEDURE SPICmd(n, arg: INTEGER);
     VAR i, data, crc: INTEGER;
   BEGIN (*send cmd*)
@@ -62,6 +92,10 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
     REPEAT SPI(255); SYSTEM.GET(spiData, data); DEC(i) UNTIL (data < 80H) OR (i = 0)
   END SPICmd;
 
+  (* begin-procedure-description
+---
+**InitSPI** Initialize the SPI interface.
+  end-procedure-description *)
   PROCEDURE InitSPI;
     VAR res, data: INTEGER;
   BEGIN SPIIdle(9); (*first, idle for at least 80 clks*)
@@ -79,6 +113,10 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
     SPICmd(16, 512); SPIIdle(1)
   END InitSPI;
 
+  (* begin-procedure-description
+---
+**SDShift** Interrogate SPI card.
+  end-procedure-description *)
   PROCEDURE SDShift(VAR n: INTEGER);
     VAR data: INTEGER;
   BEGIN SPICmd(58, 0);  (*CMD58 get card capacity bit*)
@@ -87,6 +125,10 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
     SPI(-1); SPI(-1); SPIIdle(1)  (*flush response*)
   END SDShift;
 
+  (* begin-procedure-description
+---
+**ReadSD** Retrieve one block from the SD card via SPI.
+  end-procedure-description *)
   PROCEDURE ReadSD(src, dst: INTEGER);
     VAR i, data: INTEGER;
   BEGIN SDShift(src); SPICmd(17, src); (*CMD17 read one block*)
@@ -101,6 +143,10 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
     SPI(255); SPI(255); SPIIdle(1) (*may be a checksum; deselect card*)
   END ReadSD;
 
+  (* begin-procedure-description
+---
+**LoadFromDisk** Retreive the Innner Core of Oberon from the SD Card.
+  end-procedure-description *)
   PROCEDURE LoadFromDisk;
     VAR src, dst, adr, lim: INTEGER;
   BEGIN src := FSoffset + 4;   (*start at boot block*)
@@ -109,6 +155,12 @@ MODULE* BootLoad;  (*NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line*)
     WHILE dst < lim DO ReadSD(src, dst); INC(src); INC(dst, 512) END
   END LoadFromDisk;
 
+  (* begin-procedure-description
+---
+**The initialzation code for this module** sets the stack and Module table origin, 
+calls the appropriate Load routine, then places the MemoryLimit, and stackOrg in memory for Oberon to find and jumps to the start of memory.
+
+  end-procedure-description *)
 BEGIN SYSTEM.LDREG(SP, stackOrg); SYSTEM.LDREG(MT, MTOrg);
   IF SYSTEM.REG(LNK) = 0 THEN (*cold start*)
     LED(80H); InitSPI;
