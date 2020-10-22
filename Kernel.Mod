@@ -1,12 +1,11 @@
 (* begin-package-description
 ### _Package Overview:_
 The Kernel package manages:
-* Memory use by the shared Oberon heap including garbage collection
-* Reading and writing to SD Card 512-byte blocks
-* Allocating, Deallocating, Reading and Writing 1024-byte sectors on the SD card
-* Setting and checking the time and the clock
-* Setting the trap handler and dispatching traps.
-
+* Loading the Oberon inner core from the SDcard or the serial line
+* Shared Oberon Heap including Garbage Collection
+* Disk IO including the sector bitmap
+* Time
+* Trap handler setting and dispatch
 ### _Package Use:_
 
 USAGE:
@@ -18,7 +17,12 @@ Kernel.Collect
 end-package-description *)
 
 (* begin-module-use-description
-Module Kernel provides hardware abstraction for Oberon.
+Module Kernel handles:
+* Memory use by the shared Oberon heap including garbage collection
+* Reading and writing to SD Card 512-byte blocks
+* Allocating, Deallocating, Reading and Writing 1024-byte sectors on the SD card
+* Setting and checking the time and the clock
+* Setting the trap handler and dispatching traps.
 
 end-module-use-description *)
 MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
