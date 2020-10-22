@@ -1,13 +1,13 @@
 # Packages
 
-*  Kernel
-*  Files
-*  Modules
-*  Oberon
-*  Edit
-*  Draw
-*  System
-*  Build
+*  [Kernel](https://github.com/io-orig/System#Kernel)
+*  [Files](https://github.com/io-orig/System#Files)
+*  [Modules](https://github.com/io-orig/System#Modules)
+*  [Oberon](https://github.com/io-orig/System#Oberon)
+*  [Edit](https://github.com/io-orig/System#Edit)
+*  [Draw](https://github.com/io-orig/System#Draw)
+*  [System](https://github.com/io-orig/System#System)
+*  [Build](https://github.com/io-orig/System#Build)
 
 ## Kernel
 Package handles basic os functionality including device access and garbage collection.
