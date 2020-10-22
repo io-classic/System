@@ -21,6 +21,7 @@
 
 ---
 ## The Kernel Package
+includes: [Kernel.Mod](README.md#KernelMod-doc-src)  
 
 ### _Package Overview:_
 The Kernel package abstracts the hardware of the computing platform for the rest of Oberon.
@@ -43,6 +44,7 @@ Module Kernel provides hardware abstraction for Oberon.
 
 ---
 ## The Files Package
+includes: [FileDir.Mod](README.md#FileDirMod-doc-src) [Files.Mod](README.md#FilesMod-doc-src)  
 
 ### _Package Overview:_
 The Files package provides:
@@ -77,6 +79,7 @@ Module Files manages the on-disk representation of files and the file api presen
 
 ---
 ## The Modules Package
+includes: [Modules.Mod](README.md#ModulesMod-doc-src)  
 
 ### _Package Overview:_
 The Modules package manages the module heap, the loading and unloading of packages, etc.
@@ -99,6 +102,7 @@ Module Modules is the heart of how separately compiled Oberon programs are loade
 
 ---
 ## The Oberon Package
+includes: [Oberon.Mod](README.md#OberonMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [Viewers.Mod](README.md#ViewersMod-doc-src) [Input.Mod](README.md#InputMod-doc-src) [Display.Mod](README.md#DisplayMod-doc-src)  
 
 
 #### Oberon.Mod [_doc_](https://github.com/io-orig/System/blob/main/Oberon.md) [_src_](https://github.com/io-orig/System/blob/main/Oberon.Mod)
@@ -153,6 +157,7 @@ A pattern is an array of bytes; the first is its width (< 32), the second its he
 
 ---
 ## The Edit Package
+includes: [Edit.Mod](README.md#EditMod-doc-src) [Fonts.Mod](README.md#FontsMod-doc-src) [TextFrames.Mod](README.md#TextFramesMod-doc-src) [Texts.Mod](README.md#TextsMod-doc-src)  
 
 ### _Package Overview:_
 The Edit package provides:
@@ -203,6 +208,7 @@ Module Texts defines the 'text' abstract data type used pervasively in the Obero
 
 ---
 ## The Draw Package
+includes: [Draw.Mod](README.md#DrawMod-doc-src) [Graphics.Mod](README.md#GraphicsMod-doc-src) [MacroTool.Mod](README.md#MacroToolMod-doc-src) [GraphicFrames.Mod](README.md#GraphicFramesMod-doc-src) [GraphTool.Mod](README.md#GraphToolMod-doc-src) [Rectangles.Mod](README.md#RectanglesMod-doc-src) [Curves.Mod](README.md#CurvesMod-doc-src)  
 
 ### _Package Overview:_
 The Draw package provides:
@@ -260,6 +266,7 @@ Module Edit provides document editing capability.
 
 ---
 ## The System Package
+includes: [System.Mod](README.md#SystemMod-doc-src) [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [BootLoad.Mod](README.md#BootLoadMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  
 
 ### _Package Overview:_
 The System package collects the expected set of modules and tools that allows the Oberon user to perform typical computing tasks.
@@ -359,6 +366,7 @@ Module Batch provides for automatic sequential execution of Oberon commands.
 
 ---
 ## The Build Package
+includes: [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORL.Mod](README.md#ORLMod-doc-src)  
 
 ### _Package Overview:_
 Integrated Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
