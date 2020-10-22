@@ -3,8 +3,8 @@
 
 (NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line)
 
-    ORP.Compile @
-    ORX.WriteFile BootLoad.rsc 512 "D:/Verilog/RISC5/prom.mem"~ 
+    ORP.Compile BootLoad.Mod ~
+    ORF.WriteFile BootLoad.rsc prom.mem ~ 
 
 
   ## Imports:
@@ -36,48 +36,48 @@
 ---
 **RecInt** gets a 32-bit binary value from the serial line.
 
-`  PROCEDURE RecInt(VAR x: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L35)
+`  PROCEDURE RecInt(VAR x: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L38)
 
 ---
 **LoadFromLine** Loads the binary image of the inner core of Oberon from the serial line.
 
-`  PROCEDURE LoadFromLine;` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L49)
+`  PROCEDURE LoadFromLine;` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L52)
 
 ## ---------- Boot Via SPI SD Card
 ---
 **SPIIdle** sends n FFs slowly with no card selected.
 
-`  PROCEDURE SPIIdle(n: INTEGER); (*send n FFs slowly with no card selected*)` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L67)
+`  PROCEDURE SPIIdle(n: INTEGER); (*send n FFs slowly with no card selected*)` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L70)
 
 ---
 **SPI** Delivers a value to SPI data on CARD0 and waits for acceptance.
 
-`  PROCEDURE SPI(n: INTEGER); (*send&rcv byte slowly with card selected*)` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L78)
+`  PROCEDURE SPI(n: INTEGER); (*send&rcv byte slowly with card selected*)` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L81)
 
 ---
 **SPICmd** Synchronously ends an SPI command and its argument.
 
-`  PROCEDURE SPICmd(n, arg: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L87)
+`  PROCEDURE SPICmd(n, arg: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L90)
 
 ---
 **InitSPI** Initializes the SPI interface.
 
-`  PROCEDURE InitSPI;` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L103)
+`  PROCEDURE InitSPI;` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L106)
 
 ---
 **SDShift** Interrogates an SPI storage card.
 
-`  PROCEDURE SDShift(VAR n: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L124)
+`  PROCEDURE SDShift(VAR n: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L127)
 
 ---
 **ReadSD** Retrieves one block from the SD card via SPI.
 
-`  PROCEDURE ReadSD(src, dst: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L136)
+`  PROCEDURE ReadSD(src, dst: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L139)
 
 ---
 **LoadFromDisk** Retreives the Innner Core of Oberon from the SD Card.
 
-`  PROCEDURE LoadFromDisk;` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L154)
+`  PROCEDURE LoadFromDisk;` [(source)](https://github.com/io-orig/System/blob/main/BootLoad.Mod#L157)
 
 ---
 **The initialzation code for this module** sets the stack and Module table origin, 

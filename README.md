@@ -47,7 +47,10 @@ Module Kernel provides hardware abstraction for Oberon.
 
 
 #### BootLoad.Mod [_doc_](https://github.com/io-orig/System/blob/main/BootLoad.md) [_src_](https://github.com/io-orig/System/blob/main/BootLoad.Mod)
-Module BootLoad compiles to a binary to be placed in the firmware of a system that will boot to Oberon.
+Module BootLoad is the firmware for the RISC Oberon platform.
+
+    ORP.Compile BootLoad.Mod ~
+    ORF.WriteFile BootLoad.rsc prom.mem ~                      
 
 
   **imports:** ` SYSTEM`
