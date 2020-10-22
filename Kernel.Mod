@@ -1,7 +1,11 @@
 (* begin-package-description
 ### _Package Overview:_
-The Kernel package abstracts the hardware of the computing platform for the rest of Oberon.
-
+The Kernel package manages:
+* Memory use by the shared Oberon heap including garbage collection
+* Reading and writing to SD Card 512-byte blocks
+* Allocating, Deallocating, Reading and Writing 1024-byte sectors on the SD card
+* Setting and checking the time and the clock
+* Setting the trap handler and dispatching traps.
 
 ### _Package Use:_
 
@@ -19,24 +23,34 @@ Module Kernel provides hardware abstraction for Oberon.
 end-module-use-description *)
 MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
   IMPORT SYSTEM;
-  CONST SectorLength* = 1024;
+
+  CONST 
+    SectorLength* = 1024;
     timer = -64; spiData = -48; spiCtrl = -44;
     CARD0 = 1; SPIFAST = 4;
     FSoffset = 80000H; (*256MB in 512-byte blocks*)
     mapsize = 10000H; (*1K sectors, 64MB*)
 
-  TYPE Sector* = ARRAY SectorLength OF BYTE;
+  TYPE 
+    Sector* = ARRAY SectorLength OF BYTE;
 
-  VAR allocated*, NofSectors*: INTEGER;
+  VAR 
+    allocated*, NofSectors*: INTEGER;
     heapOrg*, heapLim*: INTEGER; 
     stackOrg* ,  stackSize*, MemLim*: INTEGER;
     clock: INTEGER;
     list0, list1, list2, list3: INTEGER;  (*lists of free blocks of size n*256, 128, 64, 32 bytes*)
     data: INTEGER; (*SPI data in*)
     sectorMap: ARRAY mapsize DIV 32 OF SET;
-    
-(* ---------- New: heap allocation ----------*)
 
+  (* begin-section-description
+## ---------- Heap Allocation
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**GetBlock** gets a block from the heap of a regular size. 
+  end-procedure-description *)
   PROCEDURE GetBlock(VAR p: LONGINT; len: LONGINT);
     (*len is multiple of 256*)
     VAR q0, q1, q2, size: LONGINT; done: BOOLEAN;
@@ -56,6 +70,10 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     IF ~done THEN p := 0 END
   END GetBlock;
 
+  (* begin-procedure-description
+---
+**GetBlock128** gets a 128-byte block from the heap.
+  end-procedure-description *)
   PROCEDURE GetBlock128(VAR p: LONGINT);
     VAR q: LONGINT;
   BEGIN
@@ -65,6 +83,10 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     END
   END GetBlock128;
 
+  (* begin-procedure-description
+---
+**GetBlock64** gets a 64-byte block from the heap. 
+  end-procedure-description *)
   PROCEDURE GetBlock64(VAR p: LONGINT);
     VAR q: LONGINT;
   BEGIN
@@ -74,6 +96,10 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     END
   END GetBlock64;
 
+  (* begin-procedure-description
+---
+**GetBlock32** gets a 32-byte block from the heap.
+  end-procedure-description *)
   PROCEDURE GetBlock32(VAR p: LONGINT);
     VAR q: LONGINT;
   BEGIN
@@ -83,6 +109,10 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     END
   END GetBlock32;
 
+  (* begin-procedure-description
+---
+**New** gets an appropriate block from the heap to hold a new object and initializes it to zero. 
+  end-procedure-description *)
    PROCEDURE New*(VAR ptr: LONGINT; tag: LONGINT);
     (*called by NEW via MT[0]; ptr and tag are pointers*)
     VAR p, size, lim: LONGINT;
@@ -98,8 +128,14 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     END
   END New;
 
-(* ---------- Garbage collector ----------*)
+  (* begin-section-description
+## ---------- Garbage Collection
+  end-section-description *)
 
+  (* begin-procedure-description
+---
+**Mark** traverses the heap from roots, identifying live objects. 
+  end-procedure-description *)
   PROCEDURE Mark*(pref: LONGINT);
     VAR pvadr, offadr, offset, tag, p, q, r: LONGINT;
   BEGIN SYSTEM.GET(pref, pvadr); (*pointers < heapOrg considered NIL*)
@@ -121,6 +157,10 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     END
   END Mark;
 
+  (* begin-procedure-description
+---
+**Scan** traverses the heap de-allocating unreachable objects. 
+  end-procedure-description *)
   PROCEDURE Scan*;
     VAR p, q, mark, tag, size: LONGINT;
   BEGIN p := heapOrg;
@@ -149,8 +189,14 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     UNTIL p >= heapLim
   END Scan;
 
-(* ---------- Disk storage management ----------*)
+  (* begin-section-description
+## ---------- SPI Block Operations (see also BootLoad.Mod for the same procedures)
+  end-section-description *)
 
+  (* begin-procedure-description
+---
+**SPIIdle** 
+  end-procedure-description *)
   PROCEDURE SPIIdle(n: INTEGER); (*send n FFs slowly with no card selected*)
   BEGIN SYSTEM.PUT(spiCtrl, 0);
     WHILE n > 0 DO DEC(n); SYSTEM.PUT(spiData, -1);
@@ -159,12 +205,20 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     END
   END SPIIdle;
 
+  (* begin-procedure-description
+---
+**SPI** 
+  end-procedure-description *)
   PROCEDURE SPI(n: INTEGER); (*send&rcv byte slowly with card selected*)
   BEGIN SYSTEM.PUT(spiCtrl, CARD0); SYSTEM.PUT(spiData, n);
     REPEAT UNTIL SYSTEM.BIT(spiCtrl, 0);
     SYSTEM.GET(spiData, data)
   END SPI;
 
+  (* begin-procedure-description
+---
+**SPICmd** 
+  end-procedure-description *)
   PROCEDURE SPICmd(n, arg: INTEGER);
     VAR i, crc: INTEGER;
   BEGIN (*send cmd*)
@@ -177,6 +231,10 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     REPEAT SPI(255); DEC(i) UNTIL (data < 80H) OR (i = 0)
   END SPICmd;
 
+  (* begin-procedure-description
+---
+**SDShift** 
+  end-procedure-description *)
   PROCEDURE SDShift(VAR n: INTEGER);
     VAR data: INTEGER;
   BEGIN SPICmd(58, 0);  (*CMD58 get card capacity bit*)
@@ -185,6 +243,10 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     SPI(-1); SPI(-1); SPIIdle(1)  (*flush response*)
   END SDShift;
 
+  (* begin-procedure-description
+---
+**ReadSD** 
+  end-procedure-description *)
   PROCEDURE ReadSD(src, dst: INTEGER);
     VAR i: INTEGER;
   BEGIN SDShift(src); SPICmd(17, src); ASSERT(data = 0); (*CMD17 read one block*)
@@ -199,6 +261,10 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     SPI(255); SPI(255); SPIIdle(1) (*may be a checksum; deselect card*)
   END ReadSD;
 
+  (* begin-procedure-description
+---
+**WriteSD** 
+  end-procedure-description *)
   PROCEDURE WriteSD(dst, src: INTEGER);
     VAR i, n: INTEGER; x: BYTE;
   BEGIN SDShift(dst); SPICmd(24, dst); ASSERT(data = 0); (*CMD24 write one block*)
@@ -213,22 +279,42 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     ASSERT(data MOD 32 = 5); SPIIdle(1) (*deselect card*)
   END WriteSD;
 
+  (* begin-section-description
+## ---------- Disk Sector Operations
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**InitSecMap** 
+  end-procedure-description *)
   PROCEDURE InitSecMap*;
     VAR i: INTEGER;
   BEGIN NofSectors := 0; sectorMap[0] := {0 .. 31}; sectorMap[1] := {0 .. 31};
     FOR i := 2 TO mapsize DIV 32 - 1 DO sectorMap[i] := {} END
   END InitSecMap;
 
+  (* begin-procedure-description
+---
+**MarkSector** 
+  end-procedure-description *)
   PROCEDURE MarkSector*(sec: INTEGER);
   BEGIN sec := sec DIV 29; ASSERT(SYSTEM.H(0) = 0);
     INCL(sectorMap[sec DIV 32], sec MOD 32); INC(NofSectors)
   END MarkSector;
 
+  (* begin-procedure-description
+---
+**FreeSector** 
+  end-procedure-description *)
   PROCEDURE FreeSector*(sec: INTEGER);
   BEGIN sec := sec DIV 29; ASSERT(SYSTEM.H(0) = 0);
     EXCL(sectorMap[sec DIV 32], sec MOD 32); DEC(NofSectors)
   END FreeSector;
 
+  (* begin-procedure-description
+---
+**AllocSector** 
+  end-procedure-description *)
   PROCEDURE AllocSector*(hint: INTEGER; VAR sec: INTEGER);
     VAR s: INTEGER;
   BEGIN (*find free sector, starting after hint*)
@@ -239,12 +325,20 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     INCL(sectorMap[s DIV 32], s MOD 32); INC(NofSectors); sec := s * 29
   END AllocSector;
 
+  (* begin-procedure-description
+---
+**GetSector** 
+  end-procedure-description *)
   PROCEDURE GetSector*(src: INTEGER; VAR dst: Sector);
   BEGIN src := src DIV 29; ASSERT(SYSTEM.H(0) = 0);
     src := src * 2 + FSoffset;
     ReadSD(src, SYSTEM.ADR(dst)); ReadSD(src+1, SYSTEM.ADR(dst)+512) 
   END GetSector;
   
+  (* begin-procedure-description
+---
+**PutSector** 
+  end-procedure-description *)
   PROCEDURE PutSector*(dst: INTEGER; VAR src: Sector);
   BEGIN dst := dst DIV 29; ASSERT(SYSTEM.H(0) =  0);
     dst := dst * 2 + FSoffset;

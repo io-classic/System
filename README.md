@@ -26,8 +26,12 @@
 includes: [Kernel.Mod](README.md#KernelMod-doc-src) [BootLoad.Mod](README.md#BootLoadMod-doc-src)  
 
 ### _Package Overview:_
-The Kernel package abstracts the hardware of the computing platform for the rest of Oberon.
-
+The Kernel package manages:
+* Memory use by the shared Oberon heap including garbage collection
+* Reading and writing to SD Card 512-byte blocks
+* Allocating, Deallocating, Reading and Writing 1024-byte sectors on the SD card
+* Setting and checking the time and the clock
+* Setting the trap handler and dispatching traps.
 
 ### _Package Use:_
 
