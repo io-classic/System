@@ -19,10 +19,15 @@ Module Modules is the heart of how separately compiled Oberon programs are loade
 end-module-use-description *)
 MODULE Modules;  (*Link and load on RISC; NW 20.10.2013 / 8.1.2019*)
   IMPORT SYSTEM, Files;
-  CONST versionkey = 1X; MT = 12; DescSize = 80;
 
-  TYPE Module* = POINTER TO ModDesc;
-    Command* = PROCEDURE;
+  CONST 
+    versionkey = 1X; 
+    MT         = 12; 
+    DescSize   = 80;
+
+  TYPE 
+    Module*     = POINTER TO ModDesc;
+    Command*    = PROCEDURE;
     ModuleName* = ARRAY 32 OF CHAR;
 
     ModDesc* = RECORD
@@ -32,11 +37,16 @@ MODULE Modules;  (*Link and load on RISC; NW 20.10.2013 / 8.1.2019*)
         data*, code*, imp*, cmd*, ent*, ptr*, unused: INTEGER  (*addresses*)
       END ;
 
-  VAR root*, M: Module;
+  VAR 
+    root*, M: Module;
     MTOrg*, AllocPtr*, res*: INTEGER;
     importing*, imported*: ModuleName;
     limit: INTEGER;
 
+  (* begin-procedure-description
+---
+**ThisFile** appends `.rsc` to the module name to generate the name of the file to load from disk.
+  end-procedure-description *)
   PROCEDURE ThisFile(name: ARRAY OF CHAR): Files.File;
     VAR i: INTEGER;
       filename: ModuleName;
@@ -46,10 +56,18 @@ MODULE Modules;  (*Link and load on RISC; NW 20.10.2013 / 8.1.2019*)
     RETURN Files.Old(filename)
   END ThisFile;
 
+  (* begin-procedure-description 
+---
+**error** places the error number and error name in global varaibles `res` and `importing` for later reference.
+  end-procedure-description *)
   PROCEDURE error(n: INTEGER; name: ARRAY OF CHAR);
   BEGIN res := n; importing := name
   END error;
 
+  (* begin-procedure-description 
+---
+**Check** conditionally sets global variable `res` to 0 (valid) or 1 (invalid) when checking to see if the string is a valid name. 
+  end-procedure-description *)
   PROCEDURE Check(s: ARRAY OF CHAR);
     VAR i: INTEGER; ch: CHAR;
   BEGIN ch := s[0]; res := 1; i := 1;
@@ -61,6 +79,10 @@ MODULE Modules;  (*Link and load on RISC; NW 20.10.2013 / 8.1.2019*)
     END
   END Check;
 
+  (* begin-procedure-description 
+---
+**Load** recursively loads from disk into the module area of memory the imports of a module and then the module itself. 
+  end-procedure-description *)
   PROCEDURE Load*(name: ARRAY OF CHAR; VAR newmod: Module);
     (*search module in list; if not found, load module.
       res = 0: already present or loaded; res = 2: file not available; res = 3: key conflict;
@@ -204,6 +226,10 @@ MODULE Modules;  (*Link and load on RISC; NW 20.10.2013 / 8.1.2019*)
     newmod :=  mod
   END Load;
 
+  (* begin-procedure-description 
+---
+**ThisCommand** finds and executes a parameterless procedure of module `mod` identified by the string `name`.
+  end-procedure-description *)
   PROCEDURE ThisCommand*(mod: Module; name: ARRAY OF CHAR): Command;
     VAR k, adr, w: INTEGER; ch: CHAR;
       s: ARRAY 32 OF CHAR;
@@ -221,6 +247,10 @@ MODULE Modules;  (*Link and load on RISC; NW 20.10.2013 / 8.1.2019*)
     RETURN SYSTEM.VAL(Command, w)
   END ThisCommand;
 
+  (* begin-procedure-description 
+---
+**Free** recursively removes modules imported by a module and the module itself from memory if no other loaded modules import it, or returns an error.
+  end-procedure-description *)
   PROCEDURE Free*(name: ARRAY OF CHAR);
     VAR mod, imp: Module; p, q: INTEGER;
   BEGIN mod := root; res := 0;
@@ -234,6 +264,10 @@ MODULE Modules;  (*Link and load on RISC; NW 20.10.2013 / 8.1.2019*)
     END
   END Free;
 
+  (* begin-procedure-description 
+---
+**Init** calls `Files.Init` and then initializes module table and top of heap values, after which Modules dynamically loads the `Oberon` module and its imports.
+  end-procedure-description *)
   PROCEDURE Init*;
   BEGIN Files.Init; MTOrg := SYSTEM.REG(MT);
     SYSTEM.GET(16, AllocPtr); SYSTEM.GET(20, root); SYSTEM.GET(24, limit); DEC(limit, 8000H)

@@ -6,13 +6,17 @@
 
 ## Constants:
 ```
- versionkey = 1X; MT = 12; DescSize = 80;
+ 
+    versionkey = 1X; 
+    MT         = 12; 
+    DescSize   = 80;
 
 ```
 ## Types:
 ```
- Module* = POINTER TO ModDesc;
-    Command* = PROCEDURE;
+ 
+    Module*     = POINTER TO ModDesc;
+    Command*    = PROCEDURE;
     ModuleName* = ARRAY 32 OF CHAR;
 
     ModDesc* = RECORD
@@ -25,7 +29,8 @@
 ```
 ## Variables:
 ```
- root*, M: Module;
+ 
+    root*, M: Module;
     MTOrg*, AllocPtr*, res*: INTEGER;
     importing*, imported*: ModuleName;
     limit: INTEGER;
@@ -33,24 +38,38 @@
 ```
 ## Procedures:
 ---
+---
+**ThisFile** appends `.rsc` to the module name to generate the name of the file to load from disk.
 
-`  PROCEDURE ThisFile(name: ARRAY OF CHAR): Files.File;` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L40)
+`  PROCEDURE ThisFile(name: ARRAY OF CHAR): Files.File;` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L50)
 
+---
+**error** places the error number and error name in global varaibles `res` and `importing` for later reference.
 
-`  PROCEDURE error(n: INTEGER; name: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L49)
+`  PROCEDURE error(n: INTEGER; name: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L63)
 
+---
+**Check** conditionally sets global variable `res` to 0 (valid) or 1 (invalid) when checking to see if the string is a valid name. 
 
-`  PROCEDURE Check(s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L53)
+`  PROCEDURE Check(s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L71)
 
+---
+**Load** recursively loads from disk into the module area of memory the imports of a module and then the module itself. 
 
-`  PROCEDURE Load*(name: ARRAY OF CHAR; VAR newmod: Module);` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L64)
+`  PROCEDURE Load*(name: ARRAY OF CHAR; VAR newmod: Module);` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L86)
 
+---
+**ThisCommand** finds and executes a parameterless procedure of module `mod` identified by the string `name`.
 
-`  PROCEDURE ThisCommand*(mod: Module; name: ARRAY OF CHAR): Command;` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L207)
+`  PROCEDURE ThisCommand*(mod: Module; name: ARRAY OF CHAR): Command;` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L233)
 
+---
+**Free** recursively removes modules imported by a module and the module itself from memory if no other loaded modules import it, or returns an error.
 
-`  PROCEDURE Free*(name: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L224)
+`  PROCEDURE Free*(name: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L254)
 
+---
+**Init** calls `Files.Init` and then initializes module table and top of heap values, after which Modules dynamically loads the `Oberon` module and its imports.
 
-`  PROCEDURE Init*;` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L237)
+`  PROCEDURE Init*;` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L271)
 
