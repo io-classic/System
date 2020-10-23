@@ -99,7 +99,11 @@ FileDir is not intended for use by regular programs. The FileDir interface is us
 
 
 #### Files.Mod [_doc_](https://github.com/io-orig/System/blob/main/Files.md) [_src_](https://github.com/io-orig/System/blob/main/Files.Mod)
-Module Files manages the on-disk representation of files and the file api presented to Oberon programs.
+Module Files manages the on-disk representation of files and presents the following APIs:
+* File Directory API: Old, New, Register, Close, Purge, Delete, Rename, Date, Length
+* File Read API: Set, Pos, Base, ReadByte, ReadBytes, Read, ReadInt, ReadSet, ReadReal, ReadString, ReadNum
+* File Write API: WriteByte, WriteBytes, Write, WriteInt, WriteReal, WriteString, WriteNum
+* System use: Init, RestoreList
 
 
   **imports:** ` SYSTEM Kernel FileDir`

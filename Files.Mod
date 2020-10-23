@@ -1,5 +1,9 @@
 (* begin-module-use-description
-Module Files manages the on-disk representation of files and the file api presented to Oberon programs.
+Module Files manages the on-disk representation of files and presents the following APIs:
+* File Directory API: Old, New, Register, Close, Purge, Delete, Rename, Date, Length
+* File Read API: Set, Pos, Base, ReadByte, ReadBytes, Read, ReadInt, ReadSet, ReadReal, ReadString, ReadNum
+* File Write API: WriteByte, WriteBytes, Write, WriteInt, WriteReal, WriteString, WriteNum
+* System use: Init, RestoreList
 
 end-module-use-description *)
 MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
@@ -10,16 +14,18 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     of disk addresses to the pages. A file is referenced through riders.
     A rider indicates a current position and refers to a file*)
 
-  CONST MaxBufs    = 4;
-      HS        = FileDir.HeaderSize;
-      SS        = FileDir.SectorSize;
-      STS       = FileDir.SecTabSize;
-      XS        = FileDir.IndexSize;
+  CONST 
+    MaxBufs   = 4;
+    HS        = FileDir.HeaderSize;
+    SS        = FileDir.SectorSize;
+    STS       = FileDir.SecTabSize;
+    XS        = FileDir.IndexSize;
 
-  TYPE  DiskAdr = INTEGER;
-      File*    = POINTER TO FileDesc;
-      Buffer  = POINTER TO BufferRecord;
-      Index   = POINTER TO IndexRecord;
+  TYPE  
+    DiskAdr = INTEGER;
+    File*   = POINTER TO FileDesc;
+    Buffer  = POINTER TO BufferRecord;
+    Index   = POINTER TO IndexRecord;
 
     Rider* =
       RECORD eof*: BOOLEAN;
@@ -60,7 +66,8 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
       0 <= apos <= aleng < PgTabSize
       (apos < aleng) & (lim = SS) OR (apos = aleng) *)
 
-  VAR root: INTEGER (*File*);  (*list of open files*)
+  VAR 
+    root: INTEGER (*File*);  (*list of open files*)
 
   (* begin-section-description
 ## ---------- File Directory API: Old, New, Register, Close, Purge, Delete, Rename, Date, Length
@@ -470,7 +477,7 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
   END ReadNum;
         
   (* begin-section-description
-## ---------- File Reading API: WriteByte, WriteBytes, Write, WriteInt, WriteReal, WriteString, WriteNum
+## ---------- File Writing API: WriteByte, WriteBytes, Write, WriteInt, WriteReal, WriteString, WriteNum
   end-section-description *)
 
   (*---------------------------Write---------------------------*)
