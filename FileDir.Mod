@@ -91,6 +91,7 @@ MODULE FileDir;   (*NW 12.1.86 / 23.8.90 / 15.8.2013*)
   (* begin-procedure-description
 ---
 **Search** finds the DiskAdr for a given FileName.
+  end-procedure-description *)
   PROCEDURE Search*(name: FileName; VAR A: DiskAdr);
     VAR i, L, R: INTEGER; dadr: DiskAdr;
       a: DirPage;
@@ -111,6 +112,7 @@ MODULE FileDir;   (*NW 12.1.86 / 23.8.90 / 15.8.2013*)
   (* begin-procedure-description
 ---
 **insert** is the recursive procedure for finding a DirEntry to place a FileName in.
+  end-procedure-description *)
   PROCEDURE insert(name: FileName;
                    dpg0:  DiskAdr;
                    VAR h: BOOLEAN;
@@ -174,6 +176,7 @@ MODULE FileDir;   (*NW 12.1.86 / 23.8.90 / 15.8.2013*)
   (* begin-procedure-description
 ---
 **Insert** starts the process of finding a DirEntry to place a FileName in.
+  end-procedure-description *)
   PROCEDURE Insert*(name: FileName; fad: DiskAdr);
     VAR  oldroot: DiskAdr;
       h: BOOLEAN; U: DirEntry;
@@ -192,6 +195,7 @@ MODULE FileDir;   (*NW 12.1.86 / 23.8.90 / 15.8.2013*)
   (* begin-procedure-description
 ---
 **underflow** handles the case of DirPage underflow on DirEntry deletion.
+  end-procedure-description *)
   PROCEDURE underflow(VAR c: DirPage;  (*ancestor page*)
                       dpg0:  DiskAdr;
                       s:     INTEGER;  (*insertion point in c*)
@@ -244,6 +248,7 @@ MODULE FileDir;   (*NW 12.1.86 / 23.8.90 / 15.8.2013*)
   (* begin-procedure-description
 ---
 **delete** is the recursive function that searches for and removes a DirEntry.
+  end-procedure-description *)
   PROCEDURE delete(name: FileName;
                    dpg0: DiskAdr;
                    VAR h: BOOLEAN;
@@ -258,6 +263,7 @@ MODULE FileDir;   (*NW 12.1.86 / 23.8.90 / 15.8.2013*)
   (* begin-procedure-description
 ---
 **del** is the interior procedure that re-writes a DirPage to remove a DirEntry.
+  end-procedure-description *)
     PROCEDURE del(VAR a: DirPage; R: INTEGER; dpg1: DiskAdr; VAR h: BOOLEAN);
       VAR dpg2: DiskAdr;  (*global: a, R*)
           b: DirPage;
@@ -296,6 +302,7 @@ MODULE FileDir;   (*NW 12.1.86 / 23.8.90 / 15.8.2013*)
   (* begin-procedure-description
 ---
 **Delete** starts the process of removing a DirEntry with a given FileName.
+  end-procedure-description *)
   PROCEDURE Delete*(name: FileName; VAR fad: DiskAdr);
     VAR h: BOOLEAN; newroot: DiskAdr;
       a: DirPage;
@@ -313,6 +320,7 @@ MODULE FileDir;   (*NW 12.1.86 / 23.8.90 / 15.8.2013*)
   (* begin-procedure-description
 ---
 **enumerate** is the recursive function that iteratively calls a passed-in procedure on DirEntries with names that match a prefix.
+  end-procedure-description *)
   PROCEDURE enumerate(prefix:   ARRAY OF CHAR;
                       dpg:          DiskAdr;
                       proc:         EntryHandler;
@@ -342,6 +350,7 @@ MODULE FileDir;   (*NW 12.1.86 / 23.8.90 / 15.8.2013*)
   (* begin-procedure-description
 ---
 **Enumerate** starts the process of listing directory entries matching a prefix.
+  end-procedure-description *)
   PROCEDURE Enumerate*(prefix: ARRAY OF CHAR; proc: EntryHandler);
     VAR b: BOOLEAN;
   BEGIN b := TRUE; enumerate(prefix, DirRootAdr, proc, b)
@@ -352,7 +361,8 @@ MODULE FileDir;   (*NW 12.1.86 / 23.8.90 / 15.8.2013*)
   (* begin-procedure-description
 ---
 **Init** preapres Oberon to use the disk by marking used sectors in the Kernel sector map.
-PROCEDURE Init*;
+  end-procedure-description *)
+  PROCEDURE Init*;
     VAR k: INTEGER;
         A: ARRAY 2000 OF DiskAdr;
 
