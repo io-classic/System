@@ -266,13 +266,19 @@ MODULE Modules;  (*Link and load on RISC; NW 20.10.2013 / 8.1.2019*)
 
   (* begin-procedure-description 
 ---
-**Init** calls `Files.Init` and then initializes module table and top of heap values, after which Modules dynamically loads the `Oberon` module and its imports.
+**Init** calls `Files.Init`, sets the module table start and allocation pointer and module root and limit and makes room for the stack by decreasing the limit.
   end-procedure-description *)
   PROCEDURE Init*;
   BEGIN Files.Init; MTOrg := SYSTEM.REG(MT);
     SYSTEM.GET(16, AllocPtr); SYSTEM.GET(20, root); SYSTEM.GET(24, limit); DEC(limit, 8000H)
   END Init;
 
+  (* begin-procedure-description
+---
+**The initialzation code for this module** calls `Init` and then dynamically loads the `Oberon` module and its imports. `Oberon` is not expected to return.
+calls the appropriate Load routine, then places the MemoryLimit, and stackOrg in memory for Oberon to find and jumps to the start of memory.
+
+  end-procedure-description *)
 BEGIN Init; Load("Oberon", M);
     LED(res); REPEAT UNTIL FALSE  (*only if load fails*)
 END Modules.
