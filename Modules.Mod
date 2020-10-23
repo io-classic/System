@@ -45,7 +45,7 @@ MODULE Modules;  (*Link and load on RISC; NW 20.10.2013 / 8.1.2019*)
 
   (* begin-procedure-description
 ---
-**ThisFile** appends `.rsc` to the module name to generate the name of the file to load from disk.
+**ThisFile** appends `.rsc` to the module name, opens it, and returns the file.
   end-procedure-description *)
   PROCEDURE ThisFile(name: ARRAY OF CHAR): Files.File;
     VAR i: INTEGER;

@@ -39,7 +39,7 @@
 ## Procedures:
 ---
 ---
-**ThisFile** appends `.rsc` to the module name to generate the name of the file to load from disk.
+**ThisFile** appends `.rsc` to the module name, opens it, and returns the file.
 
 `  PROCEDURE ThisFile(name: ARRAY OF CHAR): Files.File;` [(source)](https://github.com/io-orig/System/blob/main/Modules.Mod#L50)
 
