@@ -63,7 +63,7 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
   VAR root: INTEGER (*File*);  (*list of open files*)
 
   (* begin-section-description
-## ---------- API: Old, New, Register, Close, Purge, Delete, Rename, Date, Length
+## ---------- File Directory API: Old, New, Register, Close, Purge, Delete, Rename, Date, Length
   end-section-description *)
 
   (* begin-procedure-description
@@ -166,6 +166,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     WHILE k > 0 DO DEC(k); F.ext[k] := f.ext[k].adr END
   END UpdateHeader;
 
+  (* begin-procedure-description
+---
+**ReadBuf** retrieves a file buffer's sector contents from disk.
+  end-procedure-description *)
   PROCEDURE ReadBuf(f: File; buf: Buffer; pos: INTEGER);
     VAR sec: DiskAdr;
   BEGIN
@@ -177,6 +181,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     buf.apos := pos; buf.mod := FALSE
   END ReadBuf;
 
+  (* begin-procedure-description
+---
+**WriteBuf** places a file buffer's sector contents on disk, allocating a sector if necessary.
+  end-procedure-description *)
   PROCEDURE WriteBuf(f: File; buf: Buffer);
     VAR i, k: INTEGER;
       secadr: DiskAdr; inx: Index;
@@ -203,6 +211,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     Kernel.PutSector(secadr, buf.data); buf.mod := FALSE
   END WriteBuf;
 
+  (* begin-procedure-description
+---
+**Buf** returns the buffer for file `f` in memory for a sector at file sector index `pos` or NIL.
+  end-procedure-description *)
   PROCEDURE Buf(f: File; pos: INTEGER): Buffer;
     VAR buf: Buffer;
   BEGIN buf := f.firstbuf;
@@ -211,6 +223,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     RETURN buf
   END Buf;
 
+  (* begin-procedure-description
+---
+**GetBuf** returns a buffer for file `f` for a sector at file sector index `pos`, loading from disk if necessary, potentially spilling a buffer.
+  end-procedure-description *)
   PROCEDURE GetBuf(f: File; pos: INTEGER): Buffer;
     VAR buf: Buffer;
   BEGIN buf := f.firstbuf;
@@ -226,6 +242,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     RETURN buf
   END GetBuf;
 
+  (* begin-procedure-description
+---
+**Unbuffer** writes modified buffers and the file header for a file back to disk, allocating new sectors as necessary.
+  end-procedure-description *)
   PROCEDURE Unbuffer(f: File);
     VAR i, k: INTEGER;
       buf: Buffer;
@@ -252,6 +272,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     END
   END Unbuffer;
 
+  (* begin-procedure-description
+---
+**Register** makes temporary (created with `New`) file permanent by inserting it into the on-disk directory structure.
+  end-procedure-description *)
   PROCEDURE Register*(f: File);
   BEGIN
     IF (f # NIL) & (f.name[0] # 0X) THEN
@@ -262,11 +286,19 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     END
   END Register;
 
+  (* begin-procedure-description
+---
+**Close** flushes all outstanding changes to a file to disk.
+  end-procedure-description *)
   PROCEDURE Close*(f: File);
   BEGIN
     IF f # NIL THEN Unbuffer(f) END
   END Close;
 
+  (* begin-procedure-description
+---
+**Purge** returns disk sectors used by a file to free space.
+  end-procedure-description *)
   PROCEDURE Purge*(f: File);
     VAR a, i, j, k: INTEGER;
       ind: FileDir.IndexSector;
@@ -284,6 +316,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     END
   END Purge;
 
+  (* begin-procedure-description
+---
+**Delete** removes a file from the directory and frees the disk sectors used by the file.
+  end-procedure-description *)
   PROCEDURE Delete*(name: ARRAY OF CHAR; VAR res: INTEGER);
     VAR adr: DiskAdr;
         namebuf: FileDir.FileName;
@@ -294,6 +330,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     END
   END Delete;
 
+  (* begin-procedure-description
+---
+**Rename** Changes the name of a file.
+  end-procedure-description *)
   PROCEDURE Rename*(old, new: ARRAY OF CHAR; VAR res: INTEGER);
     VAR adr: DiskAdr;
         oldbuf, newbuf: FileDir.FileName;
@@ -312,13 +352,25 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     END
   END Rename;
 
+  (* begin-procedure-description
+---
+**Length** returns the length of the file.
+  end-procedure-description *)
   PROCEDURE Length*(f: File): INTEGER;
   BEGIN RETURN f.aleng * SS + f.bleng - HS
   END Length;
 
+  (* begin-procedure-description
+---
+**Date** returns the last modified date of the file.
+  end-procedure-description *)
   PROCEDURE Date*(f: File): INTEGER;
   BEGIN RETURN f.date
   END Date;
+
+  (* begin-section-description
+## ---------- File Reading API: Set, Pos, Base, ReadByte, ReadBytes, Read, ReadInt, ReadSet, ReadReal, ReadString, ReadNum
+  end-section-description *)
 
   (*---------------------------Read---------------------------*)
 
@@ -417,6 +469,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     IF n <= 4 THEN x := ROR(y + b MOD 10H, 4) ELSE x := ASR(ROR(y + b, 7), n-7) END
   END ReadNum;
         
+  (* begin-section-description
+## ---------- File Reading API: WriteByte, WriteBytes, Write, WriteInt, WriteReal, WriteString, WriteNum
+  end-section-description *)
+
   (*---------------------------Write---------------------------*)
 
   PROCEDURE NewExt(f: File);
@@ -501,6 +557,9 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     WriteByte(R, x MOD 80H)
   END WriteNum;
 
+  (* begin-section-description
+## ---------- System Use
+  end-section-description *)
   (*---------------------------System use---------------------------*)
 
   PROCEDURE Init*;
