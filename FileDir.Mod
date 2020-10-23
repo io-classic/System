@@ -77,7 +77,7 @@ MODULE FileDir;   (*NW 12.1.86 / 23.8.90 / 15.8.2013*)
         e*:  ARRAY DirPgSize OF DirEntry
       END ;
 
-  (*Exported procedures: Search, Insert, Delete, Enumerate, Init*)
+  VAR
 
   (* begin-section-description
 ## ---------- API: Search, Insert, Delete, Enumerate, Init

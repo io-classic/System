@@ -59,34 +59,10 @@
         e*:  ARRAY DirPgSize OF DirEntry
       END ;
 
-  (*Exported procedures: Search, Insert, Delete, Enumerate, Init*)
-
-  (* begin-section-description
-## ---------- API: Search, Insert, Delete, Enumerate, Init
-  end-section-description *)
-
-  (* begin-procedure-description
----
-**Search** finds the DiskAdr for a given FileName.
-  PROCEDURE Search*(name: FileName; VAR A: DiskAdr);
 ```
 ## Variables:
 ```
- i, L, R: INTEGER; dadr: DiskAdr;
-      a: DirPage;
-  BEGIN dadr := DirRootAdr; A := 0;
-    REPEAT Kernel.GetSector(dadr, a); ASSERT(a.mark = DirMark);
-      L := 0; R := a.m; (*binary search*)
-      WHILE L < R DO
-        i := (L+R) DIV 2;
-        IF name <= a.e[i].name THEN R := i ELSE L := i+1 END
-      END ;
-      IF (R < a.m) & (name = a.e[R].name) THEN A := a.e[R].adr (*found*)
-      ELSIF R = 0 THEN dadr := a.p0
-      ELSE dadr := a.e[R-1].p
-      END ;
-    UNTIL (dadr = 0) OR (A # 0)
-  END Search;
+
 
 ```
 ## Procedures:
