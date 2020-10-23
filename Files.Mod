@@ -383,6 +383,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
 
   (*---------------------------Read---------------------------*)
 
+  (* begin-procedure-description
+---
+**Set** positions the Rider `r` to position `pos` on File `f` for reading and writing.
+  end-procedure-description *)
   PROCEDURE Set*(VAR r: Rider; f: File; pos: INTEGER);
     VAR a, b: INTEGER;
   BEGIN  r.eof := FALSE; r.res := 0;
@@ -397,14 +401,26 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     END
   END Set;
 
+  (* begin-procedure-description
+---
+**Pos** returns the current position of Rider `r` on its file. 
+  end-procedure-description *)
   PROCEDURE Pos*(VAR r: Rider): INTEGER;
   BEGIN RETURN r.apos * SS + r.bpos - HS
   END Pos;
 
+  (* begin-procedure-description
+---
+**Base** returns the File that Rider `r` is based on. 
+  end-procedure-description *)
   PROCEDURE Base*(VAR r: Rider): File;
   BEGIN RETURN r.file
   END Base;
 
+  (* begin-procedure-description
+---
+**ReadByte** provides the next byte, advancing the position by a byte.
+  end-procedure-description *)
   PROCEDURE ReadByte*(VAR r: Rider; VAR x: BYTE);
     VAR buf: Buffer;
   BEGIN
@@ -422,12 +438,20 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     END
   END ReadByte;
 
+  (* begin-procedure-description
+---
+**ReadBytes** provides the next `n` bytes, advancing the position by `n`. 
+  end-procedure-description *)
   PROCEDURE ReadBytes*(VAR r: Rider; VAR x: ARRAY OF BYTE; n: INTEGER);
     VAR i: INTEGER;
   BEGIN i := 0;  (*this implementation is to be improved*)
     WHILE i < n DO ReadByte(r, x[i]); INC(i) END
   END ReadBytes;
 
+  (* begin-procedure-description
+---
+**Read** provide the next byte as a CHAR, advancing the position by one. 
+  end-procedure-description *)
   PROCEDURE Read*(VAR r: Rider; VAR ch: CHAR);
     VAR buf: Buffer;  (*same as ReadByte*)
   BEGIN
@@ -445,12 +469,20 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     END
   END Read;
 
+  (* begin-procedure-description
+---
+**ReadInt** provides the next four bytes as an INTEGER, advancing the position by four.
+  end-procedure-description *)
   PROCEDURE ReadInt*(VAR R: Rider; VAR x: INTEGER);
     VAR x0, x1, x2, x3: BYTE;
   BEGIN ReadByte(R, x0); ReadByte(R, x1); ReadByte(R, x2); ReadByte(R, x3);
     x := ((x3 * 100H + x2) * 100H + x1) * 100H + x0
   END ReadInt;
 
+  (* begin-procedure-description
+---
+**ReadSet** provides the next four bytes as a SET, advancing the position by four. 
+  end-procedure-description *)
   PROCEDURE ReadSet*(VAR R: Rider; VAR s: SET);
     VAR n: INTEGER;
   BEGIN ReadInt(R, SYSTEM.VAL(INTEGER, s))
@@ -461,6 +493,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
   BEGIN ReadInt(R, SYSTEM.VAL(INTEGER, x))
   END ReadReal;
 
+  (* begin-procedure-description
+---
+**ReadString** provides the next range of bytes up to and including a NULL value as an ARRAY OF CHAR, advancing the position past the NULL. 
+  end-procedure-description *)
   PROCEDURE ReadString*(VAR R: Rider; VAR x: ARRAY OF CHAR);
     VAR i: INTEGER; ch: CHAR;
   BEGIN i := 0; Read(R, ch);
@@ -471,6 +507,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     x[i] := 0X
   END ReadString;
 
+  (* begin-procedure-description
+---
+**ReadNum** provides the next several bytes as an INTEGER, converting from the on-disk representation of a 'Number', advancing past the number. 
+  end-procedure-description *)
   PROCEDURE ReadNum*(VAR R: Rider; VAR x: INTEGER);
     VAR n, y: INTEGER; b: BYTE;
   BEGIN n := 32; y := 0; ReadByte(R, b);
@@ -485,6 +525,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
 
   (*---------------------------Write---------------------------*)
 
+  (* begin-procedure-description
+---
+**NewExt** creates a new file sector indirection buffer for tracking sectors used by a file. 
+  end-procedure-description *)
   PROCEDURE NewExt(f: File);
     VAR i, k: INTEGER; ext: Index;
   BEGIN k := (f.aleng - STS) DIV XS;
@@ -492,6 +536,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     REPEAT DEC(i); ext.sec[i] := 0 UNTIL i = 0
   END NewExt;
 
+  (* begin-procedure-description
+---
+**WriteByte** writes a byte to the file at the rider position, extending the file as necessary.
+  end-procedure-description *)
   PROCEDURE WriteByte*(VAR r: Rider; x: BYTE);
     VAR f: File; buf: Buffer;
   BEGIN
@@ -513,12 +561,20 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     r.buf.data[r.bpos] := x; INC(r.bpos); r.buf.mod := TRUE
   END WriteByte;
 
+  (* begin-procedure-description
+---
+**WriteByte** writes `n` bytes to the file at the rider position, extending the file as necessary.
+  end-procedure-description *)
   PROCEDURE WriteBytes*(VAR r: Rider; x: ARRAY OF BYTE; n: INTEGER);
     VAR i: INTEGER;
-  BEGIN i := 0; (*this implementation is to be improed*)
+  BEGIN i := 0; (*this implementation is to be improved*)
     WHILE i < n DO WriteByte(r, x[i]); INC(i) END
   END WriteBytes;
 
+  (* begin-procedure-description
+---
+**Write** writes a CHAR to the file at the rider position, extending the file as necessary.
+  end-procedure-description *)
   PROCEDURE Write*(VAR r: Rider; ch: CHAR);
     VAR f: File; buf: Buffer;
   BEGIN (*same as WriteByte*)
@@ -540,6 +596,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     r.buf.data[r.bpos] := ORD(ch); INC(r.bpos); r.buf.mod := TRUE
   END Write;
 
+  (* begin-procedure-description
+---
+**WriteInt** writes an Int to the file at the rider position, extending the file as necessary.
+  end-procedure-description *)
   PROCEDURE WriteInt*(VAR R: Rider; x: INTEGER);
   BEGIN WriteByte(R, x MOD 100H);
     WriteByte(R, x DIV 100H MOD 100H);
@@ -547,20 +607,36 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     WriteByte(R, x DIV 1000000H MOD 100H)
   END WriteInt;
 
+  (* begin-procedure-description
+---
+**WriteSet** writes a set to the file at the rider position, extending the file as necessary.
+  end-procedure-description *)
   PROCEDURE WriteSet*(VAR R: Rider; s: SET);
   BEGIN WriteInt(R, ORD(s))
   END WriteSet;
 
+  (* begin-procedure-description
+---
+**WriteByte** writes a Real to the file at the rider position, extending the file as necessary.
+  end-procedure-description *)
   PROCEDURE WriteReal*(VAR R: Rider; x: REAL);
   BEGIN  WriteInt(R, ORD(x))
   END WriteReal;
 
+  (* begin-procedure-description
+---
+**WriteString** writes a string including the terminating NULL to the file at the rider position, extending the file as necessary.
+  end-procedure-description *)
   PROCEDURE WriteString*(VAR R: Rider; x: ARRAY OF CHAR);
     VAR i: INTEGER; ch: CHAR;
   BEGIN i := 0;
     REPEAT ch := x[i]; Write(R, ch); INC(i) UNTIL ch = 0X
   END WriteString;
 
+  (* begin-procedure-description
+---
+**WriteNum** writes an INTEGER in something format to the file at the rider position, extending the file as necessary.
+  end-procedure-description *)
   PROCEDURE WriteNum*(VAR R: Rider; x: INTEGER);
   BEGIN
     WHILE (x < -40H) OR (x >= 40H) DO WriteByte(R, x MOD 80H + 80H); x := ASR(x, 7) END ;
@@ -572,10 +648,18 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
   end-section-description *)
   (*---------------------------System use---------------------------*)
 
+  (* begin-procedure-description
+---
+**Init** (called on system-startup by `Modules`) sets the list of open files to `0` and calls `Kernel.Init` and `FileDir.Init`.
+  end-procedure-description *)
   PROCEDURE Init*;
   BEGIN root := 0; Kernel.Init; FileDir.Init
   END Init;
 
+  (* begin-procedure-description
+---
+**RestoreList** is used by the Garbage Collector after mark phase to put the open files list back.
+  end-procedure-description *)
   PROCEDURE RestoreList*; (*after mark phase of garbage collection*)
     VAR f, f0: INTEGER;
 
