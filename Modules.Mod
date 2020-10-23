@@ -276,8 +276,6 @@ MODULE Modules;  (*Link and load on RISC; NW 20.10.2013 / 8.1.2019*)
   (* begin-procedure-description
 ---
 **The initialzation code for this module** calls `Init` and then dynamically loads the `Oberon` module and its imports. `Oberon` is not expected to return.
-calls the appropriate Load routine, then places the MemoryLimit, and stackOrg in memory for Oberon to find and jumps to the start of memory.
-
   end-procedure-description *)
 BEGIN Init; Load("Oberon", M);
     LED(res); REPEAT UNTIL FALSE  (*only if load fails*)
