@@ -72,7 +72,7 @@
 **Search** finds the DiskAdr for a given FileName.
   PROCEDURE Search*(name: FileName; VAR A: DiskAdr);
 
-`  PROCEDURE Search*(name: FileName; VAR A: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L89)
+`  PROCEDURE Search*(name: FileName; VAR A: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L94)
 
     VAR i, L, R: INTEGER; dadr: DiskAdr;
       a: DirPage;
@@ -95,7 +95,7 @@
 **insert** is the recursive procedure for finding a DirEntry to place a FileName in.
   PROCEDURE insert(name: FileName;
 
-`  PROCEDURE insert(name: FileName;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L109)
+`  PROCEDURE insert(name: FileName;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L114)
 
                    dpg0:  DiskAdr;
                    VAR h: BOOLEAN;
@@ -161,7 +161,7 @@
 **Insert** starts the process of finding a DirEntry to place a FileName in.
   PROCEDURE Insert*(name: FileName; fad: DiskAdr);
 
-`  PROCEDURE Insert*(name: FileName; fad: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L172)
+`  PROCEDURE Insert*(name: FileName; fad: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L177)
 
     VAR  oldroot: DiskAdr;
       h: BOOLEAN; U: DirEntry;
@@ -182,7 +182,7 @@
 **underflow** handles the case of DirPage underflow on DirEntry deletion.
   PROCEDURE underflow(VAR c: DirPage;  (*ancestor page*)
 
-`  PROCEDURE underflow(VAR c: DirPage;  (*ancestor page*)` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L190)
+`  PROCEDURE underflow(VAR c: DirPage;  (*ancestor page*)` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L195)
 
                       dpg0:  DiskAdr;
                       s:     INTEGER;  (*insertion point in c*)
@@ -237,7 +237,7 @@
 **delete** is the recursive function that searches for and removes a DirEntry.
   PROCEDURE delete(name: FileName;
 
-`  PROCEDURE delete(name: FileName;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L242)
+`  PROCEDURE delete(name: FileName;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L247)
 
                    dpg0: DiskAdr;
                    VAR h: BOOLEAN;
@@ -254,7 +254,7 @@
 **del** is the interior procedure that re-writes a DirPage to remove a DirEntry.
     PROCEDURE del(VAR a: DirPage; R: INTEGER; dpg1: DiskAdr; VAR h: BOOLEAN);
 
-`    PROCEDURE del(VAR a: DirPage; R: INTEGER; dpg1: DiskAdr; VAR h: BOOLEAN);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L256)
+`    PROCEDURE del(VAR a: DirPage; R: INTEGER; dpg1: DiskAdr; VAR h: BOOLEAN);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L261)
 
       VAR dpg2: DiskAdr;  (*global: a, R*)
           b: DirPage;
@@ -295,7 +295,7 @@
 **Delete** starts the process of removing a DirEntry with a given FileName.
   PROCEDURE Delete*(name: FileName; VAR fad: DiskAdr);
 
-`  PROCEDURE Delete*(name: FileName; VAR fad: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L294)
+`  PROCEDURE Delete*(name: FileName; VAR fad: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L299)
 
     VAR h: BOOLEAN; newroot: DiskAdr;
       a: DirPage;
@@ -315,7 +315,7 @@
 **enumerate** is the recursive function that iteratively calls a passed-in procedure on DirEntries with names that match a prefix.
   PROCEDURE enumerate(prefix:   ARRAY OF CHAR;
 
-`  PROCEDURE enumerate(prefix:   ARRAY OF CHAR;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L311)
+`  PROCEDURE enumerate(prefix:   ARRAY OF CHAR;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L316)
 
                       dpg:          DiskAdr;
                       proc:         EntryHandler;
@@ -347,7 +347,7 @@
 **Enumerate** starts the process of listing directory entries matching a prefix.
   PROCEDURE Enumerate*(prefix: ARRAY OF CHAR; proc: EntryHandler);
 
-`  PROCEDURE Enumerate*(prefix: ARRAY OF CHAR; proc: EntryHandler);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L340)
+`  PROCEDURE Enumerate*(prefix: ARRAY OF CHAR; proc: EntryHandler);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L345)
 
     VAR b: BOOLEAN;
   BEGIN b := TRUE; enumerate(prefix, DirRootAdr, proc, b)
@@ -360,14 +360,14 @@
 **Init** preapres Oberon to use the disk by marking used sectors in the Kernel sector map.
 PROCEDURE Init*;
 
-`PROCEDURE Init*;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L350)
+`PROCEDURE Init*;` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L355)
 
     VAR k: INTEGER;
         A: ARRAY 2000 OF DiskAdr;
 
     PROCEDURE MarkSectors(VAR A: ARRAY OF DiskAdr; k: INTEGER);
 
-`    PROCEDURE MarkSectors(VAR A: ARRAY OF DiskAdr; k: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L354)
+`    PROCEDURE MarkSectors(VAR A: ARRAY OF DiskAdr; k: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L359)
 
       VAR L, R, i, j, n: INTEGER; x: DiskAdr;
         hd: FileHeader;
@@ -375,7 +375,7 @@ PROCEDURE Init*;
 
       PROCEDURE sift(VAR A: ARRAY OF DiskAdr; L, R: INTEGER);
 
-`      PROCEDURE sift(VAR A: ARRAY OF DiskAdr; L, R: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L359)
+`      PROCEDURE sift(VAR A: ARRAY OF DiskAdr; L, R: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L364)
 
         VAR i, j: INTEGER; x: DiskAdr;
       BEGIN j := L; x := A[j];
@@ -412,7 +412,7 @@ PROCEDURE Init*;
 
     PROCEDURE TraverseDir(VAR A: ARRAY OF DiskAdr; VAR k: INTEGER; dpg: DiskAdr);
 
-`    PROCEDURE TraverseDir(VAR A: ARRAY OF DiskAdr; VAR k: INTEGER; dpg: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L393)
+`    PROCEDURE TraverseDir(VAR A: ARRAY OF DiskAdr; VAR k: INTEGER; dpg: DiskAdr);` [(source)](https://github.com/io-orig/System/blob/main/FileDir.Mod#L398)
 
       VAR i: INTEGER; a: DirPage;
     BEGIN Kernel.GetSector(dpg, a); ASSERT(a.mark = DirMark); Kernel.MarkSector(dpg); i := 0;

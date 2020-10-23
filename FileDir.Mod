@@ -16,9 +16,14 @@ F := Files.New("newfile.txt")
 end-package-description *)
 
 (* begin-module-use-description
-Module FileDir manages the on-disk representation if directories.
+Module FileDir implements the following operations on the binary tree of directory pages stored on disk:
+* inserting directory entries
+* deleting directory entries
+* searching for directory entries
+* enumerating directory entries
+* initializing the Kernel sector table bitmap
 
-Regular programs do not use FileDir but instead use the api presented by Files which uses FileDir on their behalf.
+FileDir is not intended for use by regular programs. The FileDir interface is used by the Files module which regular programs may access.
 
 end-module-use-description *)
 MODULE FileDir;   (*NW 12.1.86 / 23.8.90 / 15.8.2013*)

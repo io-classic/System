@@ -2,10 +2,7 @@
 ### _Package Overview:_
 The Kernel package manages:
 * Loading the Oberon inner core from the SDcard or the serial line
-* Shared Oberon Heap including Garbage Collection
-* Disk IO including the sector bitmap
-* Time
-* Trap handler setting and dispatch
+* Heap Management, Disk Access, Timekeeping, and Trap handling
 ### _Package Use:_
 
 USAGE:
@@ -25,7 +22,7 @@ Module Kernel handles:
 * Memory use by the shared Oberon heap including garbage collection
 * Reading and writing to SD Card 512-byte blocks
 * Allocating, Deallocating, Reading and Writing 1024-byte sectors on the SD card
-* Setting and checking the time and the clock
+* Using the sytem timer and clock
 * Setting the trap handler and dispatching traps.
 
 end-module-use-description *)

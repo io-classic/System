@@ -28,10 +28,7 @@ includes: [Kernel.Mod](README.md#KernelMod-doc-src) [BootLoad.Mod](README.md#Boo
 ### _Package Overview:_
 The Kernel package manages:
 * Loading the Oberon inner core from the SDcard or the serial line
-* Shared Oberon Heap including Garbage Collection
-* Disk IO including the sector bitmap
-* Time
-* Trap handler setting and dispatch
+* Heap Management, Disk Access, Timekeeping, and Trap handling
 ### _Package Use:_
 
 USAGE:
@@ -50,7 +47,7 @@ Module Kernel handles:
 * Memory use by the shared Oberon heap including garbage collection
 * Reading and writing to SD Card 512-byte blocks
 * Allocating, Deallocating, Reading and Writing 1024-byte sectors on the SD card
-* Setting and checking the time and the clock
+* Using the sytem timer and clock
 * Setting the trap handler and dispatching traps.
 
 
@@ -87,9 +84,14 @@ F := Files.New("newfile.txt")
 ### _Modules in this package:_
 
 #### FileDir.Mod [_doc_](https://github.com/io-orig/System/blob/main/FileDir.md) [_src_](https://github.com/io-orig/System/blob/main/FileDir.Mod)
-Module FileDir manages the on-disk representation if directories.
+Module FileDir implements the following operations on the binary tree of directory pages stored on disk:
+* inserting directory entries
+* deleting directory entries
+* searching for directory entries
+* enumerating directory entries
+* initializing the Kernel sector table bitmap
 
-Regular programs do not use FileDir but instead use the api presented by Files which uses FileDir on their behalf.
+FileDir is not intended for use by regular programs. The FileDir interface is used by the Files module which regular programs may access.
 
 
   **imports:** ` SYSTEM Kernel`
