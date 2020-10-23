@@ -70,7 +70,8 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     root: INTEGER (*File*);  (*list of open files*)
 
   (* begin-section-description
-## ---------- File Directory API: Old, New, Register, Close, Purge, Delete, Rename, Date, Length
+## ---------- File Directory API
+#### Old, New, Register, Close, Purge, Delete, Rename, Date, Length
   end-section-description *)
 
   (* begin-procedure-description
@@ -376,7 +377,8 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
   END Date;
 
   (* begin-section-description
-## ---------- File Reading API: Set, Pos, Base, ReadByte, ReadBytes, Read, ReadInt, ReadSet, ReadReal, ReadString, ReadNum
+## ---------- File Reading API
+#### Set, Pos, Base, ReadByte, ReadBytes, Read, ReadInt, ReadSet, ReadReal, ReadString, ReadNum
   end-section-description *)
 
   (*---------------------------Read---------------------------*)
@@ -477,7 +479,8 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
   END ReadNum;
         
   (* begin-section-description
-## ---------- File Writing API: WriteByte, WriteBytes, Write, WriteInt, WriteReal, WriteString, WriteNum
+## ---------- File Writing API
+#### WriteByte, WriteBytes, Write, WriteInt, WriteReal, WriteString, WriteNum
   end-section-description *)
 
   (*---------------------------Write---------------------------*)
