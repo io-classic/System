@@ -113,7 +113,7 @@ Module Files manages the on-disk representation of files and presents the follow
 includes: [Modules.Mod](README.md#ModulesMod-doc-src)  
 
 ### _Package Overview:_
-The Modules package manages the module heap, the loading and unloading of packages, etc.
+The Modules package manages the loading and linking and unloading of program code and is the first code run when the boot loader passes control to the OS.
 
 
 ### _Package Use:_
@@ -135,14 +135,22 @@ Module Modules is the heart of how separately compiled Oberon programs are loade
 ## The Oberon Package
 includes: [Oberon.Mod](README.md#OberonMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [Viewers.Mod](README.md#ViewersMod-doc-src) [Input.Mod](README.md#InputMod-doc-src) [Display.Mod](README.md#DisplayMod-doc-src)  
 
-
-#### Oberon.Mod [_doc_](https://github.com/io-orig/System/blob/main/Oberon.md) [_src_](https://github.com/io-orig/System/blob/main/Oberon.Mod)
 ### _Package Overview:_
-Module Oberon establishes the messaging and callback system for implementing the extensible user interface of Oberon.
+The Oberon package defines the user interface of Oberon.
+
 
 ### _Package Use:_
 
+USAGE:
+```
+Modules.Load("something",M)
+```
+
 ### _Modules in this package:_
+
+#### Oberon.Mod [_doc_](https://github.com/io-orig/System/blob/main/Oberon.md) [_src_](https://github.com/io-orig/System/blob/main/Oberon.Mod)
+Module Oberon coordinates the interaction of the user with the system.
+
 
   **imports:** ` SYSTEM Kernel Files Modules Input Display Viewers Fonts Texts`
 

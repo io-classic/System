@@ -1,6 +1,6 @@
 (* begin-package-description
 ### _Package Overview:_
-The Modules package manages the module heap, the loading and unloading of packages, etc.
+The Modules package manages the loading and linking and unloading of program code and is the first code run when the boot loader passes control to the OS.
 
 
 ### _Package Use:_

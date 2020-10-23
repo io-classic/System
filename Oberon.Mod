@@ -1,21 +1,47 @@
-(* begin-module-use-description
+(* begin-package-description
 ### _Package Overview:_
-Module Oberon establishes the messaging and callback system for implementing the extensible user interface of Oberon.
+The Oberon package defines the user interface of Oberon.
+
 
 ### _Package Use:_
 
+USAGE:
+```
+Modules.Load("something",M)
+```
+
 ### _Modules in this package:_
+end-package-description *)
+
+(* begin-module-use-description
+Module Oberon coordinates the interaction of the user with the system.
+
 end-module-use-description *)
+(* begin-module-develop-description
+
+(JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015)
+
+The Oberon module coordiates the display area as a user-manipulatable workspace with tracks and panes.
+
+The Oberon module transforms keystrokes and mouse movements and button presses into user interface messages 
+delivered message handlers that are installed as the user initiates interactive content such as `Edit.Open` or
+`System.Directory`.
+
+The Oberon module provides the extensible UI functionality but the initial arrangement of content on system startup that the
+user may interact with is provided by the System module.
+
+end-module-develop-description *)
 MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
   IMPORT SYSTEM, Kernel, Files, Modules, Input, Display, Viewers, Fonts, Texts;
 
-  CONST (*message ids*)
-    consume* = 0; track* = 1; defocus* = 0; neutralize* = 1; mark* = 2;
+  CONST 
+    consume* = 0; track* = 1; defocus* = 0; neutralize* = 1; mark* = 2; (*message ids*)
     off = 0; idle = 1; active = 2;   (*task states*)
     BasicCycle = 20;
     ESC = 1BX; SETSTAR = 1AX;
 
-  TYPE Painter* = PROCEDURE (x, y: INTEGER);
+  TYPE
+    Painter* = PROCEDURE (x, y: INTEGER);
     Marker* = RECORD Fade*, Draw*: Painter END;
     
     Cursor* = RECORD
@@ -55,7 +81,8 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
       handle: Handler
     END;
 
-  VAR User*: ARRAY 8 OF CHAR; Password*: LONGINT;
+  VAR 
+    User*: ARRAY 8 OF CHAR; Password*: LONGINT;
     Arrow*, Star*: Marker;
     Mouse, Pointer: Cursor;
     FocusViewer*: Viewers.Viewer;
@@ -79,6 +106,14 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
 
   (*user identification*)
 
+  (* begin-section-description
+## ---------- User Identification
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**Code** Encodes a password provided by the user.
+  end-procedure-description *)
   PROCEDURE Code(VAR s: ARRAY OF CHAR): LONGINT;
     VAR i: INTEGER; a, b, c: LONGINT;
   BEGIN
@@ -91,24 +126,44 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     RETURN b * 65536 + a
   END Code;
 
+  (* begin-procedure-description
+---
+**SetUser** sets the current user of the system. 
+  end-procedure-description *)
   PROCEDURE SetUser* (VAR user, password: ARRAY OF CHAR);
   BEGIN User := user; Password := Code(password)
   END SetUser;
 
+  (* begin-procedure-description
+---
+**Clock** returns the current time.
+  end-procedure-description *)
   PROCEDURE Clock*(): LONGINT;
   BEGIN RETURN Kernel.Clock()
   END Clock;
 
+  (* begin-procedure-description
+---
+**SetClock** sets the system time.
+  end-procedure-description *)
   PROCEDURE SetClock* (d: LONGINT);
   BEGIN Kernel.SetClock(d)
   END SetClock;
 
+  (* begin-procedure-description
+---
+**Time** returns the current system timestamp.
+  end-procedure-description *)
   PROCEDURE Time*(): LONGINT;
   BEGIN RETURN Kernel.Time()
   END Time;
 
   (*cursor handling*)
 
+  (* begin-procedure-description
+---
+**FlipArrow** displays or removes the arrow at the x,y location on the screen.
+  end-procedure-description *)
   PROCEDURE FlipArrow (X, Y: INTEGER);
   BEGIN
     IF X < CL THEN
@@ -120,6 +175,10 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     Display.CopyPattern(Display.white, Display.arrow, X, Y - 14, Display.invert)
   END FlipArrow;
      
+  (* begin-procedure-description
+---
+**FlipStar** displays or removes the star at the x,y location on the screen.
+  end-procedure-description *)
   PROCEDURE FlipStar (X, Y: INTEGER);
   BEGIN
     IF X < CL THEN
@@ -131,14 +190,26 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     Display.CopyPattern(Display.white, Display.star, X - 7, Y - 7, Display.invert)
   END FlipStar;
 
+  (* begin-procedure-description
+---
+**OpenCursor** prepares a cursor initial state.
+  end-procedure-description *)
   PROCEDURE OpenCursor(VAR c: Cursor);
   BEGIN c.on := FALSE; c.X := 0; c.Y := 0
   END OpenCursor;
  
+  (* begin-procedure-description
+---
+**FadeCursor** removes a cursor from the screen.
+  end-procedure-description *)
   PROCEDURE FadeCursor(VAR c: Cursor);
   BEGIN IF c.on THEN c.marker.Fade(c.X, c.Y); c.on := FALSE END
   END FadeCursor;
 
+  (* begin-procedure-description
+---
+**DrawCursor** places a cursor on the screen at location x,y.
+  end-procedure-description *)
   PROCEDURE DrawCursor(VAR c: Cursor; m: Marker; x, y: INTEGER);
   BEGIN
     IF c.on & ((x # c.X) OR (y # c.Y) OR (m.Draw # c.marker.Draw)) THEN
@@ -149,24 +220,47 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     END
   END DrawCursor;
 
+  (* begin-procedure-description
+---
+**DrawMouse** places the mouse cursor with marker m on the screen. 
+  end-procedure-description *)
   PROCEDURE DrawMouse*(m: Marker; x, y: INTEGER);
   BEGIN DrawCursor(Mouse, m, x, y)
   END DrawMouse;
 
+  (* begin-procedure-description
+---
+**DrawMouseArrow** places the mouse arrow on the screen. 
+  end-procedure-description *)
   PROCEDURE DrawMouseArrow*(x, y: INTEGER);
   BEGIN DrawCursor(Mouse, Arrow, x, y)
   END DrawMouseArrow;
 
+  (* begin-procedure-description
+---
+**FadeMouse** removes the mouse cursor from the screen.
+  end-procedure-description *)
   PROCEDURE FadeMouse*;
   BEGIN FadeCursor(Mouse)
   END FadeMouse;
 
+  (* begin-procedure-description
+---
+**DrawPointer** places the star marker on the screen.
+  end-procedure-description *)
   PROCEDURE DrawPointer*(x, y: INTEGER);
   BEGIN DrawCursor(Pointer, Star, x, y)
   END DrawPointer;
 
+  (* begin-section-description
+## ---------- Display Management
+  end-section-description *)
   (*display management*)
 
+  (* begin-procedure-description
+---
+**RemoveMarks** remove the mouse cursor and the star marker from the screen.
+  end-procedure-description *)
   PROCEDURE RemoveMarks* (X, Y, W, H: INTEGER);
   BEGIN
     IF (Mouse.X > X - 16) & (Mouse.X < X + W + 16) & (Mouse.Y > Y - 16) & (Mouse.Y < Y + H + 16) THEN
@@ -177,6 +271,10 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     END
   END RemoveMarks;
 
+  (* begin-procedure-description
+---
+**HandleFiller** fill the blank area of the display not delegated to other display frames.
+  end-procedure-description *)
   PROCEDURE HandleFiller (V: Display.Frame; VAR M: Display.FrameMsg);
   BEGIN
     CASE M OF
@@ -193,6 +291,10 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     END
   END HandleFiller;
 
+  (* begin-procedure-description
+---
+**OpenDisplay** Set the initial values for the display.
+  end-procedure-description *)
   PROCEDURE OpenDisplay* (UW, SW, H: INTEGER);
     VAR Filler: Viewers.Viewer;
   BEGIN
@@ -204,14 +306,26 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
      Viewers.InitTrack(SW, H, Filler) (*init system track*)
   END OpenDisplay;
 
+  (* begin-procedure-description
+---
+**DisplayWidth** export the width of the display. 
+  end-procedure-description *)
   PROCEDURE DisplayWidth* (X: INTEGER): INTEGER;
   BEGIN RETURN DW
   END DisplayWidth;
 
+  (* begin-procedure-description
+---
+**DisplayHeight** export the height of the display.
+  end-procedure-description *)
   PROCEDURE DisplayHeight* (X: INTEGER): INTEGER;
   BEGIN RETURN DH
   END DisplayHeight;
 
+  (* begin-procedure-description
+---
+**OpenTrack** prepare a vertical slice of the display for holding viewers.
+  end-procedure-description *)
   PROCEDURE OpenTrack* (X, W: INTEGER);
     VAR Filler: Viewers.Viewer;
   BEGIN
@@ -219,14 +333,26 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     Viewers.OpenTrack(X, W, Filler)
   END OpenTrack;
 
+  (* begin-procedure-description
+---
+**UserTrack** returns the width of the user (left) track.
+  end-procedure-description *)
   PROCEDURE UserTrack* (X: INTEGER): INTEGER;
   BEGIN RETURN X DIV DW * DW
   END UserTrack;
 
+  (* begin-procedure-description
+---
+**SystemTrack** returns the width of the system (right) track.
+  end-procedure-description *)
   PROCEDURE SystemTrack* (X: INTEGER): INTEGER;
   BEGIN RETURN X DIV DW * DW + DW DIV 8 * 5
   END SystemTrack;
 
+  (* begin-procedure-description
+---
+**UY** locate a vertical position for a new user viewer.
+  end-procedure-description *)
   PROCEDURE UY (X: INTEGER): INTEGER;
     VAR h: INTEGER;
       fil, bot, alt, max: Display.Frame;
@@ -236,6 +362,10 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     RETURN h
   END UY;
 
+  (* begin-procedure-description
+---
+**AllocateUserViewer** allocate a new viewer on the user (left) track.
+  end-procedure-description *)
   PROCEDURE AllocateUserViewer* (DX: INTEGER; VAR X, Y: INTEGER);
   BEGIN
     IF Pointer.on THEN X := Pointer.X; Y := Pointer.Y
@@ -243,6 +373,10 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     END
   END AllocateUserViewer;
 
+  (* begin-procedure-description
+---
+**SY** locate a vertical position for a new system viewer.
+  end-procedure-description *)
   PROCEDURE SY (X: INTEGER): INTEGER;
     VAR H0, H1, H2, H3, y: INTEGER;
       fil, bot, alt, max: Display.Frame;
@@ -260,6 +394,10 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     RETURN y
   END SY;
 
+  (* begin-procedure-description
+---
+**AllocateSystemViewer** allocate a new viewer on the system (right) track.
+  end-procedure-description *)
   PROCEDURE AllocateSystemViewer* (DX: INTEGER; VAR X, Y: INTEGER);
   BEGIN
     IF Pointer.on THEN X := Pointer.X; Y := Pointer.Y
@@ -267,24 +405,49 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     END
   END AllocateSystemViewer;
 
+  (* begin-procedure-description
+---
+**MarkedViewer** returns the viewer with the mark.
+  end-procedure-description *)
   PROCEDURE MarkedViewer* (): Viewers.Viewer;
   BEGIN RETURN Viewers.This(Pointer.X, Pointer.Y)
   END MarkedViewer;
 
+  (* begin-procedure-description
+---
+**PassFocus** moves which viewer has the focus to the viewer `V`.
+  end-procedure-description *)
   PROCEDURE PassFocus* (V: Viewers.Viewer);
     VAR M: ControlMsg;
   BEGIN M.id := defocus; FocusViewer.handle(FocusViewer, M); FocusViewer := V
   END PassFocus;
 
+  (* begin-procedure-description
+---
+**OpenLog** sets the Oberon log to the specified text.
+  end-procedure-description *)
   PROCEDURE OpenLog*(T: Texts.Text);
   BEGIN Log := T
   END OpenLog;
 
+  (* begin-section-description
+## ---------- Command Interpretation
+  end-section-description *)
   (*command interpretation*)
+
+
+  (* begin-procedure-description
+---
+**SetPar** sets the parameter for an anticpated command invocation to the indicated viewer, frame, text, and position.
+  end-procedure-description *)
   PROCEDURE SetPar*(F: Display.Frame; T: Texts.Text; pos: LONGINT);
   BEGIN Par.vwr := Viewers.This(F.X, F.Y); Par.frame := F; Par.text := T; Par.pos := pos
   END SetPar;
 
+  (* begin-procedure-description
+---
+**Call** looks up and calls a command matching the `name` parameter.
+  end-procedure-description *)
   PROCEDURE Call* (name: ARRAY OF CHAR; VAR res: INTEGER);
     VAR mod: Modules.Module; P: Modules.Command;
       i, j: INTEGER; ch: CHAR;
@@ -305,6 +468,10 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     END
   END Call;
 
+  (* begin-procedure-description
+---
+**GetSelection** produces the user's selected text in VAR parameters.
+  end-procedure-description *)
   PROCEDURE GetSelection* (VAR text: Texts.Text; VAR beg, end, time: LONGINT);
     VAR M: SelectionMsg;
   BEGIN
@@ -312,6 +479,10 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     IF time >= 0 THEN text := M.text; beg := M.beg; end := M.end END
   END GetSelection;
 
+  (* begin-procedure-description
+---
+**GC** initiates garbage collection.
+  end-procedure-description *)
   PROCEDURE GC;
     VAR mod: Modules.Module;
   BEGIN
@@ -328,11 +499,19 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     END
   END GC;
 
+  (* begin-procedure-description
+---
+**NewTask** prepares a task entry that calls a handler in the background.
+  end-procedure-description *)
   PROCEDURE NewTask*(h: Handler; period: INTEGER): Task;
     VAR t: Task;
   BEGIN NEW(t); t.state := off; t.next := t; t.handle := h; t.period := period; RETURN t
   END NewTask;
   
+  (* begin-procedure-description
+---
+**Install** places the task entry in the list of tasks to process in the background.
+  end-procedure-description *)
   PROCEDURE Install* (T: Task);
   BEGIN
     IF T.state = off THEN
@@ -340,6 +519,10 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     END
   END Install;
 
+  (* begin-procedure-description
+---
+**Remove** takes the task entry out of the list of tasks to process in the background.
+  end-procedure-description *)
   PROCEDURE Remove* (T: Task);
     VAR t: Task;
   BEGIN
@@ -349,22 +532,42 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     END
   END Remove;
 
+  (* begin-procedure-description
+---
+**Collect** ?? 
+  end-procedure-description *)
   PROCEDURE Collect* (count: INTEGER);
   BEGIN ActCnt := count
   END Collect;
 
+  (* begin-procedure-description
+---
+**SetFont** changes the current font to be used when adding text.
+  end-procedure-description *)
   PROCEDURE SetFont* (fnt: Fonts.Font);
   BEGIN CurFnt := fnt
   END SetFont;
 
+  (* begin-procedure-description
+---
+**SetColor** changes the current color to be used when adding text.
+  end-procedure-description *)
   PROCEDURE SetColor* (col: INTEGER);
   BEGIN CurCol := col
   END SetColor;
 
+  (* begin-procedure-description
+---
+**SetOffset**  ??
+  end-procedure-description *)
   PROCEDURE SetOffset* (voff: INTEGER);
   BEGIN CurOff := voff
   END SetOffset;
 
+  (* begin-procedure-description
+---
+**Loop** is the central dispatch of input event messages in the Oberon UI and the background task dispatcher.
+  end-procedure-description *)
   PROCEDURE Loop*;
     VAR V: Viewers.Viewer; M: InputMsg; N: ControlMsg;
        prevX, prevY, X, Y, t: INTEGER; keys: SET; ch: CHAR;
@@ -398,12 +601,20 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     UNTIL FALSE
   END Loop;
 
+  (* begin-procedure-description
+---
+**Reset** resets the background tasks and the stack pointer. 
+  end-procedure-description *)
   PROCEDURE Reset*;
   BEGIN
     IF CurTask.state = active THEN Remove(CurTask) END ;
     SYSTEM.LDREG(14, Kernel.stackOrg); (*reset stack pointer*) Loop
   END Reset;
 
+  (* begin-procedure-description
+---
+**The initialzation code for this module** prepares the arrow, star, cursor behavior procedures, opens the display, sets GC as a background task, loads the System module then enters the UI loop.
+  end-procedure-description *)
 BEGIN User[0] := 0X;
   Arrow.Fade := FlipArrow; Arrow.Draw := FlipArrow;
   Star.Fade := FlipStar; Star.Draw := FlipStar;
