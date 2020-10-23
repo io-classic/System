@@ -12,14 +12,16 @@ Module System presents the Oberon user with tools and commands for interacting D
 
 end-module-use-description *)
 MODULE System; (*JG 3.10.90 / NW 12.10.93 / NW 20.6.2016*)
-  IMPORT SYSTEM, Kernel, FileDir, Files, Modules,
-    Input, Display, Viewers, Fonts, Texts, Oberon, MenuViewers, TextFrames;
+  IMPORT SYSTEM, Kernel, FileDir, Files, Modules, Input, Display, Viewers, Fonts, Texts, Oberon, MenuViewers, TextFrames;
 
   CONST
     StandardMenu = "System.Close System.Copy System.Grow Edit.Search Edit.Store";
     LogMenu = "Edit.Locate Edit.Search System.Copy System.Grow System.Clear";
 
-  VAR W: Texts.Writer;
+  TYPE
+
+  VAR 
+    W: Texts.Writer;
     pat: ARRAY 32 OF CHAR;
 
   PROCEDURE GetArg(VAR S: Texts.Scanner);

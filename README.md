@@ -310,7 +310,8 @@ The System package collects the expected set of modules and tools that allows th
 Module System presents the Oberon user with tools and commands for interacting Displays and Tracks and Files and other miscelaneous features.
 
 
-  **imports:** ` SYSTEM Kernel FileDir Files Modules
+  **imports:** ` SYSTEM Kernel FileDir Files Modules Input Display Viewers Fonts Texts Oberon MenuViewers TextFrames`
+
 
 
 #### PIO.Mod [_doc_](https://github.com/io-orig/System/blob/main/PIO.md) [_src_](https://github.com/io-orig/System/blob/main/PIO.Mod)
