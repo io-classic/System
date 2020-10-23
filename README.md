@@ -2,7 +2,7 @@
 
 | Package |          |
 | ------- | -------- |
-| [Kernel](README.md#the-Kernel-package) | handles basic os functionality including startup |
+| [Kernel](README.md#the-Kernel-package) |  handles booting |
 |   | [Kernel.Mod](README.md#KernelMod-doc-src) [BootLoad.Mod](README.md#BootLoadMod-doc-src)  |
 | [Files](README.md#the-Files-package) | handles persistent storage and the file and directory interface of Oberon. |
 |   | [FileDir.Mod](README.md#FileDirMod-doc-src) [Files.Mod](README.md#FilesMod-doc-src)  |

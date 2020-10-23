@@ -2,6 +2,6 @@ k,v1,v2
 package,Kernel,v5.0.20140204
 from,github.com/io-core,whenever
 license,PROJECTOBERON,NW
-doc,core,handles basic os functionality including startup, device access and garbage collection.
+doc,core, handles booting, heap managment and garbage collection, Disk Sector allocation and access, time and date, and trap installation and dispatch.
 p,Kernel.Mod,
 p,BootLoad.Mod,
