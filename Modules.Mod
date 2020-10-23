@@ -21,13 +21,15 @@ end-module-use-description *)
 
 (Link and load on RISC; NW 20.10.2013 / 8.1.2019)
 
-After the BootLoader loads the Inner Core (Kernel, FileDir, Files, Modules) into memory, the 
+After the BootLoader loads the Inner Core (`Kernel`, `FileDir`, `Files`, `Modules`) into memory, the 
 BEGIN section at the end of this module is the next code to execute. Modules, Files, Filedir, and Kernel
 cooperate in initializing the state of the Oberon system.
 
-Once the system is initialized, `Modules` dynamically loads the `Oberon` module which recursively requires `Input`, `Display`, `Viewers`, `Fonts`, and `Texts`.
+Once the system is initialized, `Modules` dynamically loads the `Oberon` module which recursively requires `Input`, `Display`, `Viewers`, `Fonts`, and `Texts` to also be loaded.
 
-The `Oberon` module in turn, once loaded and and at the end of its initialization, dynamically loads the `System` module which further requires `MenuViewers` and `TextFrames`.
+The `Oberon` module in turn, at the end of its initialization, dynamically loads the `System` module which further requires `MenuViewers` and `TextFrames`.
+
+At this point the Oberon system is responsive to user commands.
 
 end-module-develop-description *)
 MODULE Modules;  (*Link and load on RISC; NW 20.10.2013 / 8.1.2019*)
