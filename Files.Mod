@@ -62,6 +62,14 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
 
   VAR root: INTEGER (*File*);  (*list of open files*)
 
+  (* begin-section-description
+## ---------- API: Old, New, Register, Close, Purge, Delete, Rename, Date, Length
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**Check** verifies a FileName is in an acceptable format.
+  end-procedure-description *)
   PROCEDURE Check(s: ARRAY OF CHAR;
         VAR name: FileDir.FileName; VAR res: INTEGER);
     VAR i: INTEGER; ch: CHAR;
@@ -80,6 +88,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     END
   END Check;
 
+  (* begin-procedure-description
+---
+**Old** opens an existing file or returns the file handle or NIL.
+  end-procedure-description *)
   PROCEDURE Old*(name: ARRAY OF CHAR): File;
     VAR i, k, res: INTEGER;
       f: File;
@@ -115,6 +127,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     RETURN f
   END Old;
 
+  (* begin-procedure-description
+---
+**New** creates a new file and returns a file handle.
+  end-procedure-description *)
   PROCEDURE New*(name: ARRAY OF CHAR): File;
     VAR i, res: INTEGER;
       f: File;
@@ -139,6 +155,10 @@ MODULE Files;  (*NW 11.1.86 / 22.9.93 / 25.5.95 / 25.12.95 / 15.8.2013*)
     RETURN f
   END New;
 
+  (* begin-procedure-description
+---
+**UpdateHeader** updates the file header.
+  end-procedure-description *)
   PROCEDURE UpdateHeader(f: File; VAR F: FileDir.FileHeader);
     VAR k: INTEGER;
   BEGIN F.aleng := f.aleng; F.bleng := f.bleng;
