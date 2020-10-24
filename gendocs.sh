@@ -24,8 +24,8 @@ echo >> README.md
                 echo "## The $nam Package" >> README.md
 	#	echo "This package $pkgdesc" >> README.md
 	#	echo >> README.md
-	#        mods=`grep '^p,' $j | awk -F',' '{print "["$2"]("$2")"}' | tr '\n' ' ' | sed -e 's/\[\.Mod//g'`
-	#	echo "includes: $mods " >> README.md
+	        mods=`grep '^p,' $j | awk -F',' '{print "["$2"](README.md#"$2"-doc-src)"}' | tr '\n' ' ' | sed -e 's/.Mod-doc-src/Mod-doc-src/g'`
+		echo "includes: $mods " >> README.md
 	#	echo >> README.md
 
 		for l in `grep '^p,' $j | awk -F',' '{print $2}'`; do
