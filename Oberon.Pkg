@@ -8,7 +8,6 @@ r,[core]/Kernel,v5.0.0
 r,[core]/Files,v5.0.0
 doc,core,implements the user-interaction functionality and the task loop of the system.
 p,Oberon.Mod,cc84a2c0a7c9fa7244a02dbdc7e7f7bd15cfeb7d3903d14950666c95626897e0
-p,MenuViewers.Mod,c91c52dd1441f545057467b6bc3122fa0a09550a0f8d7dc40e812c43f3602b7b
 p,Viewers.Mod,d7991eabdff1cb6b06c4a085f1a5a05bf10cc03398bcf03b9d47241865d357ae
-p,Input.Mod,4eb36a06d406512335c595b830600cf9df42eb6e351c22d7ca27358c7ec5ce5d
 p,Display.Mod,d7095213ac8cec4fe11bcb5400dd8ee120218d31c58d9012cbf74e6a7d573161
+p,Input.Mod,4eb36a06d406512335c595b830600cf9df42eb6e351c22d7ca27358c7ec5ce5d

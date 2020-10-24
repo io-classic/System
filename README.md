@@ -9,13 +9,13 @@
 | [Modules](README.md#the-Modules-package) | manages compiled module loading and unloading in Oberon. |
 |   | [Modules.Mod](README.md#ModulesMod-doc-src)  |
 | [Oberon](README.md#the-Oberon-package) | implements the user-interaction functionality and the task loop of the system. |
-|   | [Oberon.Mod](README.md#OberonMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [Viewers.Mod](README.md#ViewersMod-doc-src) [Input.Mod](README.md#InputMod-doc-src) [Display.Mod](README.md#DisplayMod-doc-src)  |
+|   | [Oberon.Mod](README.md#OberonMod-doc-src) [Viewers.Mod](README.md#ViewersMod-doc-src) [Display.Mod](README.md#DisplayMod-doc-src) [Input.Mod](README.md#InputMod-doc-src)  |
 | [Edit](README.md#the-Edit-package) | manages the text and font handling in Oberon. |
 |   | [Edit.Mod](README.md#EditMod-doc-src) [Fonts.Mod](README.md#FontsMod-doc-src) [TextFrames.Mod](README.md#TextFramesMod-doc-src) [Texts.Mod](README.md#TextsMod-doc-src)  |
 | [Draw](README.md#the-Draw-package) | provides line-oriented drawing primitives and a vector drawing tool. |
 |   | [Draw.Mod](README.md#DrawMod-doc-src) [Graphics.Mod](README.md#GraphicsMod-doc-src) [MacroTool.Mod](README.md#MacroToolMod-doc-src) [GraphicFrames.Mod](README.md#GraphicFramesMod-doc-src) [GraphTool.Mod](README.md#GraphToolMod-doc-src) [Rectangles.Mod](README.md#RectanglesMod-doc-src) [Curves.Mod](README.md#CurvesMod-doc-src)  |
 | [System](README.md#the-System-package) | prepares the user interface and manages viewers for the user. |
-|   | [System.Mod](README.md#SystemMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  |
+|   | [System.Mod](README.md#SystemMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  |
 | [Build](README.md#the-Build-package) | provides the compiler and associated program building and debugging tools for Oberon. |
 |   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORL.Mod](README.md#ORLMod-doc-src)  |
 | [Extras](README.md#the-Extras-package) | contains extra modules demonstrating Oberon. |
@@ -133,7 +133,7 @@ Module Modules is the heart of how separately compiled Oberon programs are loade
 
 ---
 ## The Oberon Package
-includes: [Oberon.Mod](README.md#OberonMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [Viewers.Mod](README.md#ViewersMod-doc-src) [Input.Mod](README.md#InputMod-doc-src) [Display.Mod](README.md#DisplayMod-doc-src)  
+includes: [Oberon.Mod](README.md#OberonMod-doc-src) [Viewers.Mod](README.md#ViewersMod-doc-src) [Display.Mod](README.md#DisplayMod-doc-src) [Input.Mod](README.md#InputMod-doc-src)  
 
 ### _Package Overview:_
 The Oberon package defines the user interface of Oberon.
@@ -156,22 +156,22 @@ Module Oberon coordinates the interaction of the user with the system.
 
 
 
-#### MenuViewers.Mod [_doc_](https://github.com/io-orig/System/blob/main/MenuViewers.md) [_src_](https://github.com/io-orig/System/blob/main/MenuViewers.Mod)
-Module MenuViewers implements the top-of-pane 'menu' functionality of the Oberon user interface. 
-
-MenuViewers uses Input, Display, Viewers, Oberon
-
-
-
-  **imports:** ` Input Display Viewers Oberon`
-
-
-
 #### Viewers.Mod [_doc_](https://github.com/io-orig/System/blob/main/Viewers.md) [_src_](https://github.com/io-orig/System/blob/main/Viewers.Mod)
-Module Viewers implements base functionaltiy which may be extended for interacting with a pane or 'Viewer' in Oberon.
+Module Viewers introduces rectangular areas of the display that present information and 
+react to user input -- 'tracks' and 'viewers'.
 
 
   **imports:** ` Display`
+
+
+
+#### Display.Mod [_doc_](https://github.com/io-orig/System/blob/main/Display.md) [_src_](https://github.com/io-orig/System/blob/main/Display.Mod)
+Module Display implements the drawing primitives for the frame buffer device in Oberon.
+
+A pattern is an array of bytes; the first is its width (< 32), the second its height, the rest the raster data.
+
+
+  **imports:** ` SYSTEM`
 
 
 
@@ -180,16 +180,6 @@ Module Input reads keyboard and mouse raw data and returns ASCII values and mous
 
 Input uses SYSTEM
 
-
-
-  **imports:** ` SYSTEM`
-
-
-
-#### Display.Mod [_doc_](https://github.com/io-orig/System/blob/main/Display.md) [_src_](https://github.com/io-orig/System/blob/main/Display.Mod)
-Module Display implements the drawing primitives for the frame buffer device in Oberon.
-
-A pattern is an array of bytes; the first is its width (< 32), the second its height, the rest the raster data.
 
 
   **imports:** ` SYSTEM`
@@ -305,7 +295,7 @@ Module Edit provides document editing capability.
 
 ---
 ## The System Package
-includes: [System.Mod](README.md#SystemMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  
+includes: [System.Mod](README.md#SystemMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  
 
 ### _Package Overview:_
 The System package collects the expected set of modules and tools that allows the Oberon user to perform typical computing tasks.
@@ -319,6 +309,17 @@ Module System presents the Oberon user with tools and commands for interacting D
 
 
   **imports:** ` SYSTEM Kernel FileDir Files Modules Input Display Viewers Fonts Texts Oberon MenuViewers TextFrames`
+
+
+
+#### MenuViewers.Mod [_doc_](https://github.com/io-orig/System/blob/main/MenuViewers.md) [_src_](https://github.com/io-orig/System/blob/main/MenuViewers.Mod)
+Module MenuViewers implements the top-of-pane 'menu' functionality of the Oberon user interface. 
+
+MenuViewers uses Input, Display, Viewers, Oberon
+
+
+
+  **imports:** ` Input Display Viewers Oberon`
 
 
 
