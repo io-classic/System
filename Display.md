@@ -44,24 +44,43 @@ A pattern is an array of bytes; the first is its width (< 32), the second its he
 ```
 ## Procedures:
 ---
+## ---------- General
+---
+**Handle** dispatches a handle message to the appropriate frame.
 
-`  PROCEDURE Handle*(F: Frame; VAR M: FrameMsg);` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L43)
+`  PROCEDURE Handle*(F: Frame; VAR M: FrameMsg);` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L51)
 
+## ---------- Raster Ops
+---
+**Dot** modifies a pixel on the display.
 
-`  PROCEDURE Dot*(col, x, y, mode: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L50)
+`  PROCEDURE Dot*(col, x, y, mode: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L66)
 
+---
+**ReplConst** paints a color into a rectangular area or inverts the area.
 
-`  PROCEDURE ReplConst*(col, x, y, w, h, mode: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L61)
+`  PROCEDURE ReplConst*(col, x, y, w, h, mode: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L81)
 
+---
+**CopyPattern** copies a bitmap to a location in a color, possibly inverting the destination area.
 
-`  PROCEDURE CopyPattern*(col, patadr, x, y, mode: INTEGER);  (*only for modes = paint, invert*)` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L99)
+`  PROCEDURE CopyPattern*(col, patadr, x, y, mode: INTEGER);  (*only for modes = paint, invert*)` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L123)
 
+---
+**CopyBlock** copies a rectangular area to a location on the display.
 
-`  PROCEDURE CopyBlock*(sx, sy, w, h, dx, dy, mode: INTEGER); (*only for mode = replace*)` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L126)
+`  PROCEDURE CopyBlock*(sx, sy, w, h, dx, dy, mode: INTEGER); (*only for mode = replace*)` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L154)
 
+---
+**ReplPattern** replicates a pattern over a rectangular area of the display.
 
-`  PROCEDURE ReplPattern*(col, patadr, x, y, w, h, mode: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L182)
+`  PROCEDURE ReplPattern*(col, patadr, x, y, w, h, mode: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L214)
 
+## ---------- Initialization
+---
+**InitResolution** determines the frame buffer base address and screen geometry.
 
-`  PROCEDURE InitResolution;` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L213)
+`  PROCEDURE InitResolution;` [(source)](https://github.com/io-orig/System/blob/main/Display.Mod#L253)
 
+---
+**The initialzation code for this module** detects the screen origin and geometry and then installs icons for cursors and a background pattern.

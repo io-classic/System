@@ -40,6 +40,14 @@ MODULE Display;  (*NW 5.11.2013 / 17.1.2019*)
     arrow*, star*, hook*, updown*, block*, cross*, grey*: INTEGER;
     (*a pattern is an array of bytes; the first is its width (< 32), the second its height, the rest the raster*)
 
+  (* begin-section-description
+## ---------- General
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**Handle** dispatches a handle message to the appropriate frame.
+  end-procedure-description *)
   PROCEDURE Handle*(F: Frame; VAR M: FrameMsg);
   BEGIN
     IF (F # NIL) & (F.handle # NIL) THEN F.handle(F, M) END
@@ -47,6 +55,14 @@ MODULE Display;  (*NW 5.11.2013 / 17.1.2019*)
 
   (* raster ops *)
 
+  (* begin-section-description
+## ---------- Raster Ops
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**Dot** modifies a pixel on the display.
+  end-procedure-description *)
   PROCEDURE Dot*(col, x, y, mode: INTEGER);
     VAR a: INTEGER; u, s: SET;
   BEGIN a := Base + (x DIV 32)*4 + y*Span;
@@ -58,6 +74,10 @@ MODULE Display;  (*NW 5.11.2013 / 17.1.2019*)
     END
   END Dot;
 
+  (* begin-procedure-description
+---
+**ReplConst** paints a color into a rectangular area or inverts the area.
+  end-procedure-description *)
   PROCEDURE ReplConst*(col, x, y, w, h, mode: INTEGER);
     VAR al, ar, a0, a1, i: INTEGER; left, right, mid, pix, pixl, pixr: SET;
   BEGIN al := Base + y*Span;
@@ -96,6 +116,10 @@ MODULE Display;  (*NW 5.11.2013 / 17.1.2019*)
     END
   END ReplConst;
 
+  (* begin-procedure-description
+---
+**CopyPattern** copies a bitmap to a location in a color, possibly inverting the destination area.
+  end-procedure-description *)
   PROCEDURE CopyPattern*(col, patadr, x, y, mode: INTEGER);  (*only for modes = paint, invert*)
     VAR a0, pwd, i: INTEGER;
       w, h, pbt: BYTE; pix, mask: SET;
@@ -123,6 +147,10 @@ MODULE Display;  (*NW 5.11.2013 / 17.1.2019*)
     END
   END CopyPattern;
 
+  (* begin-procedure-description
+---
+**CopyBlock** copies a rectangular area to a location on the display.
+  end-procedure-description *)
   PROCEDURE CopyBlock*(sx, sy, w, h, dx, dy, mode: INTEGER); (*only for mode = replace*)
     VAR sa, da, sa0, sa1, d, len: INTEGER;
       u0, u1, u2, u3, v0, v1, v2, v3, n: INTEGER;
@@ -179,6 +207,10 @@ MODULE Display;  (*NW 5.11.2013 / 17.1.2019*)
     END
   END CopyBlock;
 
+  (* begin-procedure-description
+---
+**ReplPattern** replicates a pattern over a rectangular area of the display.
+  end-procedure-description *)
   PROCEDURE ReplPattern*(col, patadr, x, y, w, h, mode: INTEGER);
   (* pattern width = 32, fixed; pattern starts at patadr+4, for mode = invert only *)
     VAR al, ar, a0, a1, i: INTEGER;
@@ -210,6 +242,14 @@ MODULE Display;  (*NW 5.11.2013 / 17.1.2019*)
     END
   END ReplPattern;
 
+  (* begin-section-description
+## ---------- Initialization
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**InitResolution** determines the frame buffer base address and screen geometry.
+  end-procedure-description *)
   PROCEDURE InitResolution;
   VAR magic: INTEGER;
   BEGIN
@@ -233,6 +273,10 @@ MODULE Display;  (*NW 5.11.2013 / 17.1.2019*)
     END;
   END InitResolution;
 
+  (* begin-procedure-description
+---
+**The initialzation code for this module** detects the screen origin and geometry and then installs icons for cursors and a background pattern.
+  end-procedure-description *)
 BEGIN InitResolution;
   arrow := SYSTEM.ADR($0F0F 0060 0070 0038 001C 000E 0007 8003 C101 E300 7700 3F00 1F00 3F00 7F00 FF00$);
   star := SYSTEM.ADR($0F0F 8000 8220 8410 8808 9004 A002 C001 7F7F C001 A002 9004 8808 8410 8220 8000$);
