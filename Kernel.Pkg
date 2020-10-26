@@ -2,6 +2,6 @@ k,v1,v2
 package,Kernel,v5.0.20140204
 from,github.com/io-core,whenever
 license,PROJECTOBERON,NW
-doc,core, handles booting/heap managment/garbage collection/disk sector IO/timer and clock/trap installation and dispatch.
+doc,core, handles the heap and GC, the SDcard and sectors, the timer and clock, and traps.
 p,Kernel.Mod,
 p,BootLoad.Mod,
