@@ -66,6 +66,7 @@ MODULE Input; (*NW 5.10.86 / 15.11.90 Ceres-2; PDR 21.4.12 / NW 15.5.2013 Ceres-
   (* begin-procedure-description
 ---  
 **Read** delivers ascii values of pressed keys.
+  end-procedure-description *)
   PROCEDURE Read*(VAR ch: CHAR);
   BEGIN
     WHILE ~Recd DO Peek() END ;
@@ -84,6 +85,7 @@ MODULE Input; (*NW 5.10.86 / 15.11.90 Ceres-2; PDR 21.4.12 / NW 15.5.2013 Ceres-
   (* begin-procedure-description
 ---  
 **Mouse** provides the curent position and button state of the mouse.
+  end-procedure-description *)
   PROCEDURE Mouse*(VAR keys: SET; VAR x, y: INTEGER);
     VAR w: INTEGER;
   BEGIN SYSTEM.GET(msAdr, w);
@@ -96,6 +98,7 @@ MODULE Input; (*NW 5.10.86 / 15.11.90 Ceres-2; PDR 21.4.12 / NW 15.5.2013 Ceres-
   (* begin-procedure-description
 ---  
 **SetMouseLimits** restricts the mouse to the extent of the screen.
+  end-procedure-description *)
   PROCEDURE SetMouseLimits*(w, h: INTEGER);
   BEGIN MW := w; MH := h
   END SetMouseLimits;
