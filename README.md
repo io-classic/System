@@ -381,7 +381,7 @@ Module Batch provides for automatic sequential execution of Oberon commands.
 includes: [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORL.Mod](README.md#ORLMod-doc-src)  
 
 ### _Package Overview:_
-Integrated Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
+Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
 
  * A recursive-descent parser of the Oberon language, ORP
  * A generator of target-specific opcodes (RISC5), ORG
@@ -390,7 +390,7 @@ Integrated Oberon uses a one-pass compiler with four parts, each depending on th
 
 In addition, several tools link and examine the binary modules produced by the compiler:
 
- * A linker and loader, ORL
+ * A linker and loader, Linker
  * A bootload firmware generator, ORF
  * A tool for examining modules, ORTool
 
@@ -402,11 +402,11 @@ ORP.Compile Kernel.Mod/s, Filedir.Mod/s, Files.Mod/s, Modules.Mod/s ~
 ```
 To link the inner core modules into a bootable binary:
 ```
-ORL.Link Modules ~
+Linker.Link Modules ~
 ```
 To Install the binary into the boot region of the current disk image:
 ```
-ORL.Load Modules.bin ~
+Linker.Load Modules.bin ~
 ```
 To compile an example module:
 ```

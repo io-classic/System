@@ -1,6 +1,6 @@
 (* begin-package-description
 ### _Package Overview:_
-Integrated Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
+Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
 
  * A recursive-descent parser of the Oberon language, ORP
  * A generator of target-specific opcodes (RISC5), ORG
@@ -9,7 +9,7 @@ Integrated Oberon uses a one-pass compiler with four parts, each depending on th
 
 In addition, several tools link and examine the binary modules produced by the compiler:
 
- * A linker and loader, ORL
+ * A linker and loader, Linker
  * A bootload firmware generator, ORF
  * A tool for examining modules, ORTool
 
@@ -21,11 +21,11 @@ ORP.Compile Kernel.Mod/s, Filedir.Mod/s, Files.Mod/s, Modules.Mod/s ~
 ```
 To link the inner core modules into a bootable binary:
 ```
-ORL.Link Modules ~
+Linker.Link Modules ~
 ```
 To Install the binary into the boot region of the current disk image:
 ```
-ORL.Load Modules.bin ~
+Linker.Load Modules.bin ~
 ```
 To compile an example module:
 ```
@@ -71,12 +71,16 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     ORG to produce binary code. ORP performs type checking and data allocation.
     Parser is target-independent, except for part of the handling of allocations.*)
 
-  TYPE PtrBase = POINTER TO PtrBaseDesc;
+  CONST
+
+  TYPE 
+    PtrBase = POINTER TO PtrBaseDesc;
     PtrBaseDesc = RECORD  (*list of names of pointer base types*)
       name: ORS.Ident; type: ORB.Type; next: PtrBase
     END ;
   
-  VAR sym: INTEGER;   (*last symbol read*)
+  VAR 
+    sym: INTEGER;   (*last symbol read*)
     dc: LONGINT;    (*data counter*)
     level, exno, version: INTEGER;
     newSF: BOOLEAN;  (*option flag*)
@@ -88,6 +92,13 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     dummy: ORB.Object;
     W: Texts.Writer;
 
+## ---------- Tests
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**Check** marks an error if the current symbol does not match the expeted symbol.
+  end-procedure-description *)
   PROCEDURE Check(s: INTEGER; msg: ARRAY OF CHAR);
   BEGIN
     IF sym = s THEN ORS.Get(sym) ELSE ORS.Mark(msg) END
@@ -159,6 +170,13 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
 
   (* expressions *)
 
+## ---------- Expressions
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**TypeTest** checks for assignment type compatibility.
+  end-procedure-description *)
   PROCEDURE TypeTest(VAR x: ORG.Item; T: ORB.Type; guard: BOOLEAN);
     VAR xt: ORB.Type;
   BEGIN xt := x.type;
@@ -488,6 +506,13 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
 
   (* statements *)
 
+## ---------- Statements
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**StandProc** sets the keyboard initial state and populates the scancode to ascii table.
+  end-procedure-description *)
   PROCEDURE StandProc(pno: LONGINT);
     VAR nap, npar: LONGINT; (*nof actual/formal parameters*)
       x, y, z: ORG.Item;
@@ -658,6 +683,13 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
 
   (* Types and declarations *)
 
+## ---------- Types and declarations
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**IdentList** matches a comma separated list of identifiers.
+  end-procedure-description *)
   PROCEDURE IdentList(class: INTEGER; VAR first: ORB.Object);
     VAR obj: ORB.Object;
   BEGIN
@@ -1019,6 +1051,13 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END Module;
 
+## ---------- Command Invocation
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**Option** checks if a new symbol file may be generated.
+  end-procedure-description *)
   PROCEDURE Option(VAR S: Texts.Scanner);
   BEGIN newSF := FALSE;
     IF S.nextCh = "/" THEN
@@ -1027,6 +1066,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END Option;
 
+  (* begin-procedure-description
+---
+**Compile** locates the source code to a module, initializes the scanner, and begins parsing at 'Module'.
+  end-procedure-description *)
   PROCEDURE Compile*;
     VAR beg, end, time: LONGINT;
       T: Texts.Text;
@@ -1059,6 +1102,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     Oberon.Collect(0)
   END Compile;
 
+  (* begin-procedure-description
+---
+**The initialzation code for this module** opens a writer to print marked errors and initializes the Oberon parser state.
+  end-procedure-description *)
 BEGIN Texts.OpenWriter(W); Texts.WriteString(W, "OR Compiler  8.3.2020");
   Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
   NEW(dummy); dummy.class := ORB.Var; dummy.type := ORB.intType;
