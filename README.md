@@ -178,9 +178,6 @@ A pattern is an array of bytes; the first is its width (< 32), the second its he
 #### Input.Mod [_doc_](https://github.com/io-orig/System/blob/main/Input.md) [_src_](https://github.com/io-orig/System/blob/main/Input.Mod)
 Module Input reads keyboard and mouse raw data and returns ASCII values and mouse state to Oberon.
 
-Input uses SYSTEM
-
-
 
   **imports:** ` SYSTEM`
 
