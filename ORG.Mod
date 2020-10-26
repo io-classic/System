@@ -7,9 +7,9 @@ ORG uses SYSTEM, Files, ORS, ORB
 end-module-use-description *)
 (* begin-module-develop-description
 
-(N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / AP 1.9.20 Extended Oberon / CP 10.20 Integrated Oberon)
+(N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC)
 
-**ORG** is called from ORP and generates machine code various Oberon-2i language constructs for the Oberon RISC5 architeture.
+**ORG** is called from ORP and generates machine code various Oberon language constructs for the Oberon RISC5 architeture.
 
 end-module-develop-description *)
 MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC*)
@@ -18,7 +18,8 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
      Procedural interface to Parser OSAP; result in array "code".
      Procedure Close writes code-files*)
 
-  CONST WordSize* = 4;
+  CONST
+    WordSize* = 4;
     StkOrg0 = -64; VarOrg0 = 0;  (*for RISC-0 only*)
     MT = 12; SP = 14; LNK = 15;   (*dedicated registers*)
     maxCode = 8000; maxStrx = 2400; maxTD = 160; C24 = 1000000H;
@@ -32,7 +33,8 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     BR = 0; BLR = 1; BC = 2; BL = 3;
     MI = 0; PL = 8; EQ = 1; NE = 9; LT = 5; GE = 13; LE = 6; GT = 14;
 
-    TYPE Item* = RECORD
+  TYPE 
+    Item* = RECORD
       mode*: INTEGER;
       type*: ORB.Type;
       a*, b*, r: LONGINT;
@@ -49,7 +51,8 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     RegI   regno   off     -
     Cond  cond   Fchain  Tchain  *)
 
-  VAR pc*, varsize: LONGINT;   (*program counter, data index*)
+  VAR 
+    pc*, varsize: LONGINT;   (*program counter, data index*)
     tdx, strx: LONGINT;
     entry: LONGINT;   (*main entry point*)
     RH: LONGINT;  (*available registers R[0] ... R[H-1]*)
@@ -57,7 +60,6 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     fixorgP, fixorgD, fixorgT: LONGINT;   (*origins of lists of locations to be fixed up by loader*)
     check: BOOLEAN;  (*emit run-time checks*)
     version: INTEGER;  (* 0 = RISC-0, 1 = RISC-5 *)
-    
     relmap: ARRAY 6 OF INTEGER;  (*condition codes for relations*)
     code: ARRAY maxCode OF LONGINT;
     data: ARRAY maxTD OF LONGINT;  (*type descriptors*)
@@ -65,6 +67,16 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 
   (*instruction assemblers according to formats*)
 
+  (* begin-section-description
+## ---------- Instruction assemblers according to formats
+  end-section-description *)
+
+  (*instruction assemblers according to formats*)
+
+  (* begin-procedure-description
+---
+**Put0** 
+  end-procedure-description *)
   PROCEDURE Put0(op, a, b, c: LONGINT);
   BEGIN (*emit format-0 instruction*)
     code[pc] := ((a*10H + b) * 10H + op) * 10000H + c; INC(pc)
@@ -117,6 +129,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 
   (*handling of forward reference, fixups of branch addresses and constant tables*)
 
+  (* begin-section-description
+## ---------- Handling of forward reference, fixups of instruction operands
+  end-section-description *)
+
   PROCEDURE negated(cond: LONGINT): LONGINT;
   BEGIN
     IF cond < 8 THEN cond := cond+8 ELSE cond := cond-8 END ;
@@ -157,6 +173,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   END merged;
 
   (* loading of operands and addresses into registers *)
+
+  (* begin-section-description
+## ----------  Loading of operands and addresses into registers
+  end-section-description *)
 
   PROCEDURE GetSB(base: LONGINT);
   BEGIN
@@ -242,6 +262,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 
   (* Items: Conversion from constants or from Objects on the Heap to Items on the Stack*)
 
+  (* begin-section-description
+## ----------  Items: Conversion from constants or from Objects on the Heap to Items on the Stack
+  end-section-description *)
+
   PROCEDURE MakeConstItem*(VAR x: Item; typ: ORB.Type; val: LONGINT);
   BEGIN x.mode := ORB.Const; x.type := typ; x.a := val
   END MakeConstItem;
@@ -270,6 +294,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   END MakeItem;
 
   (* Code generation for Selectors, Variables, Constants *)
+
+  (* begin-section-description
+## ----------  Code generation for Selectors, Variables, Constants
+  end-section-description *)
 
   PROCEDURE Field*(VAR x: Item; y: ORB.Object);   (* x := x.y *)
   BEGIN;
@@ -393,6 +421,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 
   (* Code generation for Boolean operators *)
 
+  (* begin-section-description
+## ----------  Code generation for Boolean operators
+  end-section-description *)
+
   PROCEDURE Not*(VAR x: Item);   (* x := ~x *)
     VAR t: LONGINT;
   BEGIN
@@ -425,6 +457,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   END Or2;
 
   (* Code generation for arithmetic operators *)
+
+  (* begin-section-description
+## ----------  Code generation for arithmetic operators
+  end-section-description *)
 
   PROCEDURE Neg*(VAR x: Item);   (* x := -x *)
   BEGIN
@@ -507,6 +543,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 
   (* Code generation for REAL operators *)
 
+  (* begin-section-description
+## ----------  Code generation for REAL operators
+  end-section-description *)
+
   PROCEDURE RealOp*(op: INTEGER; VAR x, y: Item);   (* x := x op y *)
   BEGIN load(x); load(y);
     IF op = ORS.plus THEN Put0(Fad, RH-2, x.r, y.r)
@@ -518,6 +558,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   END RealOp;
 
   (* Code generation for set operators *)
+
+  (* begin-section-description
+## ----------  Code generation for set operators
+  end-section-description *)
 
   PROCEDURE Singleton*(VAR x: Item);  (* x := {x} *)
   BEGIN
@@ -583,6 +627,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 
   (* Code generation for relations *)
 
+  (* begin-section-description
+## ----------  Code generation for relations
+  end-section-description *)
+
   PROCEDURE IntRelation*(op: INTEGER; VAR x, y: Item);   (* x := x < y *)
   BEGIN
     IF (y.mode = ORB.Const) & (y.type.form # ORB.Proc) THEN
@@ -617,6 +665,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   END StringRelation;
 
   (* Code generation of Assignments *)
+
+  (* begin-section-description
+## ----------  Code generation of Assigments
+  end-section-description *)
 
   PROCEDURE StrToChar*(VAR x: Item);
   BEGIN x.type := ORB.charType; DEC(strx, 4); x.a := ORD(str[x.a])
@@ -683,6 +735,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   
   (* Code generation for parameters *)
   
+  (* begin-section-description
+## ----------  Code generation for parameters
+  end-section-description *)
+
   PROCEDURE OpenArrayParam*(VAR x: Item);
   BEGIN loadAdr(x);
     IF x.type.len >= 0 THEN Put1a(Mov, RH, 0, x.type.len) ELSE Put2(Ldr, RH, SP, x.a+4+frame) END ;
@@ -710,6 +766,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 
   (*For Statements*)
 
+  (* begin-section-description
+## ----------  For Statements
+  end-section-description *)
+
   PROCEDURE For0*(VAR x, y: Item);
   BEGIN load(y)
   END For0;
@@ -732,6 +792,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   END For2;
 
   (* Branches, procedure calls, procedure prolog and epilog *)
+
+  (* begin-section-description
+## ----------  Branches, procedure calls, procedure prolog and epilog
+  end-section-description *)
 
   PROCEDURE Here*(): LONGINT;
   BEGIN RETURN pc
@@ -834,6 +898,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 
   (* In-line code procedures*)
 
+  (* begin-section-description
+## ----------  In-line code procedures
+  end-section-description *)
+
   PROCEDURE Increment*(upordown: LONGINT; VAR x, y: Item);
     VAR op, zr, v: LONGINT;
   BEGIN (*frame = 0*)
@@ -924,6 +992,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   END LDREG;
 
   (*In-line code functions*)
+
+  (* begin-section-description
+## ----------  In-line code functions
+  end-section-description *)
 
   PROCEDURE Abs*(VAR x: Item);
   BEGIN
@@ -1130,5 +1202,12 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     Files.Write(R, "O"); Files.Register(F)
   END Close;
 
+  (* begin-procedure-description
+---
+**The initialzation code for this module** merely sets the 6 values in the global relmap array.
+
+This module's global variables are initialized by ORP calling ORG.Open, once it has begun parsing the source code's Module
+definition and determined that its module imports are available and of compatible object filetype.
+  end-procedure-description *)
 BEGIN relmap[0] := 1; relmap[1] := 9; relmap[2] := 5; relmap[3] := 6; relmap[4] := 14; relmap[5] := 13;
 END ORG.
