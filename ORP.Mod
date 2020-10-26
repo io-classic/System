@@ -105,6 +105,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     IF sym = s THEN ORS.Get(sym) ELSE ORS.Mark(msg) END
   END Check;
 
+  (* begin-procedure-description
+---
+**Qualident** generates a reference to a previously defined item if possible otherwise an error is marked.
+  end-procedure-description *)
   PROCEDURE qualident(VAR obj: ORB.Object);
   BEGIN obj := ORB.thisObj(); ORS.Get(sym);
     IF obj = NIL THEN ORS.Mark("undef"); obj := dummy END ;
@@ -117,26 +121,46 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END qualident;
 
+  (* begin-procedure-description
+---
+**CheckBool** marks an error if the item is not a boolean.
+  end-procedure-description *)
   PROCEDURE CheckBool(VAR x: ORG.Item);
   BEGIN
     IF x.type.form # ORB.Bool THEN ORS.Mark("not Boolean"); x.type := ORB.boolType END
   END CheckBool;
 
+  (* begin-procedure-description
+---
+**CheckInt** marks an error if the item is not an Int.
+  end-procedure-description *)
   PROCEDURE CheckInt(VAR x: ORG.Item);
   BEGIN
     IF x.type.form # ORB.Int THEN ORS.Mark("not Integer"); x.type := ORB.intType END
   END CheckInt;
 
+  (* begin-procedure-description
+---
+**CheckReal** marks an error if the item is not a Real.
+  end-procedure-description *)
   PROCEDURE CheckReal(VAR x: ORG.Item);
   BEGIN
     IF x.type.form # ORB.Real THEN ORS.Mark("not Real"); x.type := ORB.realType END
   END CheckReal;
 
+  (* begin-procedure-description
+---
+**CheckSet** marks an error if the item is not a Set.
+  end-procedure-description *)
   PROCEDURE CheckSet(VAR x: ORG.Item);
   BEGIN
     IF x.type.form # ORB.Set THEN ORS.Mark("not Set"); x.type := ORB.setType END 
   END CheckSet;
 
+  (* begin-procedure-description
+---
+**CheckSetVal** marks an error if the item is not a Set Value.
+  end-procedure-description *)
   PROCEDURE CheckSetVal(VAR x: ORG.Item);
   BEGIN
     IF x.type.form # ORB.Int THEN ORS.Mark("not Int"); x.type := ORB.setType
@@ -145,16 +169,28 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END 
   END CheckSetVal;
 
+  (* begin-procedure-description
+---
+**CheckConst** marks an error if the value is not a Constant.
+  end-procedure-description *)
   PROCEDURE CheckConst(VAR x: ORG.Item);
   BEGIN
     IF x.mode # ORB.Const THEN ORS.Mark("not a constant"); x.mode := ORB.Const END
   END CheckConst;
 
+  (* begin-procedure-description
+---
+**CheckReadOnly** marks an error if the value is not read-only.
+  end-procedure-description *)
   PROCEDURE CheckReadOnly(VAR x: ORG.Item);
   BEGIN
     IF x.rdo THEN ORS.Mark("read-only") END
   END CheckReadOnly;
 
+  (* begin-procedure-description
+---
+**CheckExport** checks for an export symbol and marks an error if export not at top level.
+  end-procedure-description *)
   PROCEDURE CheckExport(VAR expo: BOOLEAN);
   BEGIN
     IF sym = ORS.times THEN
@@ -164,6 +200,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END CheckExport;
 
+  (* begin-procedure-description
+---
+**IsExtension** determines if type t1 is an extension of t0.
+  end-procedure-description *)
   PROCEDURE IsExtension(t0, t1: ORB.Type): BOOLEAN;
   BEGIN (*t1 is an extension of t0*)
     RETURN (t0 = t1) OR (t1 # NIL) & IsExtension(t0, t1.base)
@@ -202,6 +242,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     IF ~guard THEN x.type := ORB.boolType END
   END TypeTest;
 
+  (* begin-procedure-description
+---
+**selector** generates the array item, procedure, or method dereference on an array or record.
+  end-procedure-description *)
   PROCEDURE selector(VAR x: ORG.Item);
     VAR y: ORG.Item; obj: ORB.Object;
   BEGIN
@@ -246,6 +290,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END selector;
 
+  (* begin-procedure-description
+---
+**EqualSignatures** verifies that a procedure may be assigned to a procedure variable.
+  end-procedure-description *)
   PROCEDURE EqualSignatures(t0, t1: ORB.Type): BOOLEAN;
     VAR p0, p1: ORB.Object; com: BOOLEAN;
   BEGIN com := TRUE;
@@ -265,6 +313,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     RETURN com
   END EqualSignatures;
 
+  (* begin-procedure-description
+---
+**CompTypes** verifies assigment compatibility by type.
+  end-procedure-description *)
   PROCEDURE CompTypes(t0, t1: ORB.Type; varpar: BOOLEAN): BOOLEAN;
   BEGIN (*check for assignment compatibility*)
     RETURN (t0 = t1)    (*openarray assignment disallowed in ORG*)
@@ -276,6 +328,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
         OR (t0.form IN {ORB.Pointer, ORB.Proc}) & (t1.form = ORB.NilTyp))
   END CompTypes;
 
+  (* begin-procedure-description
+---
+**Parameter** consumes a function call parameter and produces function call proloogue code for the parameter.
+  end-procedure-description *)
   PROCEDURE Parameter(par: ORB.Object);
     VAR x: ORG.Item; varpar: BOOLEAN;
   BEGIN expression(x);
@@ -304,6 +360,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END Parameter;
 
+  (* begin-procedure-description
+---
+**ParamList** consumes the function call parameters, resulting in a function call prologue.
+  end-procedure-description *)
   PROCEDURE ParamList(VAR x: ORG.Item);
     VAR n: INTEGER; par: ORB.Object;
   BEGIN par := x.type.dsc; n := 0;
@@ -322,6 +382,12 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END ParamList;
 
+  (* begin-procedure-description
+---
+**StandFunc** consumes standard language functions and produces inline code for those functions.
+
+Standard functions include: `ABS` `ODD` `FLOOR` `FLT` `ORD` `CHR` `LEN` `ADC` `SBC` `UML` `BIT` `REG` `VAL` `ADR` `SIZE` `COND` `H`
+  end-procedure-description *)
   PROCEDURE StandFunc(VAR x: ORG.Item; fct: LONGINT; restyp: ORB.Type);
     VAR y: ORG.Item; n, npar: LONGINT;
   BEGIN Check(ORS.lparen, "no (");
@@ -366,6 +432,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END StandFunc;
 
+  (* begin-procedure-description
+---
+**element** produces a reference to an element in a set.
+  end-procedure-description *)
   PROCEDURE element(VAR x: ORG.Item);
     VAR y: ORG.Item;
   BEGIN expression(x); CheckSetVal(x);
@@ -375,6 +445,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     x.type := ORB.setType
   END element;
   
+  (* begin-procedure-description
+---
+**set** produces a set from elements.
+  end-procedure-description *)
   PROCEDURE set(VAR x: ORG.Item);
     VAR y: ORG.Item;
   BEGIN
@@ -391,6 +465,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END set; 
 
+  (* begin-procedure-description
+---
+**factor** generates code that produces a value from identifiers, applications of functions and procedures, etc. for use in a calculation or assignment.
+  end-procedure-description *)
   PROCEDURE factor(VAR x: ORG.Item);
     VAR obj: ORB.Object; rx: LONGINT;
   BEGIN (*sync*)
@@ -423,6 +501,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END factor;
 
+  (* begin-procedure-description
+---
+**term** combines factors via multiplication and division, resulting in a value.
+  end-procedure-description *)
   PROCEDURE term(VAR x: ORG.Item);
     VAR y: ORG.Item; op, f: INTEGER;
   BEGIN factor(x); f := x.type.form;
@@ -446,6 +528,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END term;
 
+  (* begin-procedure-description
+---
+**SimpleExpression** combines terms via addition, subtraction, boolean, and set operations, resulting in a value.
+  end-procedure-description *)
   PROCEDURE SimpleExpression(VAR x: ORG.Item);
     VAR y: ORG.Item; op: INTEGER;
   BEGIN
@@ -464,6 +550,13 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END SimpleExpression;
 
+  (* begin-procedure-description
+---
+**expression0** produces code handling arbitrary arithmetic and logical operations, resulting in a value.
+
+expression0 is assigned to the procedure variable `expression` to allow the forward reference.
+
+  end-procedure-description *)
   PROCEDURE expression0(VAR x: ORG.Item);
     VAR y: ORG.Item; obj: ORB.Object; rel, xf, yf: INTEGER;
   BEGIN SimpleExpression(x);
@@ -553,12 +646,19 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END StandProc;
 
+  (* begin-procedure-description
+---
+**StatSequence** matches a statement sequence.
+  end-procedure-description *)
   PROCEDURE StatSequence;
     VAR obj: ORB.Object;
       orgtype: ORB.Type; (*original type of case var*)
       x, y, z, w: ORG.Item;
       L0, L1, rx: LONGINT;
 
+  (* begin-procedure-description
+**TypeCase** (interior procedure)
+  end-procedure-description *)
     PROCEDURE TypeCase(obj: ORB.Object; VAR x: ORG.Item);
       VAR typobj: ORB.Object;
     BEGIN
@@ -571,6 +671,9 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
       END
      END TypeCase;
 
+  (* begin-procedure-description
+**SkipCase** (interior procedure)
+  end-procedure-description *)
     PROCEDURE SkipCase;
     BEGIN 
       WHILE sym # ORS.colon DO ORS.Get(sym) END ;
@@ -710,6 +813,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END IdentList;
   
+  (* begin-procedure-description
+---
+**ArrayType** matches the definiton of an Array Type or marks an error.
+  end-procedure-description *)
   PROCEDURE ArrayType(VAR type: ORB.Type);
     VAR x: ORG.Item; typ: ORB.Type; len: LONGINT;
   BEGIN NEW(typ); typ.form := ORB.NoTyp;
@@ -726,6 +833,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     typ.form := ORB.Array; typ.len := len; type := typ
   END ArrayType;
 
+  (* begin-procedure-description
+---
+**RecordType** matches the definition of a Record Type or marks an error.
+  end-procedure-description *)
   PROCEDURE RecordType(VAR type: ORB.Type);
     VAR obj, obj0, new, bot, base: ORB.Object;
       typ, tp: ORB.Type;
@@ -771,6 +882,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     typ.form := ORB.Record; typ.dsc := bot; typ.size := (offset + 3) DIV 4 * 4; type := typ
   END RecordType;
 
+  (* begin-procedure-description
+---
+**FPSection** matches the parameters to a function or marks an error.
+  end-procedure-description *)
   PROCEDURE FPSection(VAR adr: LONGINT; VAR nofpar: INTEGER);
     VAR obj, first: ORB.Object; tp: ORB.Type;
       parsize: LONGINT; cl: INTEGER; rdo: BOOLEAN;
@@ -790,6 +905,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     IF adr >= 52 THEN ORS.Mark("too many parameters") END
   END FPSection;
 
+  (* begin-procedure-description
+---
+**ProcedureType** matches a Procedure Type definition or marks an error.
+  end-procedure-description *)
   PROCEDURE ProcedureType(ptype: ORB.Type; VAR parblksize: LONGINT);
     VAR obj: ORB.Object; size: LONGINT; nofpar: INTEGER;
   BEGIN ptype.base := ORB.noType; size := parblksize; nofpar := 0; ptype.dsc := NIL;
@@ -814,6 +933,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     ptype.nofpar := nofpar; parblksize := size
   END ProcedureType;
 
+  (* begin-procedure-description
+---
+**FormalType0** matches the definition of a type or marks an error.
+  end-procedure-description *)
   PROCEDURE FormalType0(VAR typ: ORB.Type; dim: INTEGER);
     VAR obj: ORB.Object; dmy: LONGINT;
   BEGIN
@@ -833,11 +956,19 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END FormalType0;
 
+  (* begin-procedure-description
+---
+**CheckRecLevel** ensures that the ptr base is global.
+  end-procedure-description *)
   PROCEDURE CheckRecLevel(lev: INTEGER);
   BEGIN
     IF lev # 0 THEN ORS.Mark("ptr base must be global") END
   END CheckRecLevel;
 
+  (* begin-procedure-description
+---
+**Type0** matches a type definition or marks an error.
+  end-procedure-description *)
   PROCEDURE Type0(VAR type: ORB.Type);
     VAR dmy: LONGINT; obj: ORB.Object; ptbase: PtrBase;
   BEGIN type := ORB.intType; (*sync*)
@@ -880,6 +1011,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END Type0;
 
+  (* begin-procedure-description
+---
+**Declarations** dispatches the definition of constants, types, and variables.
+  end-procedure-description *)
   PROCEDURE Declarations(VAR varsize: LONGINT);
     VAR obj, first: ORB.Object;
       x: ORG.Item; tp: ORB.Type; ptbase: PtrBase;
@@ -946,6 +1081,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     IF (sym >= ORS.const) & (sym <= ORS.var) THEN ORS.Mark("declaration in bad order") END
   END Declarations;
 
+  (* begin-procedure-description
+---
+**ProcedureDecl** matches the definition of a procedure or marks an error.
+  end-procedure-description *)
   PROCEDURE ProcedureDecl;
     VAR proc: ORB.Object;
       type: ORB.Type;
@@ -994,6 +1133,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END ProcedureDecl;
 
+  (* begin-procedure-description
+---
+**Import** consumes the names of modules imported by this module and ensures their compatibility or marks an error.
+  end-procedure-description *)
   PROCEDURE Import;
     VAR impid, impid1: ORS.Ident;
   BEGIN
@@ -1011,6 +1154,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END Import;
 
+  (* begin-procedure-description
+---
+**Module** begins the recursive descent parsing of the source text and emits an object code file on completion or marks an error.
+  end-procedure-description *)
   PROCEDURE Module;
     VAR key: LONGINT;
   BEGIN Texts.WriteString(W, "  compiling "); ORS.Get(sym);
