@@ -49,6 +49,7 @@ for lexical parsing and built-in type identification.
 ```
 ## Procedures:
 ---
+## ---------- Tests
 ---
 **Check** marks an error if the current symbol does not match the expeted symbol.
 
@@ -84,6 +85,7 @@ for lexical parsing and built-in type identification.
 
 `  PROCEDURE IsExtension(t0, t1: ORB.Type): BOOLEAN;` [(source)](https://github.com/io-orig/System/blob/main/ORP.Mod#L167)
 
+## ---------- Expressions
 ---
 **TypeTest** checks for assignment type compatibility.
 
@@ -125,6 +127,7 @@ for lexical parsing and built-in type identification.
 
 `  PROCEDURE expression0(VAR x: ORG.Item);` [(source)](https://github.com/io-orig/System/blob/main/ORP.Mod#L467)
 
+## ---------- Statements
 ---
 **StandProc** sets the keyboard initial state and populates the scancode to ascii table.
 
@@ -139,6 +142,7 @@ for lexical parsing and built-in type identification.
 
 `    PROCEDURE SkipCase;` [(source)](https://github.com/io-orig/System/blob/main/ORP.Mod#L574)
 
+## ---------- Types and declarations
 ---
 **IdentList** matches a comma separated list of identifiers.
 
@@ -177,6 +181,7 @@ for lexical parsing and built-in type identification.
 
 `  PROCEDURE Module;` [(source)](https://github.com/io-orig/System/blob/main/ORP.Mod#L1014)
 
+## ---------- Command Invocation
 ---
 **Option** checks if a new symbol file may be generated.
 
