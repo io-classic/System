@@ -92,6 +92,7 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     dummy: ORB.Object;
     W: Texts.Writer;
 
+(* start-section-description
 ## ---------- Tests
   end-section-description *)
 
@@ -170,6 +171,7 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
 
   (* expressions *)
 
+(* start-section-description
 ## ---------- Expressions
   end-section-description *)
 
@@ -506,6 +508,7 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
 
   (* statements *)
 
+(* start-section-description
 ## ---------- Statements
   end-section-description *)
 
@@ -683,6 +686,7 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
 
   (* Types and declarations *)
 
+(* start-section-description
 ## ---------- Types and declarations
   end-section-description *)
 
@@ -1051,6 +1055,7 @@ MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*
     END
   END Module;
 
+(* start-section-description
 ## ---------- Command Invocation
   end-section-description *)
 
