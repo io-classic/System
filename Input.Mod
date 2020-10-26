@@ -6,14 +6,7 @@ end-module-use-description *)
 
 (NW 5.10.86 / 15.11.90 Ceres-2; PDR 21.4.12 / NW 15.5.2013 Ceres-4 / PDW 19.4.2016)
 
-**Display** is the interface to the hardware framebuffer in Oberon.
-
-On initialization the origial base address is queried for a magic value to determine
-if the base has moved and if the resolution is something other than 1024x768.
-
-Only monochrome screens are implemented in this version of Display.Mod
-
-A pattern is an array of bytes; the first is its width (< 32), the second its height, the rest the raster data.
+**Input** is the interface to the keyboard and mouse in Oberon.
 
 end-module-develop-description *)
 MODULE Input; (*NW 5.10.86 / 15.11.90 Ceres-2; PDR 21.4.12 / NW 15.5.2013 Ceres-4 / PDW 19.4.2016*)

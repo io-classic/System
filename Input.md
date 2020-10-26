@@ -3,14 +3,7 @@
 
 (NW 5.10.86 / 15.11.90 Ceres-2; PDR 21.4.12 / NW 15.5.2013 Ceres-4 / PDW 19.4.2016)
 
-**Display** is the interface to the hardware framebuffer in Oberon.
-
-On initialization the origial base address is queried for a magic value to determine
-if the base has moved and if the resolution is something other than 1024x768.
-
-Only monochrome screens are implemented in this version of Display.Mod
-
-A pattern is an array of bytes; the first is its width (< 32), the second its height, the rest the raster data.
+**Input** is the interface to the keyboard and mouse in Oberon.
 
 
   ## Imports:
@@ -43,18 +36,18 @@ A pattern is an array of bytes; the first is its width (< 32), the second its he
 ---
 **Peek** checks to see if a key has been pressed or released.
 
-`  PROCEDURE Peek();` [(source)](https://github.com/io-orig/System/blob/main/Input.Mod#L47)
+`  PROCEDURE Peek();` [(source)](https://github.com/io-orig/System/blob/main/Input.Mod#L40)
 
 ---
 **Available** returns the available keypress.
 
-`  PROCEDURE Available*(): INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/Input.Mod#L68)
+`  PROCEDURE Available*(): INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/Input.Mod#L61)
 
 ---  
 **Read** delivers ascii values of pressed keys.
   PROCEDURE Read*(VAR ch: CHAR);
 
-`  PROCEDURE Read*(VAR ch: CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Input.Mod#L76)
+`  PROCEDURE Read*(VAR ch: CHAR);` [(source)](https://github.com/io-orig/System/blob/main/Input.Mod#L69)
 
   BEGIN
     WHILE ~Recd DO Peek() END ;
@@ -76,7 +69,7 @@ A pattern is an array of bytes; the first is its width (< 32), the second its he
 **Mouse** provides the curent position and button state of the mouse.
   PROCEDURE Mouse*(VAR keys: SET; VAR x, y: INTEGER);
 
-`  PROCEDURE Mouse*(VAR keys: SET; VAR x, y: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Input.Mod#L94)
+`  PROCEDURE Mouse*(VAR keys: SET; VAR x, y: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Input.Mod#L87)
 
     VAR w: INTEGER;
   BEGIN SYSTEM.GET(msAdr, w);
@@ -91,7 +84,7 @@ A pattern is an array of bytes; the first is its width (< 32), the second its he
 **SetMouseLimits** restricts the mouse to the extent of the screen.
   PROCEDURE SetMouseLimits*(w, h: INTEGER);
 
-`  PROCEDURE SetMouseLimits*(w, h: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Input.Mod#L106)
+`  PROCEDURE SetMouseLimits*(w, h: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/Input.Mod#L99)
 
   BEGIN MW := w; MH := h
   END SetMouseLimits;
@@ -106,5 +99,5 @@ A pattern is an array of bytes; the first is its width (< 32), the second its he
 ---
 **Init** sets the keyboard initial state and populates the scancode to ascii table.
 
-`  PROCEDURE Init*;` [(source)](https://github.com/io-orig/System/blob/main/Input.Mod#L119)
+`  PROCEDURE Init*;` [(source)](https://github.com/io-orig/System/blob/main/Input.Mod#L112)
 
