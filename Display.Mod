@@ -6,7 +6,7 @@ A pattern is an array of bytes; the first is its width (< 32), the second its he
 end-module-use-description *)
 (* begin-module-develop-description
 
-(NW 5.11.2013 / 17.1.2019 / AP 9.3.20 Extended Oberon / CP 10.20 Integrated Oberon)
+(NW 5.11.2013 / 17.1.2019 / PDW 21.1.2019)
 
 **Display** is the interface to the hardware framebuffer in Oberon.
 
@@ -18,17 +18,19 @@ Only monochrome screens are implemented in this version of Display.Mod
 A pattern is an array of bytes; the first is its width (< 32), the second its height, the rest the raster data.
 
 end-module-develop-description *)
-MODULE Display;  (*NW 5.11.2013 / 17.1.2019*)
+MODULE Display;  (*NW 5.11.2013 / 17.1.2019 / PDW 21.1.2019 *)
 (* Adapted for a customizable framebuffer size -- see git history *)
 
   IMPORT SYSTEM;
 
-  CONST black* = 0; white* = 1;  (*black = background*)
+  CONST 
+    black* = 0; white* = 1;  (*black = background*)
     replace* = 0; paint* = 1; invert* = 2;  (*modes*)
     (* base = 0E7F00H; *)  (*adr of 1024 x 768 pixel, monocolor display frame*)
     (* In the emulator, the frame buffer address might be moved depending on memory configuration *)
 
-  TYPE Frame* = POINTER TO FrameDesc;
+  TYPE 
+    Frame* = POINTER TO FrameDesc;
     FrameMsg* = RECORD END ;
     Handler* = PROCEDURE (F: Frame; VAR M: FrameMsg);
     FrameDesc* = RECORD next*, dsc*: Frame;
@@ -36,7 +38,8 @@ MODULE Display;  (*NW 5.11.2013 / 17.1.2019*)
         handle*: Handler
       END ;
 
-  VAR Base*, Width*, Height*, Span: INTEGER;
+  VAR 
+    Base*, Width*, Height*, Span: INTEGER;
     arrow*, star*, hook*, updown*, block*, cross*, grey*: INTEGER;
     (*a pattern is an array of bytes; the first is its width (< 32), the second its height, the rest the raster*)
 
