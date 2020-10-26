@@ -967,7 +967,11 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   BEGIN load(x); x.type := y.type; x.mode := RegI; x.a := 0; Store(x, y)
   END Put;
 
-  PROCEDURE Copy*(VAR x, y, z: Item);
+  (* begin-procedure-description
+---
+**Copy** generates an inline memory copy routine.     
+  end-procedure-description *)
+   PROCEDURE Copy*(VAR x, y, z: Item);
   BEGIN load(x); load(y);
     IF z.mode = ORB.Const THEN
       IF z.a > 0 THEN load(z) ELSE ORS.Mark("bad count") END
@@ -980,11 +984,19 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     Put1(Sub, z.r, z.r, 1); Put3(BC, NE, -6); DEC(RH, 3)
   END Copy;
 
-  PROCEDURE LDPSR*(VAR x: Item);
+  (* begin-procedure-description
+---
+**LDPSR** places the processor status register in a variable     
+  end-procedure-description *)
+   PROCEDURE LDPSR*(VAR x: Item);
   BEGIN (*x.mode = Const*)  Put3(0, 15, x.a + 20H)
   END LDPSR;
 
-  PROCEDURE LDREG*(VAR x, y: Item);
+  (* begin-procedure-description
+---
+**LDREG** places a register value in a variable     
+  end-procedure-description *)
+   PROCEDURE LDREG*(VAR x, y: Item);
   BEGIN
     IF y.mode = ORB.Const THEN Put1a(Mov, x.a, 0, y.a)
     ELSE load(y); Put0(Mov, x.a, 0, y.r); DEC(RH)
@@ -997,7 +1009,11 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  In-line code functions
   end-section-description *)
 
-  PROCEDURE Abs*(VAR x: Item);
+  (* begin-procedure-description
+---
+**Abs** generates an inline functionn that takes the absolute value     
+  end-procedure-description *)
+   PROCEDURE Abs*(VAR x: Item);
   BEGIN
     IF x.mode = ORB.Const THEN x.a := ABS(x.a)
     ELSE load(x);
@@ -1007,24 +1023,44 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END Abs;
 
-  PROCEDURE Odd*(VAR x: Item);
+  (* begin-procedure-description
+---
+**Odd** generates an inlinen function that checks whether a value is odd.     
+  end-procedure-description *)
+   PROCEDURE Odd*(VAR x: Item);
   BEGIN load(x); Put1(And, x.r, x.r, 1); SetCC(x, NE); DEC(RH)
   END Odd;
 
-  PROCEDURE Floor*(VAR x: Item);
+  (* begin-procedure-description
+---
+**Floor** generates an inline function that produces the floor of a value.     
+  end-procedure-description *)
+   PROCEDURE Floor*(VAR x: Item);
   BEGIN load(x); Put1(Mov+U, RH, 0, 4B00H); Put0(Fad+V, x.r, x.r, RH)
   END Floor;
 
-  PROCEDURE Float*(VAR x: Item);
+  (* begin-procedure-description
+---
+**Float** generates an inline function that produces a float.     
+  end-procedure-description *)
+   PROCEDURE Float*(VAR x: Item);
   BEGIN load(x); Put1(Mov+U, RH, 0, 4B00H);  Put0(Fad+U, x.r, x.r, RH)
   END Float;
 
-  PROCEDURE Ord*(VAR x: Item);
+  (* begin-procedure-description
+---
+**Ord** generates an inline function that presents the ordinal value of its parameter.     
+  end-procedure-description *)
+   PROCEDURE Ord*(VAR x: Item);
   BEGIN
     IF x.mode IN {ORB.Var, ORB.Par, RegI, Cond} THEN load(x) END
   END Ord;
 
-  PROCEDURE Len*(VAR x: Item);
+  (* begin-procedure-description
+---
+**Len** generates an inline function that presents the length of an array.     
+  end-procedure-description *)
+   PROCEDURE Len*(VAR x: Item);
   BEGIN
     IF x.type.len >= 0 THEN
       IF x.mode = RegI THEN DEC(RH) END ;
@@ -1033,7 +1069,11 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END 
   END Len;
 
-  PROCEDURE Shift*(fct: LONGINT; VAR x, y: Item);
+  (* begin-procedure-description
+---
+**Shift** generates an inline function that performs bit shifts.      
+  end-procedure-description *)
+   PROCEDURE Shift*(fct: LONGINT; VAR x, y: Item);
     VAR op: LONGINT;
   BEGIN load(x);
     IF fct = 0 THEN op := Lsl ELSIF fct = 1 THEN op := Asr ELSE op := Ror END ;
@@ -1042,19 +1082,35 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END Shift;
 
-  PROCEDURE ADC*(VAR x, y: Item);
+  (* begin-procedure-description
+---
+**ADC** generates an inline function that Adds with Carry     
+  end-procedure-description *)
+   PROCEDURE ADC*(VAR x, y: Item);
   BEGIN load(x); load(y); Put0(Add+2000H, x.r, x.r, y.r); DEC(RH)
   END ADC;
 
-  PROCEDURE SBC*(VAR x, y: Item);
+  (* begin-procedure-description
+---
+**SBC** generates an inline function that Subtracts with Carry 
+  end-procedure-description *)
+   PROCEDURE SBC*(VAR x, y: Item);
   BEGIN load(x); load(y); Put0(Sub+2000H, x.r, x.r, y.r); DEC(RH)
   END SBC;
 
-  PROCEDURE UML*(VAR x, y: Item);
+  (* begin-procedure-description
+---
+**UML** generates an inline function ??     
+  end-procedure-description *)
+   PROCEDURE UML*(VAR x, y: Item);
   BEGIN load(x); load(y); Put0(Mul+2000H, x.r, x.r, y.r); DEC(RH)
   END UML;
 
-  PROCEDURE Bit*(VAR x, y: Item);
+  (* begin-procedure-description
+---
+**Bit** generates an inline function presenting the yth bit of x      
+  end-procedure-description *)
+   PROCEDURE Bit*(VAR x, y: Item);
   BEGIN load(x); Put2(Ldr, x.r, x.r, 0);
     IF y.mode = ORB.Const THEN Put1(Ror, x.r, x.r, y.a+1); DEC(RH)
     ELSE load(y); Put1(Add, y.r, y.r, 1); Put0(Ror, x.r, x.r, y.r); DEC(RH, 2)
@@ -1062,17 +1118,29 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     SetCC(x, MI)
   END Bit;
 
-  PROCEDURE Register*(VAR x: Item);
+  (* begin-procedure-description
+---
+**Register** generates an inline function presenting a general register's contents      
+  end-procedure-description *)
+   PROCEDURE Register*(VAR x: Item);
   BEGIN (*x.mode = Const*)
     Put0(Mov, RH, 0, x.a MOD 10H); x.mode := Reg; x.r := RH; incR
   END Register;
 
-  PROCEDURE H*(VAR x: Item);
+  (* begin-procedure-description
+---
+**H** genrates an inline funtion presenting the contents of the H register.     
+  end-procedure-description *)
+   PROCEDURE H*(VAR x: Item);
   BEGIN (*x.mode = Const*)
     Put0(Mov + U + x.a MOD 2 * V, RH, 0, 0); x.mode := Reg; x.r := RH; incR
   END H;
 
-  PROCEDURE Adr*(VAR x: Item);
+  (* begin-procedure-description
+---
+**Adr** generates an inline function presenting the memory address of its parameter.      
+  end-procedure-description *)
+   PROCEDURE Adr*(VAR x: Item);
   BEGIN 
     IF x.mode IN {ORB.Var, ORB.Par, RegI} THEN loadAdr(x)
     ELSIF (x.mode = ORB.Const) & (x.type.form = ORB.Proc) THEN load(x)
@@ -1081,28 +1149,48 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END Adr;
 
-  PROCEDURE Condition*(VAR x: Item);
+  (* begin-procedure-description
+---
+**Condition** generates an inline function presenting a condition.     
+  end-procedure-description *)
+   PROCEDURE Condition*(VAR x: Item);
   BEGIN (*x.mode = Const*) SetCC(x, x.a)
   END Condition;
 
-  PROCEDURE Open*(v: INTEGER);
+  (* begin-procedure-description
+---
+**Open** initializes the ORG module code generation engine.     
+  end-procedure-description *)
+   PROCEDURE Open*(v: INTEGER);
   BEGIN pc := 0; tdx := 0; strx := 0; RH := 0; fixorgP := 0; fixorgD := 0; fixorgT := 0; check := v # 0; version := v;
     IF v = 0 THEN pc := 1;
       REPEAT code[pc] := 0; INC(pc) UNTIL pc = 8
     END
   END Open;
 
-  PROCEDURE SetDataSize*(dc: LONGINT);
+  (* begin-procedure-description
+---
+**SetDataSize** sets the amount of space reserved for module global variables.     
+  end-procedure-description *)
+   PROCEDURE SetDataSize*(dc: LONGINT);
   BEGIN varsize := dc
   END SetDataSize;
 
-  PROCEDURE Header*;
+  (* begin-procedure-description
+---
+**Header** prepares the code introductory sequence for a compiled module     
+  end-procedure-description *)
+   PROCEDURE Header*;
   BEGIN entry := pc*4;
     IF version = 0 THEN code[0] := 0E7000000H-1 + pc;  Put1a(Mov, SP, 0, StkOrg0)  (*RISC-0*)
     ELSE Put1(Sub, SP, SP, 4); Put2(Str, LNK, SP, 0)
     END
   END Header;
 
+  (* begin-procedure-description
+---
+**NofPtrs** determines the number of Garbage Collection Roots.
+  end-procedure-description *)
   PROCEDURE NofPtrs(typ: ORB.Type): LONGINT;
     VAR fld: ORB.Object; n: LONGINT;
   BEGIN
@@ -1116,6 +1204,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     RETURN n
   END NofPtrs;
 
+  (* begin-procedure-description
+---
+**FindPtrs** locates Garbage Collection roots.
+  end-procedure-description *)
   PROCEDURE FindPtrs(VAR R: Files.Rider; typ: ORB.Type; adr: LONGINT);
     VAR fld: ORB.Object; i, s: LONGINT;
   BEGIN
@@ -1129,6 +1221,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END FindPtrs;
 
+  (* begin-procedure-description
+---
+**Close** writes the completed binary to disk.
+  end-procedure-description *)
   PROCEDURE Close*(VAR modid: ORS.Ident; key, nofent: LONGINT);
     VAR obj: ORB.Object;
       i, comsize, nofimps, nofptrs, size: LONGINT;
