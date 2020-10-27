@@ -178,6 +178,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  Loading of operands and addresses into registers
   end-section-description *)
 
+  (* begin-procedure-description
+---
+**GetSB** loads the static base of a module
+  end-procedure-description *)
   PROCEDURE GetSB(base: LONGINT);
   BEGIN
     IF version = 0 THEN Put1(Mov, RH, 0, VarOrg0)
@@ -185,10 +189,18 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END GetSB;
 
+  (* begin-procedure-description
+---
+**NilCheck** ensures a pointer is not NIL
+  end-procedure-description *)
   PROCEDURE NilCheck;
   BEGIN IF check THEN Trap(EQ, 4) END
   END NilCheck;
 
+  (* begin-procedure-description
+---
+**load** generates loading the contents of a variable
+  end-procedure-description *)
   PROCEDURE load(VAR x: Item);
     VAR op: LONGINT;
   BEGIN
@@ -221,6 +233,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END load;
 
+  (* begin-procedure-description
+---
+**loadAdr** generates loading the location of a variable
+  end-procedure-description *)
   PROCEDURE loadAdr(VAR x: Item);
   BEGIN
     IF x.mode = ORB.Var THEN
@@ -238,6 +254,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     x.mode := Reg
   END loadAdr;
 
+  (* begin-procedure-description
+---
+**loadCond** generates loading a boolean
+  end-procedure-description *)
   PROCEDURE loadCond(VAR x: Item);
   BEGIN
     IF x.type.form = ORB.Bool THEN
@@ -251,11 +271,19 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END loadCond;
 
+  (* begin-procedure-description
+---
+**loadTypTagAdr** generates loading a type tag address
+  end-procedure-description *)
   PROCEDURE loadTypTagAdr(T: ORB.Type);
     VAR x: Item;
   BEGIN x.mode := ORB.Var; x.a := T.len; x.r := -T.mno; loadAdr(x)
   END loadTypTagAdr;
 
+  (* begin-procedure-description
+---
+**loadStringAdr** generates loading a string address
+  end-procedure-description *)
   PROCEDURE loadStringAdr(VAR x: Item);
   BEGIN GetSB(0); Put1a(Add, RH, RH, varsize+x.a); x.mode := Reg; x.r := RH; incR
   END loadStringAdr;
@@ -266,14 +294,26 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  Items: Conversion from constants or from Objects on the Heap to Items on the Stack
   end-section-description *)
 
+  (* begin-procedure-description
+---
+**MakeConstItem** prepares
+  end-procedure-description *)
   PROCEDURE MakeConstItem*(VAR x: Item; typ: ORB.Type; val: LONGINT);
   BEGIN x.mode := ORB.Const; x.type := typ; x.a := val
   END MakeConstItem;
 
+  (* begin-procedure-description
+---
+**MakeRealItem** prepares
+  end-procedure-description *)
   PROCEDURE MakeRealItem*(VAR x: Item; val: REAL);
   BEGIN x.mode := ORB.Const; x.type := ORB.realType; x.a := SYSTEM.VAL(LONGINT, val)
   END MakeRealItem;
 
+  (* begin-procedure-description
+---
+**MakeStringItem** prepares
+  end-procedure-description *)
   PROCEDURE MakeStringItem*(VAR x: Item; len: LONGINT); (*copies string from ORS-buffer to ORG-string array*)
     VAR i: LONGINT;
   BEGIN x.mode := ORB.Const; x.type := ORB.strType; x.a := strx; x.b := len; i := 0;
@@ -284,6 +324,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END MakeStringItem;
 
+  (* begin-procedure-description
+---
+**MakeItem** prepares
+  end-procedure-description *)
   PROCEDURE MakeItem*(VAR x: Item; y: ORB.Object; curlev: LONGINT);
   BEGIN x.mode := y.class; x.type := y.type; x.a := y.val; x.rdo := y.rdo;
     IF y.class = ORB.Par THEN x.b := 0
@@ -299,6 +343,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  Code generation for Selectors, Variables, Constants
   end-section-description *)
 
+  (* begin-procedure-description
+---
+**Field** locates a record field
+  end-procedure-description *)
   PROCEDURE Field*(VAR x: Item; y: ORB.Object);   (* x := x.y *)
   BEGIN;
     IF x.mode = ORB.Var THEN
@@ -310,6 +358,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END Field;
 
+  (* begin-procedure-description
+---
+**Index** locates an array element
+  end-procedure-description *)
   PROCEDURE Index*(VAR x, y: Item);   (* x := x[y] *)
     VAR s, lim: LONGINT;
   BEGIN s := x.type.base.size; lim := x.type.len;
@@ -345,6 +397,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END Index;
 
+  (* begin-procedure-description
+---
+**DeRef** generates a dereference
+  end-procedure-description *)
   PROCEDURE DeRef*(VAR x: Item);
   BEGIN
     IF x.mode = ORB.Var THEN
@@ -358,6 +414,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     x.mode := RegI; x.a := 0; x.b := 0
   END DeRef;
 
+  (* begin-procedure-description
+---
+**Q** prepares
+  end-procedure-description *)
   PROCEDURE Q(T: ORB.Type; VAR dcw: LONGINT);
   BEGIN (*one entry of type descriptor extension table*)
     IF T.base # NIL THEN
@@ -366,6 +426,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END Q;
 
+  (* begin-procedure-description
+---
+**FindPtrFlds** prepares
+  end-procedure-description *)
   PROCEDURE FindPtrFlds(typ: ORB.Type; off: LONGINT; VAR dcw: LONGINT);
     VAR fld: ORB.Object; i, s: LONGINT;
   BEGIN
@@ -379,6 +443,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END FindPtrFlds;
 
+  (* begin-procedure-description
+---
+**BuildTD** prepares
+  end-procedure-description *)
   PROCEDURE BuildTD*(T: ORB.Type; VAR dc: LONGINT);
     VAR dcw, k, s: LONGINT;  (*dcw = word address*)
   BEGIN dcw := dc DIV 4; s := T.size; (*convert size for heap allocation*)
@@ -395,6 +463,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     IF tdx >= maxTD THEN ORS.Mark("too many record types"); tdx := 0 END
   END BuildTD;
 
+  (* begin-procedure-description
+---
+**TypeTest** generates a type test
+  end-procedure-description *)
   PROCEDURE TypeTest*(VAR x: Item; T: ORB.Type; varpar, isguard: BOOLEAN);
     VAR pc0: LONGINT;
   BEGIN
@@ -425,6 +497,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  Code generation for Boolean operators
   end-section-description *)
 
+  (* begin-procedure-description
+---
+**Not** generates
+  end-procedure-description *)
   PROCEDURE Not*(VAR x: Item);   (* x := ~x *)
     VAR t: LONGINT;
   BEGIN
@@ -432,24 +508,40 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     x.r := negated(x.r); t := x.a; x.a := x.b; x.b := t
   END Not;
 
+  (* begin-procedure-description
+---
+**And1** generates
+  end-procedure-description *)
   PROCEDURE And1*(VAR x: Item);   (* x := x & *)
   BEGIN
     IF x.mode # Cond THEN loadCond(x) END ;
     Put3(BC, negated(x.r), x.a); x.a := pc-1; FixLink(x.b); x.b := 0
   END And1;
 
+  (* begin-procedure-description
+---
+**And2** generates
+  end-procedure-description *)
   PROCEDURE And2*(VAR x, y: Item);
   BEGIN
     IF y.mode # Cond THEN loadCond(y) END ;
     x.a := merged(y.a, x.a); x.b := y.b; x.r := y.r
   END And2;
 
+  (* begin-procedure-description
+---
+**Or1** generates
+  end-procedure-description *)
   PROCEDURE Or1*(VAR x: Item);   (* x := x OR *)
   BEGIN
     IF x.mode # Cond THEN loadCond(x) END ;
     Put3(BC, x.r, x.b);  x.b := pc-1; FixLink(x.a); x.a := 0
   END Or1;
 
+  (* begin-procedure-description
+---
+**Or2** generates
+  end-procedure-description *)
   PROCEDURE Or2*(VAR x, y: Item);
   BEGIN
     IF y.mode # Cond THEN loadCond(y) END ;
@@ -479,6 +571,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END Neg;
 
+  (* begin-procedure-description
+---
+**AddOp** generates an add operation
+  end-procedure-description *)
   PROCEDURE AddOp*(op: LONGINT; VAR x, y: Item);   (* x := x +- y *)
   BEGIN
     IF op = ORS.plus THEN
@@ -496,12 +592,20 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END AddOp;
 
+  (* begin-procedure-description
+---
+**log2** generates a log2 operation
+  end-procedure-description *)
   PROCEDURE log2(m: LONGINT; VAR e: LONGINT): LONGINT;
   BEGIN e := 0;
     WHILE ~ODD(m) DO m := m DIV 2; INC(e) END ;
     RETURN m
   END log2;
   
+  (* begin-procedure-description
+---
+**MulOp** generates a multipy operation
+  end-procedure-description *)
   PROCEDURE MulOp*(VAR x, y: Item);   (* x := x * y *)
     VAR e: LONGINT;
   BEGIN
@@ -514,6 +618,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END MulOp;
 
+  (* begin-procedure-description
+---
+**DivOp** generates a divide operation
+  end-procedure-description *)
   PROCEDURE DivOp*(op: LONGINT; VAR x, y: Item);   (* x := x op y *)
     VAR e: LONGINT;
   BEGIN
@@ -547,6 +655,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  Code generation for REAL operators
   end-section-description *)
 
+  (* begin-procedure-description
+---
+**RealOp** generates operations on reals
+  end-procedure-description *)
   PROCEDURE RealOp*(op: INTEGER; VAR x, y: Item);   (* x := x op y *)
   BEGIN load(x); load(y);
     IF op = ORS.plus THEN Put0(Fad, RH-2, x.r, y.r)
@@ -563,6 +675,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  Code generation for set operators
   end-section-description *)
 
+  (* begin-procedure-description
+---
+**Singleton** generates a set of one set item.
+  end-procedure-description *)
   PROCEDURE Singleton*(VAR x: Item);  (* x := {x} *)
   BEGIN
     IF x.mode = ORB.Const THEN x.a := LSL(1, x.a) 
@@ -570,6 +686,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END Singleton;
 
+  (* begin-procedure-description
+---
+**Set** generates a set value from two set items.
+  end-procedure-description *)
   PROCEDURE Set*(VAR x, y: Item);   (* x := {x .. y} *)
   BEGIN
     IF (x.mode = ORB.Const) & ( y.mode = ORB.Const) THEN
@@ -589,6 +709,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END Set;
 
+  (* begin-procedure-description
+---
+**In** generates a test for if an item is in a set
+  end-procedure-description *)
   PROCEDURE In*(VAR x, y: Item);  (* x := x IN y *)
   BEGIN load(y);
     IF x.mode = ORB.Const THEN Put1(Ror, y.r, y.r, (x.a + 1) MOD 20H); DEC(RH)
@@ -597,6 +721,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     SetCC(x, MI)
   END In;
 
+  (* begin-procedure-description
+---
+**SetOp** generates operations on sets
+  end-procedure-description *)
   PROCEDURE SetOp*(op: LONGINT; VAR x, y: Item);   (* x := x op y *)
     VAR xset, yset: SET; (*x.type.form = Set*)
   BEGIN
