@@ -171,7 +171,7 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
         NEW(mod); mod.class := Mod; mod.rdo := FALSE;
         mod.name := name; mod.orgname := orgname; mod.val := key;
         mod.lev := nofmod; INC(nofmod); mod.dsc := NIL; mod.next := NIL;
-    NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07    IF decl THEN mod.type := noType ELSE mod.type := nilType END ;
+        IF decl THEN mod.type := noType ELSE mod.type := nilType END ;
         obj1.next := mod; obj := mod
       ELSIF decl THEN
         IF obj.type.form = NoTyp THEN ORS.Mark("mult def") ELSE ORS.Mark("invalid import order") END
