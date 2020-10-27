@@ -9,7 +9,7 @@ end-module-use-description *)
 **ILinker** can generate and install a bootable inner core binary for the Oberon x86_64 architeture.
   
 end-module-develop-description *)
-MODULE RLinker;  (*Link and create binary on x86_64; NW 20.10.2013 CP 21.05.2014 CP 2020 *)
+MODULE ILinker;  (*Link and create binary on x86_64; NW 20.10.2013 CP 21.05.2014 CP 2020 *)
   IMPORT SYSTEM, Files, Modules, Kernel, Texts, Oberon;
 
   CONST versionkey = 1X; MT = 12; DescSize = 80;
