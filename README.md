@@ -15,7 +15,7 @@
 | [Draw](README.md#the-Draw-package) | provides line-oriented drawing primitives and a vector drawing tool. |
 |   | [Draw.Mod](README.md#DrawMod-doc-src) [Graphics.Mod](README.md#GraphicsMod-doc-src) [MacroTool.Mod](README.md#MacroToolMod-doc-src) [GraphicFrames.Mod](README.md#GraphicFramesMod-doc-src) [GraphTool.Mod](README.md#GraphToolMod-doc-src) [Rectangles.Mod](README.md#RectanglesMod-doc-src) [Curves.Mod](README.md#CurvesMod-doc-src)  |
 | [System](README.md#the-System-package) | prepares the user interface and manages viewers for the user. |
-|   | [System.Mod](README.md#SystemMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  |
+|   | [System.Mod](README.md#SystemMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src) [Halt.Mod](README.md#HaltMod-doc-src)  |
 | [Build](README.md#the-Build-package) | provides the compiler and associated program building and debugging tools for Oberon. |
 |   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [RLinker.Mod](README.md#RLinkerMod-doc-src) [ILinker.Mod](README.md#ILinkerMod-doc-src) [ALinker.Mod](README.md#ALinkerMod-doc-src)  |
 | [Extras](README.md#the-Extras-package) | contains extra modules demonstrating Oberon. |
@@ -292,7 +292,7 @@ Module Edit provides document editing capability.
 
 ---
 ## The System Package
-includes: [System.Mod](README.md#SystemMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  
+includes: [System.Mod](README.md#SystemMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src) [Halt.Mod](README.md#HaltMod-doc-src)  
 
 ### _Package Overview:_
 The System package collects the expected set of modules and tools that allows the Oberon user to perform typical computing tasks.
@@ -375,6 +375,14 @@ Module Batch provides for automatic sequential execution of Oberon commands.
 
 
   **imports:** ` Kernel FileDir Files Display Texts TextFrames Viewers Oberon`
+
+
+
+#### Halt.Mod [_doc_](https://github.com/io-orig/System/blob/main/Halt.md) [_src_](https://github.com/io-orig/System/blob/main/Halt.Mod)
+Module Halt halts the processor in some emulators of RISC Oberon.
+
+
+  **imports:** ` SYSTEM`
 
 ---
 ## The Build Package
