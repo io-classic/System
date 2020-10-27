@@ -17,7 +17,7 @@
 | [System](README.md#the-System-package) | prepares the user interface and manages viewers for the user. |
 |   | [System.Mod](README.md#SystemMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  |
 | [Build](README.md#the-Build-package) | provides the compiler and associated program building and debugging tools for Oberon. |
-|   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORL.Mod](README.md#ORLMod-doc-src)  |
+|   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [RLinker.Mod](README.md#RLinkerMod-doc-src) [ILinker.Mod](README.md#ILinkerMod-doc-src) [ALinker.Mod](README.md#ALinkerMod-doc-src)  |
 | [Extras](README.md#the-Extras-package) | contains extra modules demonstrating Oberon. |
 |   | [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [Sierpinski.Mod](README.md#SierpinskiMod-doc-src) [Hilbert.Mod](README.md#HilbertMod-doc-src) [Checkers.Mod](README.md#CheckersMod-doc-src)  |
 
@@ -378,7 +378,7 @@ Module Batch provides for automatic sequential execution of Oberon commands.
 
 ---
 ## The Build Package
-includes: [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORL.Mod](README.md#ORLMod-doc-src)  
+includes: [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [RLinker.Mod](README.md#RLinkerMod-doc-src) [ILinker.Mod](README.md#ILinkerMod-doc-src) [ALinker.Mod](README.md#ALinkerMod-doc-src)  
 
 ### _Package Overview:_
 Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
@@ -523,19 +523,27 @@ Module OAG generates the aarch-64 processor-specific instructions for executing 
 
 
 
-#### ORL.Mod [_doc_](https://github.com/io-orig/System/blob/main/ORL.md) [_src_](https://github.com/io-orig/System/blob/main/ORL.Mod)
-Module ORL links modules to create bin files that may be placed in the boot sectors of an Oberon disk image
+#### RLinker.Mod [_doc_](https://github.com/io-orig/System/blob/main/RLinker.md) [_src_](https://github.com/io-orig/System/blob/main/RLinker.Mod)
+Module RLinker transforms a RISC5 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+    
 
-ORL uses SYSTEM, Kernel, Disk, Files, Modules, Texts, Oberon
-
-
-Module ORL links modules to create bin files that may be placed in the boot sectors of an Oberon disk image
-
-ORL uses SYSTEM, Kernel, Files, Modules, Texts, Oberon
+  **imports:** ` SYSTEM Files Modules Kernel Texts Oberon`
 
 
 
-  **imports:** ` SYSTEM Kernel Files Modules Texts Oberon`
+#### ILinker.Mod [_doc_](https://github.com/io-orig/System/blob/main/ILinker.md) [_src_](https://github.com/io-orig/System/blob/main/ILinker.Mod)
+Module ILinker transforms an x86_64 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+    
+
+  **imports:** ` SYSTEM Files Modules Kernel Texts Oberon`
+
+
+
+#### ALinker.Mod [_doc_](https://github.com/io-orig/System/blob/main/ALinker.md) [_src_](https://github.com/io-orig/System/blob/main/ALinker.Mod)
+Module ALinker transforms an aarch64 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+    
+
+  **imports:** ` SYSTEM Files Modules Kernel Texts Oberon`
 
 ---
 ## The Extras Package

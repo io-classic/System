@@ -1,10 +1,23 @@
-MODULE Linker0;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 *)
+(* begin-module-use-description
+Module RLinker transforms a RISC5 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+    
+end-module-use-description *) 
+(* begin-module-develop-description
+    
+(Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014)
+    
+**RLinker** can generate and install a bootable inner core binary for the Oberon RISC5 architeture.
+  
+end-module-develop-description *)
+MODULE RLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 *)
   IMPORT SYSTEM, Files, Modules, Kernel, Texts, Oberon;
+
   CONST versionkey = 1X; MT = 12; DescSize = 80;
 
-  
+  TYPE
 
-  VAR binroot, M: Modules.Module;
+  VAR 
+    binroot, M: Modules.Module;
     binMTOrg, binStart, binAllocPtr, res*: INTEGER;
     importing*, imported*: Modules.ModuleName;
     limit: INTEGER;
@@ -28,7 +41,7 @@ MODULE Linker0;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 *
   END zero;
 
 
-PROCEDURE ThisBinFile(name: ARRAY OF CHAR): Files.File;
+  PROCEDURE ThisBinFile(name: ARRAY OF CHAR): Files.File;
     VAR i: INTEGER;
       filename: Modules.ModuleName;
   BEGIN i := 0;
@@ -222,10 +235,13 @@ PROCEDURE ThisBinFile(name: ARRAY OF CHAR): Files.File;
         WHILE nofimps > 0 DO DEC(nofimps); DEC(import[nofimps].refcnt) END
       END 
     END;
-
     newmod :=  mod;
-
   END LinkOne;
+
+
+  PROCEDURE Load*;
+  BEGIN
+  END Load;
 
 
   PROCEDURE Link*;
@@ -293,8 +309,6 @@ PROCEDURE ThisBinFile(name: ARRAY OF CHAR): Files.File;
    Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf) 
   END Link;
 
-
-
   PROCEDURE ThisCommand*(mod: Modules.Module; name: ARRAY OF CHAR): Modules.Command;
     VAR k, adr, w: INTEGER; ch: CHAR;
       s: ARRAY 32 OF CHAR;
@@ -312,11 +326,7 @@ PROCEDURE ThisBinFile(name: ARRAY OF CHAR): Files.File;
     RETURN SYSTEM.VAL(Modules.Command, w)
   END ThisCommand;
 
-
-
-
 BEGIN 
   Texts.OpenWriter(W); Texts.WriteString(W, "OR Linker 22.05.2014");
   Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
-  
-END Linker0.
+END RLinker.

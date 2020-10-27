@@ -274,7 +274,7 @@ MODULE OIP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
   end-procedure-description *)
   PROCEDURE CompTypes(t0, t1: ORB.Type; varpar: BOOLEAN): BOOLEAN;
   BEGIN (*check for assignment compatibility*)
-    RETURN (t0 = t1)    (*openarray assignment disallowed in ORG*)
+    RETURN (t0 = t1)    (*openarray assignment disallowed in OIG*)
       OR (t0.form = ORB.Array) & (t1.form = ORB.Array) & (t0.base =  t1.base) & (t0.len = t1.len)
       OR (t0.form = ORB.Record) & (t1.form = ORB.Record)  & IsExtension(t0, t1)
       OR ~varpar &
@@ -849,7 +849,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
     IdentList(cl, first); FormalType(tp, 0); rdo := FALSE;
     IF (cl = ORB.Var) & (tp.form >= ORB.Array) THEN cl := ORB.Par; rdo := TRUE END ;
     IF (tp.form = ORB.Array) & (tp.len < 0) OR (tp.form = ORB.Record) THEN
-      parsize := 2*ORG.WordSize  (*open array or record, needs second word for length or type tag*)
+      parsize := 2*OIG.WordSize  (*open array or record, needs second word for length or type tag*)
     ELSE parsize := OIG.WordSize
     END ;
     obj := first;
@@ -901,7 +901,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
     ELSIF sym = ORS.array THEN
       ORS.Get(sym); Check(ORS.of, "OF ?");
       IF dim >= 1 THEN ORS.Mark("multi-dimensional open arrays not implemented") END ;
-      NEW(typ); typ.form := ORB.Array; typ.len := -1; typ.size := 2*ORG.WordSize; 
+      NEW(typ); typ.form := ORB.Array; typ.len := -1; typ.size := 2*OIG.WordSize; 
       FormalType(typ.base, dim+1)
     ELSIF sym = ORS.procedure THEN
       ORS.Get(sym); ORB.OpenScope;

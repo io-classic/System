@@ -9,7 +9,7 @@ end-module-use-description *)
 **ORG** is called from ORP and generates machine code various Oberon language constructs for the Oberon RISC5 architeture.
 
 end-module-develop-description *)
-MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / CP 2020 adapted for x86_64*)
+MODULE OIG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / CP 2020 adapted for x86_64*)
   IMPORT SYSTEM, Files, ORS, ORB;
   (*Code generator for Oberon compiler for x86_64 processor.
      Procedural interface to Parser OSAP; result in array "code".

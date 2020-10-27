@@ -9,7 +9,7 @@ end-module-use-description *)
 **OAG** is called from OAP and generates machine code various Oberon language constructs for the Oberon aarch64 architeture.
 
 end-module-develop-description *)
-MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / CP 2020 adapted to aarch64*)
+MODULE OAG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / CP 2020 adapted to aarch64*)
   IMPORT SYSTEM, Files, ORS, ORB;
   (*Code generator for Oberon compiler for aarch64 processor.
      Procedural interface to Parser OSAP; result in array "code".
