@@ -1,25 +1,25 @@
 (* begin-module-use-description
 
-Module OAP reads the source code of an Oberon program and produces an aarch64 executable binary module.
+Module OaP reads the source code of an Oberon program and produces a 32-bit ARM executable binary module.
 
 end-module-use-description *)
 (* begin-module-develop-description
 
-(N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 / CP 2020 adapted to aarch64)
+(N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 / CP 2020 adapted to 32-bit ARM)
 
-**OAP** implements a one-pass recursive descent parser for the language Oberon.
+**OaP** implements a one-pass recursive descent parser for the language Oberon.
 
 The structure of the parser is derived from the structure of the language, with constituent parts of the language 
 (e.g. Module, Procedure, Type, Expression, Term, Parameter) represented by a procedure of that name, invoked from the 
 encompassing construct. Each procedure consumes and validates a part of the program source text while populating the 
 symbol table and execution context and also generating machine code faithfully representing that language construct.
 
-This module (OAP) relies on module OAG for code generation, ORB for the symbol table, execution context tracking and reserved words, and ORS
+This module (OaP) relies on module OAG for code generation, OaB for the symbol table, execution context tracking and reserved words, and ORS
 for lexical parsing and built-in type identification.
 
 end-module-develop-description *)
-MODULE OAP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 / CP 2020 adapted to aarch64*)
-  IMPORT Texts, Oberon, ORS, ORB, OAG;
+MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 / CP 2020 adapted to 32-bit ARM*)
+  IMPORT Texts, Oberon, ORS, ORB, OaG;
   (*Author: Niklaus Wirth, 2014.
     Parser of Oberon compiler. Uses Scanner ORS to obtain symbols (tokens),
     ORB for definition of data structures and for handling import and export, and
@@ -1213,8 +1213,8 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
 ---
 **The initialzation code for this module** opens a writer to print marked errors and initializes the Oberon parser state.
   end-procedure-description *)
-BEGIN ORB.Init(8); Texts.OpenWriter(W); Texts.WriteString(W, "OA Compiler 2020");
+BEGIN ORB.Init(4); Texts.OpenWriter(W); Texts.WriteString(W, "Oa Compiler 2020");
   Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
   NEW(dummy); dummy.class := ORB.Var; dummy.type := ORB.intType;
   expression := expression0; Type := Type0; FormalType := FormalType0
-END OAP.
+END OaP.

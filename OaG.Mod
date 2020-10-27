@@ -1,23 +1,23 @@
 (* begin-module-use-description
-Module OAG generates the aarch-64 processor-specific instructions for executing an Oberon program. 
+Module OAaG generates the 32-bit ARM processor-specific instructions for executing an Oberon program. 
 
 end-module-use-description *)
 (* begin-module-develop-description
 
-(N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / CP 2020 adapted to aarch64)
+(N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / CP 2020 adapted to 32-bit ARM)
 
-**OAG** is called from OAP and generates machine code various Oberon language constructs for the Oberon aarch64 architeture.
+**OAG** is called from OaP and generates machine code various Oberon language constructs for the Oberon 32-bit ARM architeture.
 
 end-module-develop-description *)
-MODULE OAG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / CP 2020 adapted to aarch64*)
+MODULE OaG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / CP 2020 adapted to 32-bit ARM*)
   IMPORT SYSTEM, Files, ORS, ORB;
   (*Code generator for Oberon compiler for aarch64 processor.
      Procedural interface to Parser OSAP; result in array "code".
      Procedure Close writes code-files*)
 
   CONST
-    WordSize* = 8;
-    StkOrg0 = -64; VarOrg0 = 0;  (*for aarch64-0 only*)
+    WordSize* = 4;
+    StkOrg0 = -64; VarOrg0 = 0;  (*for RISC-0 only*)
     MT = 12; SP = 14; LNK = 15;   (*dedicated registers*)
     maxCode = 8000; maxStrx = 2400; maxTD = 160; C24 = 1000000H;
     Reg = 10; RegI = 11; Cond = 12;  (*internal item modes*)
@@ -1571,4 +1571,4 @@ This module's global variables are initialized by OAP calling OAG.Open, once it 
 definition and determined that its module imports are available and of compatible object filetype.
   end-procedure-description *)
 BEGIN relmap[0] := 1; relmap[1] := 9; relmap[2] := 5; relmap[3] := 6; relmap[4] := 14; relmap[5] := 13;
-END OAG.
+END OaG.
