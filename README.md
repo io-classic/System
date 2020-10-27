@@ -457,9 +457,6 @@ ORB uses Files, ORS
 #### ORS.Mod [_doc_](https://github.com/io-orig/System/blob/main/ORS.md) [_src_](https://github.com/io-orig/System/blob/main/ORS.Mod)
 Module ORS does lexical analysis of the Oberon source code and defines symbols and operations
 
-ORS uses SYSTEM, Texts, Oberon
-
-
 
   **imports:** ` SYSTEM Texts Oberon`
 

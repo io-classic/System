@@ -22,7 +22,8 @@ if int or char in ival, if real in rval, and if string in str (and slen)
 
 ## Constants:
 ```
- IdLen* = 32;
+ 
+    IdLen* = 32;
     NKW = 34;  (*nof keywords*)
     maxExp = 38; stringBufSize = 256;
   
@@ -45,7 +46,8 @@ if int or char in ival, if real in rval, and if string in str (and slen)
 ```
 ## Types:
 ```
- Ident* = ARRAY IdLen OF CHAR;
+ 
+    Ident* = ARRAY IdLen OF CHAR;
 
 ```
 ## Variables:
@@ -55,43 +57,83 @@ if int or char in ival, if real in rval, and if string in str (and slen)
     id*: Ident;  (*for identifiers*)
     str*: ARRAY stringBufSize OF CHAR;
     errcnt*: INTEGER;
+    ch: CHAR;  (*last character read*)
+    errpos: LONGINT;
+    R: Texts.Reader;
+    W: Texts.Writer;
+    k: INTEGER;
+    KWX: ARRAY 10 OF INTEGER;
+    keyTab: ARRAY NKW OF
+        RECORD sym: INTEGER; id: ARRAY 12 OF CHAR END;
+  
+  (* begin-section-description
+## ---------- Lexer
+  end-section-description *)
 
 ```
 ## Procedures:
 ---
+## ---------- Lexer
+---
+**CopyId** duplicates an identifier.
 
-`  PROCEDURE CopyId*(VAR ident: Ident);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L75)
+`  PROCEDURE CopyId*(VAR ident: Ident);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L81)
 
+---
+**Pos** reports the location in the source text not couting the most current character.
 
-`  PROCEDURE Pos*(): LONGINT;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L79)
+`  PROCEDURE Pos*(): LONGINT;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L89)
 
+---
+**Mark** reports an error to the Oberon system log.
 
-`  PROCEDURE Mark*(msg: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L83)
+`  PROCEDURE Mark*(msg: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L97)
 
+---
+**Identifier** matches an alphanumeric identifier.
 
-`  PROCEDURE Identifier(VAR sym: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L93)
+`  PROCEDURE Identifier(VAR sym: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L111)
 
+---
+**String** matches a quote delimeted string.
 
-`  PROCEDURE String;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L108)
+`  PROCEDURE String;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L130)
 
+---
+**HexString** matches a hex string.
 
-`  PROCEDURE HexString;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L120)
+`  PROCEDURE HexString;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L146)
 
+---
+**Ten** ??
 
-`  PROCEDURE Ten(e: LONGINT): REAL;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L140)
+`  PROCEDURE Ten(e: LONGINT): REAL;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L170)
 
+---
+**Number** matches a number.
 
-`  PROCEDURE Number(VAR sym: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L150)
+`  PROCEDURE Number(VAR sym: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L184)
 
+---
+**Comment** matches comments.
 
-`  PROCEDURE comment;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L219)
+`  PROCEDURE comment;` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L257)
 
+---
+**Get** gets the next symbol from the source text.
 
-`  PROCEDURE Get*(VAR sym: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L233)
+`  PROCEDURE Get*(VAR sym: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L275)
 
+## ---------- Initialization
+---
+**Init** opens the source text for reading and gets the first character.
 
-`  PROCEDURE Init*(T: Texts.Text; pos: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L288)
+`  PROCEDURE Init*(T: Texts.Text; pos: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L340)
 
+---
+**EnterKW** adds a symbol to the keyword table.
 
-`  PROCEDURE EnterKW(sym: INTEGER; name: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L292)
+`  PROCEDURE EnterKW(sym: INTEGER; name: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORS.Mod#L348)
 
+---
+**The initialzation code for this module** populats the table of reserved keywords.
