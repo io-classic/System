@@ -1,13 +1,11 @@
 (* begin-module-use-description
 Module ORB manages the symbol table for the Oberon compiler and reads and writes 'smb' files
 
-ORB uses Files, ORS
-
 
 end-module-use-description *)
 (* begin-module-develop-description
 
-(NW 25.6.2014  / AP 4.3.2020 / 5.3.2019  in Oberon-07 / AP 24.4.20 Extended Oberon / CP 10.20 Integrated Oberon)
+(NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07)
 
 **ORB** is called from ORP and ORG and tracks the state of identifiers and objects as code compilation progresses.
 
@@ -21,7 +19,8 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
     Import and Export. This module contains the list of standard identifiers, with which
     the symbol table (universe), and that of the pseudo-module SYSTEM are initialized. *)
 
-  CONST versionkey* = 1; maxTypTab = 64;
+  CONST 
+    versionkey* = 1; maxTypTab = 64;
     (* class values*) Head* = 0;
       Const* = 1; Var* = 2; Par* = 3; Fld* = 4; Typ* = 5;
       SProc* = 6; SFunc* = 7; Mod* = 8;
@@ -31,7 +30,8 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
       Pointer* = 7; NilTyp* = 8; NoTyp* = 9; Proc* = 10;
       String* = 11; Array* = 12; Record* = 13;
       
-  TYPE Object* = POINTER TO ObjDesc;
+  TYPE 
+    Object* = POINTER TO ObjDesc;
     Module* = POINTER TO ModDesc;
     Type* = POINTER TO TypeDesc;
 
@@ -76,11 +76,16 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
     Array    -        type of elements
     Record   fields   extension *)
 
-  VAR topScope*, universe, system*: Object;
+  VAR 
+    topScope*, universe, system*: Object;
     byteType*, boolType*, charType*: Type;
     intType*, realType*, setType*, nilType*, noType*, strType*: Type;
     nofmod, Ref: INTEGER;
     typtab: ARRAY maxTypTab OF Type;
+
+  (* begin-section-description
+## ---------- Scopes
+  end-section-description *)
 
   PROCEDURE NewObj*(VAR obj: Object; id: ORS.Ident; class: INTEGER);  (*insert new Object with name id*)
     VAR new, x: Object;
@@ -135,6 +140,14 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
 
   (*------------------------------- Import ---------------------------------*)
 
+  (* begin-section-description
+## ---------- Import
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**MakeFileName**  ??
+  end-procedure-description *)
   PROCEDURE MakeFileName*(VAR FName: ORS.Ident; name, ext: ARRAY OF CHAR);
     VAR i, j: INTEGER;
   BEGIN i := 0; j := 0;  (*assume name suffix less than 4 characters*)
@@ -143,6 +156,10 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
     FName[i] := 0X
   END MakeFileName;
   
+  (* begin-procedure-description
+---
+**ThisModule** ??
+  end-procedure-description *)
   PROCEDURE ThisModule(name, orgname: ORS.Ident; decl: BOOLEAN; key: LONGINT): Object;
     VAR mod: Module; obj, obj1: Object;
   BEGIN obj1 := topScope; obj := obj1.next;  (*search for module*)
@@ -154,7 +171,7 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
         NEW(mod); mod.class := Mod; mod.rdo := FALSE;
         mod.name := name; mod.orgname := orgname; mod.val := key;
         mod.lev := nofmod; INC(nofmod); mod.dsc := NIL; mod.next := NIL;
-        IF decl THEN mod.type := noType ELSE mod.type := nilType END ;
+    NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07    IF decl THEN mod.type := noType ELSE mod.type := nilType END ;
         obj1.next := mod; obj := mod
       ELSIF decl THEN
         IF obj.type.form = NoTyp THEN ORS.Mark("mult def") ELSE ORS.Mark("invalid import order") END
@@ -166,12 +183,20 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
     RETURN obj
   END ThisModule;
   
+  (* begin-procedure-description
+---
+**Read** reads an adjusted byte in from the symbol file.
+  end-procedure-description *)
   PROCEDURE Read(VAR R: Files.Rider; VAR x: INTEGER);
     VAR b: BYTE;
   BEGIN Files.ReadByte(R, b);
     IF b < 80H THEN x := b ELSE x := b - 100H END
   END Read;
   
+  (* begin-procedure-description
+---
+**InType** reads a type in from the symbol file of an imported module.
+  end-procedure-description *)
   PROCEDURE InType(VAR R: Files.Rider; thismod: Object; VAR T: Type);
     VAR key: LONGINT;
       ref, class, form, np, readonly: INTEGER;
@@ -225,6 +250,10 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
     END
   END InType;
   
+  (* begin-procedure-description
+---
+**Import** reads in the symbol file for an imported module so that its exported constants, types, variables, and procedures may be referenced. 
+  end-procedure-description *)
   PROCEDURE Import*(VAR modid, modid1: ORS.Ident);
     VAR key: LONGINT; class, k: INTEGER;
       obj: Object;  t: Type;
@@ -263,10 +292,22 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
   
   (*-------------------------------- Export ---------------------------------*)
 
+  (* begin-section-description
+## ---------- Export
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**Write** delivers a byte from the integer to the symbol file.
+  end-procedure-description *)
   PROCEDURE Write(VAR R: Files.Rider; x: INTEGER);
   BEGIN Files.WriteByte(R, x)
   END Write;
 
+  (* begin-procedure-description
+---
+**OutType** writes a type to the symbol file
+  end-procedure-description *)
   PROCEDURE OutType(VAR R: Files.Rider; t: Type);
     VAR obj, mod, fld, bot: Object;
 
@@ -325,6 +366,10 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
     END
   END OutType;
 
+  (* begin-procedure-description
+---
+**Export** writes out the symbol file for a module.
+  end-procedure-description *)
   PROCEDURE Export*(VAR modid: ORS.Ident; VAR newSF: BOOLEAN; VAR key: LONGINT);
     VAR x, sum, oldkey: LONGINT;
       obj, obj0: Object;
@@ -374,16 +419,32 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
     END
   END Export;
 
+  (* begin-section-description
+## ---------- Initialization
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**Init** prepares the top scope of the program.
+  end-procedure-description *)
   PROCEDURE Init*;
   BEGIN topScope := universe; nofmod := 1
   END Init;
   
+  (* begin-procedure-description
+---
+**type** allocates a pre-defined type object
+  end-procedure-description *)
   PROCEDURE type(ref, form: INTEGER; size: LONGINT): Type;
     VAR tp: Type;
   BEGIN NEW(tp); tp.form := form; tp.size := size; tp.ref := ref; tp.base := NIL;
     typtab[ref] := tp; RETURN tp
   END type;
 
+  (* begin-procedure-description
+---
+**Enter** introduces a pre-defined type, function, or procedure.
+  end-procedure-description *)
   PROCEDURE enter(name: ARRAY OF CHAR; cl: INTEGER; type: Type; n: LONGINT);
     VAR obj: Object;
   BEGIN NEW(obj); obj.name := name; obj.class := cl; obj.type := type; obj.val := n; obj.dsc := NIL;
@@ -391,6 +452,10 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
     obj.next := system; system := obj
   END enter;
   
+  (* begin-procedure-description
+---
+**The initialzation code for this module** registers base Oberon types and populates the the object table with predeclared types,functions and procedures.
+  end-procedure-description *)
 BEGIN
   byteType := type(Byte, Int, 1);
   boolType := type(Bool, Bool, 1);

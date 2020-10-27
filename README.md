@@ -446,8 +446,6 @@ ORG uses SYSTEM, Files, ORS, ORB
 #### ORB.Mod [_doc_](https://github.com/io-orig/System/blob/main/ORB.md) [_src_](https://github.com/io-orig/System/blob/main/ORB.Mod)
 Module ORB manages the symbol table for the Oberon compiler and reads and writes 'smb' files
 
-ORB uses Files, ORS
-
 
 
   **imports:** ` Files ORS`
