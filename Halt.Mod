@@ -15,7 +15,7 @@ MODULE Halt;   (*CP 27.10.2020*)
   PROCEDURE Halt*(x: INTEGER);
   BEGIN
     SYSTEM.PUT(halt, x)
-  END Send;
+  END Halt;
 
   PROCEDURE Now*;
   BEGIN
