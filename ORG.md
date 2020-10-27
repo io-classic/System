@@ -223,236 +223,306 @@
 `  PROCEDURE SetOp*(op: LONGINT; VAR x, y: Item);   (* x := x op y *)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L600)
 
 ## ----------  Code generation for relations
+---
+**IntRelation** generates an integer comparison
 
-`  PROCEDURE IntRelation*(op: INTEGER; VAR x, y: Item);   (* x := x < y *)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L634)
+`  PROCEDURE IntRelation*(op: INTEGER; VAR x, y: Item);   (* x := x < y *)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L638)
 
+---
+**RealRelation** generates a real comparison
 
-`  PROCEDURE RealRelation*(op: INTEGER; VAR x, y: Item);   (* x := x < y *)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L647)
+`  PROCEDURE RealRelation*(op: INTEGER; VAR x, y: Item);   (* x := x < y *)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L655)
 
+---
+**StringRelation** generates a string comparison
 
-`  PROCEDURE StringRelation*(op: INTEGER; VAR x, y: Item);   (* x := x < y *)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L655)
+`  PROCEDURE StringRelation*(op: INTEGER; VAR x, y: Item);   (* x := x < y *)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L667)
 
 ## ----------  Code generation of Assigments
+---
+**StrToChar** ??
 
-`  PROCEDURE StrToChar*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L673)
+`  PROCEDURE StrToChar*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L689)
 
+---
+**Store** generates the copying of the value of one word-sized variable into another word-sized variable.
 
-`  PROCEDURE Store*(VAR x, y: Item); (* x := y *)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L677)
+`  PROCEDURE Store*(VAR x, y: Item); (* x := y *)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L697)
 
+---
+**StoreStruct** generates copying the contents of one structure into another structure.
 
-`  PROCEDURE StoreStruct*(VAR x, y: Item); (* x := y, frame = 0 *)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L692)
+`  PROCEDURE StoreStruct*(VAR x, y: Item); (* x := y, frame = 0 *)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L716)
 
+---
+**CopyString** generates copying the contents of one string variable into another string variable.
 
-`  PROCEDURE CopyString*(VAR x, y: Item);  (* x := y *) ` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L722)
+`  PROCEDURE CopyString*(VAR x, y: Item);  (* x := y *) ` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L750)
 
 ## ----------  Code generation for parameters
+---
+**OpenArrayParam** generates placing the address of an open array variable in a register, allocating the register.
 
-`  PROCEDURE OpenArrayParam*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L742)
+`  PROCEDURE OpenArrayParam*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L774)
 
+---
+**VarParam** generates placing the address of a variable in a register, allocating the register.
 
-`  PROCEDURE VarParam*(VAR x: Item; ftype: ORB.Type);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L748)
+`  PROCEDURE VarParam*(VAR x: Item; ftype: ORB.Type);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L784)
 
+---
+**ValueParam** generates placing a value in a register.
 
-`  PROCEDURE ValueParam*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L759)
+`  PROCEDURE ValueParam*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L799)
 
+---
+**StringParam** generates placing the location of a string in a register, allocating the register.
 
-`  PROCEDURE StringParam*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L763)
+`  PROCEDURE StringParam*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L807)
 
 ## ----------  For Statements
+---
+**For0** generates the initial part of a FOR statement
 
-`  PROCEDURE For0*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L773)
+`  PROCEDURE For0*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L821)
 
+---
+**FOR1** generates the central part of a FOR statement
 
-`  PROCEDURE For1*(VAR x, y, z, w: Item; VAR L: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L777)
+`  PROCEDURE For1*(VAR x, y, z, w: Item; VAR L: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L829)
 
+---
+**FOR2** generates the final part of a FOR statement.
 
-`  PROCEDURE For2*(VAR x, y, w: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L790)
+`  PROCEDURE For2*(VAR x, y, w: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L846)
 
 ## ----------  Branches, procedure calls, procedure prolog and epilog
+---
+**Here** returns the next available code location.
 
-`  PROCEDURE Here*(): LONGINT;` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L800)
+`  PROCEDURE Here*(): LONGINT;` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L860)
 
+---
+**FJump** generates a forward jump.
 
-`  PROCEDURE FJump*(VAR L: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L804)
+`  PROCEDURE FJump*(VAR L: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L868)
 
+---
+**CFJump** generates a conditional forward jump
 
-`  PROCEDURE CFJump*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L808)
+`  PROCEDURE CFJump*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L876)
 
+---
+**BJump** generates a backwards jump.
 
-`  PROCEDURE BJump*(L: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L814)
+`  PROCEDURE BJump*(L: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L886)
 
+---
+**CBJump** generates a conditional backwards jump.
 
-`  PROCEDURE CBJump*(VAR x: Item; L: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L818)
+`  PROCEDURE CBJump*(VAR x: Item; L: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L894)
 
+---
+**Fixup** fixes ???
 
-`  PROCEDURE Fixup*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L824)
+`  PROCEDURE Fixup*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L904)
 
+---
+**SaveRegs** saves register values in preparation for a procedure call.
 
-`  PROCEDURE SaveRegs(r: LONGINT);  (* R[0 .. r-1]*)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L828)
+`  PROCEDURE SaveRegs(r: LONGINT);  (* R[0 .. r-1]*)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L912)
 
+---
+**RestoreRegs** brings values back into registers after a procedure call.
 
-`  PROCEDURE RestoreRegs(r: LONGINT); (*R[0 .. r-1]*)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L835)
+`  PROCEDURE RestoreRegs(r: LONGINT); (*R[0 .. r-1]*)` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L923)
 
+---
+**PrepCall** generates generates a sequence that preapreas for a procedure call.
 
-`  PROCEDURE PrepCall*(VAR x: Item; VAR r: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L842)
+`  PROCEDURE PrepCall*(VAR x: Item; VAR r: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L934)
 
+---
+**Call** generates the procedure call sequence.
 
-`  PROCEDURE Call*(VAR x: Item; r: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L849)
+`  PROCEDURE Call*(VAR x: Item; r: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L945)
 
+---
+**Enter** generates the procedure entry sequence.
 
-`  PROCEDURE Enter*(parblksize, locblksize: LONGINT; int: BOOLEAN);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L873)
+`  PROCEDURE Enter*(parblksize, locblksize: LONGINT; int: BOOLEAN);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L973)
 
+---
+**Return** generates the procedure return sequence.
 
-`  PROCEDURE Return*(form: INTEGER; VAR x: Item; size: LONGINT; int: BOOLEAN);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L887)
+`  PROCEDURE Return*(form: INTEGER; VAR x: Item; size: LONGINT; int: BOOLEAN);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L991)
 
 ## ----------  In-line code procedures
+---
+**Increment** generates an inline routine that increments a variable.
 
-`  PROCEDURE Increment*(upordown: LONGINT; VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L905)
+`  PROCEDURE Increment*(upordown: LONGINT; VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1013)
 
+---
+**Include** generates a routine that ??
 
-`  PROCEDURE Include*(inorex: LONGINT; VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L921)
+`  PROCEDURE Include*(inorex: LONGINT; VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1033)
 
+---
+**Assert** generates an inline routine that traps on a condition.
 
-`  PROCEDURE Assert*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L931)
+`  PROCEDURE Assert*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1047)
 
+---
+**New** generates an inline routine that allocates heap memory via trap 0.
 
-`  PROCEDURE New*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L941)
+`  PROCEDURE New*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1061)
 
+---
+**Pack** generates an inline routine that ??
 
-`  PROCEDURE Pack*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L945)
+`  PROCEDURE Pack*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1069)
 
+---
+**Unpk** generates in inline routine that ??
 
-`  PROCEDURE Unpk*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L951)
+`  PROCEDURE Unpk*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1079)
 
+---
+**Led** generates an inline routine that displays a bit pattern on the LED display.
 
-`  PROCEDURE Led*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L958)
+`  PROCEDURE Led*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1090)
 
+---
+**Get** generates an inline routine that loads a value from an IO register.
 
-`  PROCEDURE Get*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L962)
+`  PROCEDURE Get*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1098)
 
+---
+**Put** generates an inline routine that stores a value in an IO register.
 
-`  PROCEDURE Put*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L966)
+`  PROCEDURE Put*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1106)
 
 ---
 **Copy** generates an inline memory copy routine.     
 
-`  PROCEDURE Copy*(VAR x, y, z: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L974)
+`  PROCEDURE Copy*(VAR x, y, z: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1114)
 
 ---
 **LDPSR** places the processor status register in a variable     
 
-`  PROCEDURE LDPSR*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L991)
+`  PROCEDURE LDPSR*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1131)
 
 ---
 **LDREG** places a register value in a variable     
 
-`  PROCEDURE LDREG*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L999)
+`  PROCEDURE LDREG*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1139)
 
 ## ----------  In-line code functions
 ---
 **Abs** generates an inline functionn that takes the absolute value     
 
-`  PROCEDURE Abs*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1016)
+`  PROCEDURE Abs*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1156)
 
 ---
 **Odd** generates an inlinen function that checks whether a value is odd.     
 
-`  PROCEDURE Odd*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1030)
+`  PROCEDURE Odd*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1170)
 
 ---
 **Floor** generates an inline function that produces the floor of a value.     
 
-`  PROCEDURE Floor*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1038)
+`  PROCEDURE Floor*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1178)
 
 ---
 **Float** generates an inline function that produces a float.     
 
-`  PROCEDURE Float*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1046)
+`  PROCEDURE Float*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1186)
 
 ---
 **Ord** generates an inline function that presents the ordinal value of its parameter.     
 
-`  PROCEDURE Ord*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1054)
+`  PROCEDURE Ord*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1194)
 
 ---
 **Len** generates an inline function that presents the length of an array.     
 
-`  PROCEDURE Len*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1063)
+`  PROCEDURE Len*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1203)
 
 ---
 **Shift** generates an inline function that performs bit shifts.      
 
-`  PROCEDURE Shift*(fct: LONGINT; VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1076)
+`  PROCEDURE Shift*(fct: LONGINT; VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1216)
 
 ---
 **ADC** generates an inline function that Adds with Carry     
 
-`  PROCEDURE ADC*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1089)
+`  PROCEDURE ADC*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1229)
 
 ---
 **SBC** generates an inline function that Subtracts with Carry 
 
-`  PROCEDURE SBC*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1097)
+`  PROCEDURE SBC*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1237)
 
 ---
 **UML** generates an inline function ??     
 
-`  PROCEDURE UML*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1105)
+`  PROCEDURE UML*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1245)
 
 ---
 **Bit** generates an inline function presenting the yth bit of x      
 
-`  PROCEDURE Bit*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1113)
+`  PROCEDURE Bit*(VAR x, y: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1253)
 
 ---
 **Register** generates an inline function presenting a general register's contents      
 
-`  PROCEDURE Register*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1125)
+`  PROCEDURE Register*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1265)
 
 ---
 **H** genrates an inline funtion presenting the contents of the H register.     
 
-`  PROCEDURE H*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1134)
+`  PROCEDURE H*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1274)
 
 ---
 **Adr** generates an inline function presenting the memory address of its parameter.      
 
-`  PROCEDURE Adr*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1143)
+`  PROCEDURE Adr*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1283)
 
 ---
 **Condition** generates an inline function presenting a condition.     
 
-`  PROCEDURE Condition*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1156)
+`  PROCEDURE Condition*(VAR x: Item);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1296)
 
 ---
 **Open** initializes the ORG module code generation engine.     
 
-`  PROCEDURE Open*(v: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1164)
+`  PROCEDURE Open*(v: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1304)
 
 ---
 **SetDataSize** sets the amount of space reserved for module global variables.     
 
-`  PROCEDURE SetDataSize*(dc: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1175)
+`  PROCEDURE SetDataSize*(dc: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1315)
 
 ---
 **Header** prepares the code introductory sequence for a compiled module     
 
-`  PROCEDURE Header*;` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1183)
+`  PROCEDURE Header*;` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1323)
 
 ---
 **NofPtrs** determines the number of Garbage Collection Roots.
 
-`  PROCEDURE NofPtrs(typ: ORB.Type): LONGINT;` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1194)
+`  PROCEDURE NofPtrs(typ: ORB.Type): LONGINT;` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1334)
 
 ---
 **FindPtrs** locates Garbage Collection roots.
 
-`  PROCEDURE FindPtrs(VAR R: Files.Rider; typ: ORB.Type; adr: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1211)
+`  PROCEDURE FindPtrs(VAR R: Files.Rider; typ: ORB.Type; adr: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1351)
 
 ---
 **Close** writes the completed binary to disk.
 
-`  PROCEDURE Close*(VAR modid: ORS.Ident; key, nofent: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1228)
+`  PROCEDURE Close*(VAR modid: ORS.Ident; key, nofent: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORG.Mod#L1368)
 
 ---
 **The initialzation code for this module** merely sets the 6 values in the global relmap array.

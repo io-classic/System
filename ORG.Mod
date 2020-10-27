@@ -631,6 +631,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  Code generation for relations
   end-section-description *)
 
+  (* begin-procedure-description
+---
+**IntRelation** generates an integer comparison
+  end-procedure-description *)
   PROCEDURE IntRelation*(op: INTEGER; VAR x, y: Item);   (* x := x < y *)
   BEGIN
     IF (y.mode = ORB.Const) & (y.type.form # ORB.Proc) THEN
@@ -644,6 +648,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     SetCC(x, relmap[op - ORS.eql])
   END IntRelation;
 
+  (* begin-procedure-description
+---
+**RealRelation** generates a real comparison
+  end-procedure-description *)
   PROCEDURE RealRelation*(op: INTEGER; VAR x, y: Item);   (* x := x < y *)
   BEGIN load(x);
     IF (y.mode = ORB.Const) & (y.a = 0) THEN DEC(RH)
@@ -652,6 +660,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     SetCC(x, relmap[op - ORS.eql])
   END RealRelation;
 
+  (* begin-procedure-description
+---
+**StringRelation** generates a string comparison
+  end-procedure-description *)
   PROCEDURE StringRelation*(op: INTEGER; VAR x, y: Item);   (* x := x < y *)
     (*x, y are char arrays or strings*)
   BEGIN
@@ -670,10 +682,18 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  Code generation of Assigments
   end-section-description *)
 
+  (* begin-procedure-description
+---
+**StrToChar** ??
+  end-procedure-description *)
   PROCEDURE StrToChar*(VAR x: Item);
   BEGIN x.type := ORB.charType; DEC(strx, 4); x.a := ORD(str[x.a])
   END StrToChar;
 
+  (* begin-procedure-description
+---
+**Store** generates the copying of the value of one word-sized variable into another word-sized variable.
+  end-procedure-description *)
   PROCEDURE Store*(VAR x, y: Item); (* x := y *)
     VAR op: LONGINT;
   BEGIN  load(y);
@@ -689,6 +709,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     DEC(RH)
   END Store;
 
+  (* begin-procedure-description
+---
+**StoreStruct** generates copying the contents of one structure into another structure.
+  end-procedure-description *)
   PROCEDURE StoreStruct*(VAR x, y: Item); (* x := y, frame = 0 *)
     VAR s, pc0: LONGINT;
   BEGIN
@@ -719,6 +743,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     RH := 0
   END StoreStruct;
 
+  (* begin-procedure-description
+---
+**CopyString** generates copying the contents of one string variable into another string variable.
+  end-procedure-description *)
   PROCEDURE CopyString*(VAR x, y: Item);  (* x := y *) 
      VAR len: LONGINT;
    BEGIN loadAdr(x); len := x.type.len;
@@ -739,12 +767,20 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  Code generation for parameters
   end-section-description *)
 
+  (* begin-procedure-description
+---
+**OpenArrayParam** generates placing the address of an open array variable in a register, allocating the register.
+  end-procedure-description *)
   PROCEDURE OpenArrayParam*(VAR x: Item);
   BEGIN loadAdr(x);
     IF x.type.len >= 0 THEN Put1a(Mov, RH, 0, x.type.len) ELSE Put2(Ldr, RH, SP, x.a+4+frame) END ;
     incR
   END OpenArrayParam;
 
+  (* begin-procedure-description
+---
+**VarParam** generates placing the address of a variable in a register, allocating the register.
+  end-procedure-description *)
   PROCEDURE VarParam*(VAR x: Item; ftype: ORB.Type);
     VAR xmd: INTEGER;
   BEGIN xmd := x.mode; loadAdr(x);
@@ -756,10 +792,18 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END VarParam;
 
+  (* begin-procedure-description
+---
+**ValueParam** generates placing a value in a register.
+  end-procedure-description *)
   PROCEDURE ValueParam*(VAR x: Item);
   BEGIN load(x)
   END ValueParam;
 
+  (* begin-procedure-description
+---
+**StringParam** generates placing the location of a string in a register, allocating the register.
+  end-procedure-description *)
   PROCEDURE StringParam*(VAR x: Item);
   BEGIN loadStringAdr(x); Put1(Mov, RH, 0, x.b); incR  (*len*)
   END StringParam;
@@ -770,10 +814,18 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  For Statements
   end-section-description *)
 
+  (* begin-procedure-description
+---
+**For0** generates the initial part of a FOR statement
+  end-procedure-description *)
   PROCEDURE For0*(VAR x, y: Item);
   BEGIN load(y)
   END For0;
 
+  (* begin-procedure-description
+---
+**FOR1** generates the central part of a FOR statement
+  end-procedure-description *)
   PROCEDURE For1*(VAR x, y, z, w: Item; VAR L: LONGINT);
   BEGIN 
     IF z.mode = ORB.Const THEN Put1a(Cmp, RH, y.r, z.a)
@@ -787,6 +839,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     Store(x, y)
   END For1;
 
+  (* begin-procedure-description
+---
+**FOR2** generates the final part of a FOR statement.
+  end-procedure-description *)
   PROCEDURE For2*(VAR x, y, w: Item);
   BEGIN load(x); DEC(RH); Put1a(Add, x.r, x.r, w.a)
   END For2;
@@ -797,34 +853,62 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  Branches, procedure calls, procedure prolog and epilog
   end-section-description *)
 
+  (* begin-procedure-description
+---
+**Here** returns the next available code location.
+  end-procedure-description *)
   PROCEDURE Here*(): LONGINT;
   BEGIN RETURN pc
   END Here;
 
+  (* begin-procedure-description
+---
+**FJump** generates a forward jump.
+  end-procedure-description *)
   PROCEDURE FJump*(VAR L: LONGINT);
   BEGIN Put3(BC, 7, L); L := pc-1
   END FJump;
 
+  (* begin-procedure-description
+---
+**CFJump** generates a conditional forward jump
+  end-procedure-description *)
   PROCEDURE CFJump*(VAR x: Item);
   BEGIN
     IF x.mode # Cond THEN loadCond(x) END ;
     Put3(BC, negated(x.r), x.a); FixLink(x.b); x.a := pc-1
   END CFJump;
 
+  (* begin-procedure-description
+---
+**BJump** generates a backwards jump.
+  end-procedure-description *)
   PROCEDURE BJump*(L: LONGINT);
   BEGIN Put3(BC, 7, L-pc-1)
   END BJump;
 
+  (* begin-procedure-description
+---
+**CBJump** generates a conditional backwards jump.
+  end-procedure-description *)
   PROCEDURE CBJump*(VAR x: Item; L: LONGINT);
   BEGIN
     IF x.mode # Cond THEN loadCond(x) END ;
     Put3(BC, negated(x.r), L-pc-1); FixLink(x.b); FixLinkWith(x.a, L)
   END CBJump;
 
+  (* begin-procedure-description
+---
+**Fixup** fixes ???
+  end-procedure-description *)
   PROCEDURE Fixup*(VAR x: Item);
   BEGIN FixLink(x.a)
   END Fixup;
 
+  (* begin-procedure-description
+---
+**SaveRegs** saves register values in preparation for a procedure call.
+  end-procedure-description *)
   PROCEDURE SaveRegs(r: LONGINT);  (* R[0 .. r-1]*)
     VAR r0: LONGINT;
   BEGIN (*r > 0*) r0 := 0;
@@ -832,6 +916,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     REPEAT Put2(Str, r0, SP, (r-r0-1)*4); INC(r0) UNTIL r0 = r
   END SaveRegs;
 
+  (* begin-procedure-description
+---
+**RestoreRegs** brings values back into registers after a procedure call.
+  end-procedure-description *)
   PROCEDURE RestoreRegs(r: LONGINT); (*R[0 .. r-1]*)
     VAR r0: LONGINT;
   BEGIN (*r > 0*) r0 := r;
@@ -839,6 +927,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     Put1(Add, SP, SP, r*4); DEC(frame, 4*r)
   END RestoreRegs;
 
+  (* begin-procedure-description
+---
+**PrepCall** generates generates a sequence that preapreas for a procedure call.
+  end-procedure-description *)
   PROCEDURE PrepCall*(VAR x: Item; VAR r: LONGINT);
   BEGIN (*x.type.form = ORB.Proc*)
     IF x.mode > ORB.Par THEN load(x) END ;
@@ -846,6 +938,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     IF RH > 0 THEN SaveRegs(RH); RH := 0 END
   END PrepCall;
 
+  (* begin-procedure-description
+---
+**Call** generates the procedure call sequence.
+  end-procedure-description *)
   PROCEDURE Call*(VAR x: Item; r: LONGINT);
   BEGIN (*x.type.form = ORB.Proc*)
     IF x.mode = ORB.Const THEN
@@ -870,6 +966,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END Call;
 
+  (* begin-procedure-description
+---
+**Enter** generates the procedure entry sequence.
+  end-procedure-description *)
   PROCEDURE Enter*(parblksize, locblksize: LONGINT; int: BOOLEAN);
     VAR a, r: LONGINT;
   BEGIN frame := 0;
@@ -884,6 +984,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END Enter;
 
+  (* begin-procedure-description
+---
+**Return** generates the procedure return sequence.
+  end-procedure-description *)
   PROCEDURE Return*(form: INTEGER; VAR x: Item; size: LONGINT; int: BOOLEAN);
   BEGIN
     IF form # ORB.NoTyp THEN load(x) END ;
@@ -902,6 +1006,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 ## ----------  In-line code procedures
   end-section-description *)
 
+  (* begin-procedure-description
+---
+**Increment** generates an inline routine that increments a variable.
+  end-procedure-description *)
   PROCEDURE Increment*(upordown: LONGINT; VAR x, y: Item);
     VAR op, zr, v: LONGINT;
   BEGIN (*frame = 0*)
@@ -918,6 +1026,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     END
   END Increment;
 
+  (* begin-procedure-description
+---
+**Include** generates a routine that ??
+  end-procedure-description *)
   PROCEDURE Include*(inorex: LONGINT; VAR x, y: Item);
     VAR op, zr: LONGINT;
   BEGIN loadAdr(x); zr := RH; Put2(Ldr, RH, x.r, 0); incR;
@@ -928,6 +1040,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     Put2(Str, zr, x.r, 0); DEC(RH, 2)
   END Include;
 
+  (* begin-procedure-description
+---
+**Assert** generates an inline routine that traps on a condition.
+  end-procedure-description *)
   PROCEDURE Assert*(VAR x: Item);
     VAR cond: LONGINT;
   BEGIN
@@ -938,16 +1054,28 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     Trap(cond, 7); FixLink(x.b)
   END Assert; 
 
+  (* begin-procedure-description
+---
+**New** generates an inline routine that allocates heap memory via trap 0.
+  end-procedure-description *)
   PROCEDURE New*(VAR x: Item);
   BEGIN loadAdr(x); loadTypTagAdr(x.type.base); Trap(7, 0); RH := 0
   END New;
 
+  (* begin-procedure-description
+---
+**Pack** generates an inline routine that ??
+  end-procedure-description *)
   PROCEDURE Pack*(VAR x, y: Item);
     VAR z: Item;
   BEGIN z := x; load(x); load(y);
     Put1(Lsl, y.r, y.r, 23); Put0(Add, x.r, x.r, y.r); DEC(RH); Store(z, x)
   END Pack;
 
+  (* begin-procedure-description
+---
+**Unpk** generates in inline routine that ??
+  end-procedure-description *)
   PROCEDURE Unpk*(VAR x, y: Item);
     VAR z, e0: Item;
   BEGIN  z := x; load(x); e0.mode := Reg; e0.r := RH; e0.type := ORB.intType;
@@ -955,14 +1083,26 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     Put1(Lsl, RH, RH, 23); Put0(Sub, x.r, x.r, RH); Store(z, x)
   END Unpk;
 
+  (* begin-procedure-description
+---
+**Led** generates an inline routine that displays a bit pattern on the LED display.
+  end-procedure-description *)
   PROCEDURE Led*(VAR x: Item);
   BEGIN load(x); Put1(Mov, RH, 0, -60); Put2(Str, x.r, RH, 0); DEC(RH)
   END Led;
 
+  (* begin-procedure-description
+---
+**Get** generates an inline routine that loads a value from an IO register.
+  end-procedure-description *)
   PROCEDURE Get*(VAR x, y: Item);
   BEGIN load(x); x.type := y.type; x.mode := RegI; x.a := 0; Store(y, x)
   END Get;
 
+  (* begin-procedure-description
+---
+**Put** generates an inline routine that stores a value in an IO register.
+  end-procedure-description *)
   PROCEDURE Put*(VAR x, y: Item);
   BEGIN load(x); x.type := y.type; x.mode := RegI; x.a := 0; Store(x, y)
   END Put;
