@@ -18,7 +18,7 @@ This module (OAP) relies on module OAG for code generation, ORB for the symbol t
 for lexical parsing and built-in type identification.
 
 end-module-develop-description *)
-MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 / CP 2020 adapted to aarch64*)
+MODULE OAP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 / CP 2020 adapted to aarch64*)
   IMPORT Texts, Oberon, ORS, ORB, OAG;
   (*Author: Niklaus Wirth, 2014.
     Parser of Oberon compiler. Uses Scanner ORS to obtain symbols (tokens),
