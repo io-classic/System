@@ -419,18 +419,18 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
     END
   END Export;
 
+  (* begin-procedure-description
+---
+**Clear** prepares the top scope of the program.
+  end-procedure-description *)
+  PROCEDURE Clear*;
+  BEGIN topScope := universe; nofmod := 1
+  END Clear;
+
   (* begin-section-description
 ## ---------- Initialization
   end-section-description *)
 
-  (* begin-procedure-description
----
-**Init** prepares the top scope of the program.
-  end-procedure-description *)
-  PROCEDURE Init*;
-  BEGIN topScope := universe; nofmod := 1
-  END Init;
-  
   (* begin-procedure-description
 ---
 **type** allocates a pre-defined type object
@@ -454,66 +454,69 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
   
   (* begin-procedure-description
 ---
-**The initialzation code for this module** registers base Oberon types and populates the the object table with predeclared types,functions and procedures.
+**Init** registers base Oberon types and populates the the object table with predeclared types,functions and procedures.
   end-procedure-description *)
-BEGIN
-  byteType := type(Byte, Int, 1);
-  boolType := type(Bool, Bool, 1);
-  charType := type(Char, Char,1);
-  intType := type(Int, Int, 4);
-  realType := type(Real, Real, 4);
-  setType := type(Set, Set,4);
-  nilType := type(NilTyp, NilTyp, 4);
-  noType := type(NoTyp, NoTyp, 4);
-  strType := type(String, String, 8);
+  PROCEDURE Init*(wordsize: INTEGER); 
+  BEGIN
+    byteType := type(Byte, Int, 1);
+    boolType := type(Bool, Bool, 1);
+    charType := type(Char, Char,1);
+    intType := type(Int, Int, 4);
+    realType := type(Real, Real, 4);
+    setType := type(Set, Set,4);
+    nilType := type(NilTyp, NilTyp, 4);
+    noType := type(NoTyp, NoTyp, 4);
+    strType := type(String, String, 8);
+      
+    (*initialize universe with data types and in-line procedures;
+      LONGINT is synonym to INTEGER, LONGREAL to REAL.
+      LED, ADC, SBC; LDPSR, LDREG, REG, COND are not in language definition*)
+    system := NIL;  (*n = procno*10 + nofpar*)
+    enter("UML", SFunc, intType, 132);  (*functions*)
+    enter("SBC", SFunc, intType, 122);
+    enter("ADC", SFunc, intType, 112);
+    enter("ROR", SFunc, intType, 92);
+    enter("ASR", SFunc, intType, 82);
+    enter("LSL", SFunc, intType, 72);
+    enter("LEN", SFunc, intType, 61);
+    enter("CHR", SFunc, charType, 51);
+    enter("ORD", SFunc, intType, 41);
+    enter("FLT", SFunc, realType, 31);
+    enter("FLOOR", SFunc, intType, 21);
+    enter("ODD", SFunc, boolType, 11);
+    enter("ABS", SFunc, intType, 1);
+    enter("LED", SProc, noType, 81);  (*procedures*)
+    enter("UNPK", SProc, noType, 72);
+    enter("PACK", SProc, noType, 62);
+    enter("NEW", SProc, noType, 51);
+    enter("ASSERT", SProc, noType, 41);
+    enter("EXCL", SProc, noType, 32);
+    enter("INCL", SProc, noType, 22);
+    enter("DEC", SProc, noType, 11);
+    enter("INC", SProc, noType, 1);
+    enter("SET", Typ, setType, 0);   (*types*)
+    enter("BOOLEAN", Typ, boolType, 0);
+    enter("BYTE", Typ, byteType, 0);
+    enter("CHAR", Typ, charType, 0);
+    enter("LONGREAL", Typ, realType, 0);
+    enter("REAL", Typ, realType, 0);
+    enter("LONGINT", Typ, intType, 0);
+    enter("INTEGER", Typ, intType, 0);
+    topScope := NIL; OpenScope; topScope.next := system; universe := topScope;
     
-  (*initialize universe with data types and in-line procedures;
-    LONGINT is synonym to INTEGER, LONGREAL to REAL.
-    LED, ADC, SBC; LDPSR, LDREG, REG, COND are not in language definition*)
-  system := NIL;  (*n = procno*10 + nofpar*)
-  enter("UML", SFunc, intType, 132);  (*functions*)
-  enter("SBC", SFunc, intType, 122);
-  enter("ADC", SFunc, intType, 112);
-  enter("ROR", SFunc, intType, 92);
-  enter("ASR", SFunc, intType, 82);
-  enter("LSL", SFunc, intType, 72);
-  enter("LEN", SFunc, intType, 61);
-  enter("CHR", SFunc, charType, 51);
-  enter("ORD", SFunc, intType, 41);
-  enter("FLT", SFunc, realType, 31);
-  enter("FLOOR", SFunc, intType, 21);
-  enter("ODD", SFunc, boolType, 11);
-  enter("ABS", SFunc, intType, 1);
-  enter("LED", SProc, noType, 81);  (*procedures*)
-  enter("UNPK", SProc, noType, 72);
-  enter("PACK", SProc, noType, 62);
-  enter("NEW", SProc, noType, 51);
-  enter("ASSERT", SProc, noType, 41);
-  enter("EXCL", SProc, noType, 32);
-  enter("INCL", SProc, noType, 22);
-  enter("DEC", SProc, noType, 11);
-  enter("INC", SProc, noType, 1);
-  enter("SET", Typ, setType, 0);   (*types*)
-  enter("BOOLEAN", Typ, boolType, 0);
-  enter("BYTE", Typ, byteType, 0);
-  enter("CHAR", Typ, charType, 0);
-  enter("LONGREAL", Typ, realType, 0);
-  enter("REAL", Typ, realType, 0);
-  enter("LONGINT", Typ, intType, 0);
-  enter("INTEGER", Typ, intType, 0);
-  topScope := NIL; OpenScope; topScope.next := system; universe := topScope;
-  
-  system := NIL;  (* initialize "unsafe" pseudo-module SYSTEM*)
-  enter("H", SFunc, intType, 201);     (*functions*)
-  enter("COND", SFunc, boolType, 191);
-  enter("SIZE", SFunc, intType, 181);
-  enter("ADR", SFunc, intType, 171);
-  enter("VAL", SFunc, intType, 162);
-  enter("REG", SFunc, intType, 151);
-  enter("BIT", SFunc, boolType, 142);
-  enter("LDREG", SProc, noType, 142);  (*procedures*)
-  enter("LDPSR", SProc, noType, 131);
-  enter("COPY", SProc, noType, 123);
-  enter("PUT", SProc, noType, 112);
-  enter("GET", SProc, noType, 102);
+    system := NIL;  (* initialize "unsafe" pseudo-module SYSTEM*)
+    enter("H", SFunc, intType, 201);     (*functions*)
+    enter("COND", SFunc, boolType, 191);
+    enter("SIZE", SFunc, intType, 181);
+    enter("ADR", SFunc, intType, 171);
+    enter("VAL", SFunc, intType, 162);
+    enter("REG", SFunc, intType, 151);
+    enter("BIT", SFunc, boolType, 142);
+    enter("LDREG", SProc, noType, 142);  (*procedures*)
+    enter("LDPSR", SProc, noType, 131);
+    enter("COPY", SProc, noType, 123);
+    enter("PUT", SProc, noType, 112);
+    enter("GET", SProc, noType, 102);
+  END Init;
+BEGIN
 END ORB.

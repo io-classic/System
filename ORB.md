@@ -151,12 +151,12 @@
 
 `  PROCEDURE Export*(VAR modid: ORS.Ident; VAR newSF: BOOLEAN; VAR key: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L373)
 
-## ---------- Initialization
 ---
-**Init** prepares the top scope of the program.
+**Clear** prepares the top scope of the program.
 
-`  PROCEDURE Init*;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L430)
+`  PROCEDURE Clear*;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L426)
 
+## ---------- Initialization
 ---
 **type** allocates a pre-defined type object
 
@@ -168,4 +168,7 @@
 `  PROCEDURE enter(name: ARRAY OF CHAR; cl: INTEGER; type: Type; n: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L448)
 
 ---
-**The initialzation code for this module** registers base Oberon types and populates the the object table with predeclared types,functions and procedures.
+**Init** registers base Oberon types and populates the the object table with predeclared types,functions and procedures.
+
+`  PROCEDURE Init*(wordsize: INTEGER); ` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L459)
+

@@ -1213,7 +1213,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
 ---
 **The initialzation code for this module** opens a writer to print marked errors and initializes the Oberon parser state.
   end-procedure-description *)
-BEGIN Texts.OpenWriter(W); Texts.WriteString(W, "OA Compiler 2020");
+BEGIN ORB.Init(4); Texts.OpenWriter(W); Texts.WriteString(W, "OA Compiler 2020");
   Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
   NEW(dummy); dummy.class := ORB.Var; dummy.type := ORB.intType;
   expression := expression0; Type := Type0; FormalType := FormalType0
