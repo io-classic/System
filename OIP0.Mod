@@ -1,74 +1,29 @@
-(* begin-package-description
-### _Package Overview:_
-Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
-
- * A recursive-descent parser of the Oberon language, ORP
- * A generator of target-specific opcodes (RISC5), ORG
- * A symbol table and frame tracker, ORB
- * A scanner and tokenizer, ORS
-
-In addition, several tools link and examine the binary modules produced by the compiler:
-
- * A linker and loader, Linker
- * A bootload firmware generator, ORF
- * A tool for examining modules, ORTool
-
-### _Package Use:_
-
-To compile the inner core:
-```
-ORP.Compile Kernel.Mod/s, Filedir.Mod/s, Files.Mod/s, Modules.Mod/s ~
-```
-To link the inner core modules into a bootable binary:
-```
-Linker.Link Modules ~
-```
-To Install the binary into the boot region of the current disk image:
-```
-Linker.Load Modules.bin ~
-```
-To compile an example module:
-```
-ORP.Compile Sierpinski.Mod ~
-```
-To examine the symbol file of the compiled example:
-```
-ORTool.DecSym Sierpinski.smb
-```
-To Examine the binary of the compiled example:
-```
-ORTool.DecObj Sierpinski.rsc
-```
-
-### _Modules in this package:_
-end-package-description *)
-
 (* begin-module-use-description
 
-Module ORP reads the source code of an Oberon program and produces a RISC5 executable binary module.
+Module OIP reads the source code of an Oberon program and produces an executable x86_64 binary module.
 
 end-module-use-description *)
 (* begin-module-develop-description
 
-(N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07)
+(N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 / CP 2020 adapted to x86_64)
 
-**ORP** implements a one-pass recursive descent parser for the language Oberon.
+**OIP** implements a one-pass recursive descent parser for the language Oberon.
 
 The structure of the parser is derived from the structure of the language, with constituent parts of the language 
 (e.g. Module, Procedure, Type, Expression, Term, Parameter) represented by a procedure of that name, invoked from the 
 encompassing construct. Each procedure consumes and validates a part of the program source text while populating the 
 symbol table and execution context and also generating machine code faithfully representing that language construct.
 
-This module (ORP) relies on module ORG for code generation, ORB for the symbol table, execution context tracking and reserved words, and ORS
+This module (OIP) relies on module OIG for code generation, ORB for the symbol table, execution context tracking and reserved words, and ORS
 for lexical parsing and built-in type identification.
 
 end-module-develop-description *)
-MODULE ORP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07*)
-  IMPORT Texts, Oberon, ORS, ORB, ORG;
+MODULE OIP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 / CP 2020 adapted to x86_64*)
+  IMPORT Texts, Oberon, ORS, ORB, OIG;
   (*Author: Niklaus Wirth, 2014.
-    Parser of Oberon-RISC compiler. Uses Scanner ORS to obtain symbols (tokens),
+    Parser of Oberon compiler. Uses Scanner ORS to obtain symbols (tokens),
     ORB for definition of data structures and for handling import and export, and
-    ORG to produce binary code. ORP performs type checking and data allocation.
+    OAG to produce binary code. OAP performs type checking and data allocation.
     Parser is target-independent, except for part of the handling of allocations.*)
 
   CONST
@@ -1258,8 +1213,8 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
 ---
 **The initialzation code for this module** opens a writer to print marked errors and initializes the Oberon parser state.
   end-procedure-description *)
-BEGIN Texts.OpenWriter(W); Texts.WriteString(W, "OR Compiler  8.3.2020");
+BEGIN Texts.OpenWriter(W); Texts.WriteString(W, "OI Compiler 2020");
   Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
   NEW(dummy); dummy.class := ORB.Var; dummy.type := ORB.intType;
   expression := expression0; Type := Type0; FormalType := FormalType0
-END ORP.
+END OIP.

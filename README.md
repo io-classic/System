@@ -17,7 +17,7 @@
 | [System](README.md#the-System-package) | prepares the user interface and manages viewers for the user. |
 |   | [System.Mod](README.md#SystemMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src)  |
 | [Build](README.md#the-Build-package) | provides the compiler and associated program building and debugging tools for Oberon. |
-|   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORL.Mod](README.md#ORLMod-doc-src)  |
+|   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORL.Mod](README.md#ORLMod-doc-src)  |
 | [Extras](README.md#the-Extras-package) | contains extra modules demonstrating Oberon. |
 |   | [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [Sierpinski.Mod](README.md#SierpinskiMod-doc-src) [Hilbert.Mod](README.md#HilbertMod-doc-src) [Checkers.Mod](README.md#CheckersMod-doc-src)  |
 
@@ -378,7 +378,7 @@ Module Batch provides for automatic sequential execution of Oberon commands.
 
 ---
 ## The Build Package
-includes: [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORL.Mod](README.md#ORLMod-doc-src)  
+includes: [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORL.Mod](README.md#ORLMod-doc-src)  
 
 ### _Package Overview:_
 Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
@@ -425,7 +425,7 @@ ORTool.DecObj Sierpinski.rsc
 
 #### ORP.Mod [_doc_](https://github.com/io-orig/System/blob/main/ORP.md) [_src_](https://github.com/io-orig/System/blob/main/ORP.Mod)
 
-Module ORP reads the source code of an Oberon program and produces an executable binary module.
+Module ORP reads the source code of an Oberon program and produces a RISC5 executable binary module.
 
 
   **imports:** ` Texts Oberon ORS ORB ORG`
@@ -474,6 +474,40 @@ ORTool uses SYSTEM, Files, Modules, Texts, Oberon, ORB
 #### ORC.Mod [_doc_](https://github.com/io-orig/System/blob/main/ORC.md) [_src_](https://github.com/io-orig/System/blob/main/ORC.Mod)
 
   **imports:** ` SYSTEM Files Texts Oberon V24`
+
+
+
+#### OIP.Mod [_doc_](https://github.com/io-orig/System/blob/main/OIP.md) [_src_](https://github.com/io-orig/System/blob/main/OIP.Mod)
+
+Module OIP reads the source code of an Oberon program and produces an executable x86_64 binary module.
+
+
+  **imports:** ` Texts Oberon ORS ORB OIG`
+
+
+
+#### OIG.Mod [_doc_](https://github.com/io-orig/System/blob/main/OIG.md) [_src_](https://github.com/io-orig/System/blob/main/OIG.Mod)
+Module OIG generates the x86_64 processor-specific instructions for executing an Oberon program. 
+
+
+  **imports:** ` SYSTEM Files ORS ORB`
+
+
+
+#### OAP.Mod [_doc_](https://github.com/io-orig/System/blob/main/OAP.md) [_src_](https://github.com/io-orig/System/blob/main/OAP.Mod)
+
+Module OAP reads the source code of an Oberon program and produces an aarch64 executable binary module.
+
+
+  **imports:** ` Texts Oberon ORS ORB OAG`
+
+
+
+#### OAG.Mod [_doc_](https://github.com/io-orig/System/blob/main/OAG.md) [_src_](https://github.com/io-orig/System/blob/main/OAG.Mod)
+Module OAG generates the aarch-64 processor-specific instructions for executing an Oberon program. 
+
+
+  **imports:** ` SYSTEM Files ORS ORB`
 
 
 
