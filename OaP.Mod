@@ -14,7 +14,7 @@ The structure of the parser is derived from the structure of the language, with 
 encompassing construct. Each procedure consumes and validates a part of the program source text while populating the 
 symbol table and execution context and also generating machine code faithfully representing that language construct.
 
-This module (OaP) relies on module OAG for code generation, OaB for the symbol table, execution context tracking and reserved words, and ORS
+This module (OaP) relies on module OaG for code generation, OaB for the symbol table, execution context tracking and reserved words, and ORS
 for lexical parsing and built-in type identification.
 
 end-module-develop-description *)
@@ -23,7 +23,7 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
   (*Author: Niklaus Wirth, 2014.
     Parser of Oberon compiler. Uses Scanner ORS to obtain symbols (tokens),
     ORB for definition of data structures and for handling import and export, and
-    OAG to produce binary code. OAP performs type checking and data allocation.
+    OaG to produce binary code. OaP performs type checking and data allocation.
     Parser is target-independent, except for part of the handling of allocations.*)
 
   CONST
@@ -39,7 +39,7 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
     dc: LONGINT;    (*data counter*)
     level, exno, version: INTEGER;
     newSF: BOOLEAN;  (*option flag*)
-    expression: PROCEDURE (VAR x: OAG.Item);  (*to avoid forward reference*)
+    expression: PROCEDURE (VAR x: OaG.Item);  (*to avoid forward reference*)
     Type: PROCEDURE (VAR type: ORB.Type);
     FormalType: PROCEDURE (VAR typ: ORB.Type; dim: INTEGER);
     modid: ORS.Ident;
@@ -80,7 +80,7 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
 ---
 **CheckBool** marks an error if the item is not a boolean.
   end-procedure-description *)
-  PROCEDURE CheckBool(VAR x: OAG.Item);
+  PROCEDURE CheckBool(VAR x: OaG.Item);
   BEGIN
     IF x.type.form # ORB.Bool THEN ORS.Mark("not Boolean"); x.type := ORB.boolType END
   END CheckBool;
@@ -89,7 +89,7 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
 ---
 **CheckInt** marks an error if the item is not an Int.
   end-procedure-description *)
-  PROCEDURE CheckInt(VAR x: OAG.Item);
+  PROCEDURE CheckInt(VAR x: OaG.Item);
   BEGIN
     IF x.type.form # ORB.Int THEN ORS.Mark("not Integer"); x.type := ORB.intType END
   END CheckInt;
@@ -98,7 +98,7 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
 ---
 **CheckReal** marks an error if the item is not a Real.
   end-procedure-description *)
-  PROCEDURE CheckReal(VAR x: OAG.Item);
+  PROCEDURE CheckReal(VAR x: OaG.Item);
   BEGIN
     IF x.type.form # ORB.Real THEN ORS.Mark("not Real"); x.type := ORB.realType END
   END CheckReal;
@@ -107,7 +107,7 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
 ---
 **CheckSet** marks an error if the item is not a Set.
   end-procedure-description *)
-  PROCEDURE CheckSet(VAR x: OAG.Item);
+  PROCEDURE CheckSet(VAR x: OaG.Item);
   BEGIN
     IF x.type.form # ORB.Set THEN ORS.Mark("not Set"); x.type := ORB.setType END 
   END CheckSet;
@@ -116,7 +116,7 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
 ---
 **CheckSetVal** marks an error if the item is not a Set Value.
   end-procedure-description *)
-  PROCEDURE CheckSetVal(VAR x: OAG.Item);
+  PROCEDURE CheckSetVal(VAR x: OaG.Item);
   BEGIN
     IF x.type.form # ORB.Int THEN ORS.Mark("not Int"); x.type := ORB.setType
     ELSIF x.mode = ORB.Const THEN
@@ -128,7 +128,7 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
 ---
 **CheckConst** marks an error if the value is not a Constant.
   end-procedure-description *)
-  PROCEDURE CheckConst(VAR x: OAG.Item);
+  PROCEDURE CheckConst(VAR x: OaG.Item);
   BEGIN
     IF x.mode # ORB.Const THEN ORS.Mark("not a constant"); x.mode := ORB.Const END
   END CheckConst;
@@ -137,7 +137,7 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
 ---
 **CheckReadOnly** marks an error if the value is not read-only.
   end-procedure-description *)
-  PROCEDURE CheckReadOnly(VAR x: OAG.Item);
+  PROCEDURE CheckReadOnly(VAR x: OaG.Item);
   BEGIN
     IF x.rdo THEN ORS.Mark("read-only") END
   END CheckReadOnly;
@@ -174,23 +174,23 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
 ---
 **TypeTest** checks for assignment type compatibility.
   end-procedure-description *)
-  PROCEDURE TypeTest(VAR x: OAG.Item; T: ORB.Type; guard: BOOLEAN);
+  PROCEDURE TypeTest(VAR x: OaG.Item; T: ORB.Type; guard: BOOLEAN);
     VAR xt: ORB.Type;
   BEGIN xt := x.type;
     IF (T.form = xt.form ) & ((T.form = ORB.Pointer) OR (T.form = ORB.Record) & (x.mode = ORB.Par)) THEN
       WHILE (xt # T) & (xt # NIL) DO xt := xt.base END ;
       IF xt # T THEN xt := x.type;
         IF xt.form = ORB.Pointer THEN
-          IF IsExtension(xt.base, T.base) THEN OAG.TypeTest(x, T.base, FALSE, guard); x.type := T
+          IF IsExtension(xt.base, T.base) THEN OaG.TypeTest(x, T.base, FALSE, guard); x.type := T
           ELSE ORS.Mark("not an extension")
           END
         ELSIF (xt.form = ORB.Record) & (x.mode = ORB.Par) THEN
-          IF IsExtension(xt, T) THEN  OAG.TypeTest(x, T, TRUE, guard); x.type := T
+          IF IsExtension(xt, T) THEN  OaG.TypeTest(x, T, TRUE, guard); x.type := T
           ELSE ORS.Mark("not an extension")
           END
         ELSE ORS.Mark("incompatible types")
         END
-      ELSIF ~guard THEN OAG.TypeTest(x, NIL, FALSE, FALSE)
+      ELSIF ~guard THEN OaG.TypeTest(x, NIL, FALSE, FALSE)
       END
     ELSE ORS.Mark("type mismatch")
     END ;
@@ -201,25 +201,25 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
 ---
 **selector** generates the array item, procedure, or method dereference on an array or record.
   end-procedure-description *)
-  PROCEDURE selector(VAR x: OAG.Item);
-    VAR y: OAG.Item; obj: ORB.Object;
+  PROCEDURE selector(VAR x: OaG.Item);
+    VAR y: OaG.Item; obj: ORB.Object;
   BEGIN
     WHILE (sym = ORS.lbrak) OR (sym = ORS.period) OR (sym = ORS.arrow)
         OR (sym = ORS.lparen) & (x.type.form IN {ORB.Record, ORB.Pointer}) DO
       IF sym = ORS.lbrak THEN
         REPEAT ORS.Get(sym); expression(y);
           IF x.type.form = ORB.Array THEN
-            CheckInt(y); OAG.Index(x, y); x.type := x.type.base
+            CheckInt(y); OaG.Index(x, y); x.type := x.type.base
           ELSE ORS.Mark("not an array")
           END
         UNTIL sym # ORS.comma;
         Check(ORS.rbrak, "no ]")
       ELSIF sym = ORS.period THEN ORS.Get(sym);
         IF sym = ORS.ident THEN
-          IF x.type.form = ORB.Pointer THEN OAG.DeRef(x); x.type := x.type.base END ;
+          IF x.type.form = ORB.Pointer THEN OaG.DeRef(x); x.type := x.type.base END ;
           IF x.type.form = ORB.Record THEN
             obj := ORB.thisfield(x.type); ORS.Get(sym);
-            IF obj # NIL THEN OAG.Field(x, obj); x.type := obj.type
+            IF obj # NIL THEN OaG.Field(x, obj); x.type := obj.type
             ELSE ORS.Mark("undef")
             END
           ELSE ORS.Mark("not a record")
@@ -228,7 +228,7 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
         END
       ELSIF sym = ORS.arrow THEN
         ORS.Get(sym);
-        IF x.type.form = ORB.Pointer THEN OAG.DeRef(x); x.type := x.type.base
+        IF x.type.form = ORB.Pointer THEN OaG.DeRef(x); x.type := x.type.base
         ELSE ORS.Mark("not a pointer")
         END
       ELSIF (sym = ORS.lparen) & (x.type.form IN {ORB.Record, ORB.Pointer}) THEN (*type guard*)
@@ -274,7 +274,7 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
   end-procedure-description *)
   PROCEDURE CompTypes(t0, t1: ORB.Type; varpar: BOOLEAN): BOOLEAN;
   BEGIN (*check for assignment compatibility*)
-    RETURN (t0 = t1)    (*openarray assignment disallowed in OAG*)
+    RETURN (t0 = t1)    (*openarray assignment disallowed in OaG*)
       OR (t0.form = ORB.Array) & (t1.form = ORB.Array) & (t0.base =  t1.base) & (t0.len = t1.len)
       OR (t0.form = ORB.Record) & (t1.form = ORB.Record)  & IsExtension(t0, t1)
       OR ~varpar &
@@ -288,28 +288,28 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
 **Parameter** consumes a function call parameter and produces function call proloogue code for the parameter.
   end-procedure-description *)
   PROCEDURE Parameter(par: ORB.Object);
-    VAR x: OAG.Item; varpar: BOOLEAN;
+    VAR x: OaG.Item; varpar: BOOLEAN;
   BEGIN expression(x);
     IF par # NIL THEN
       varpar := par.class = ORB.Par;
       IF CompTypes(par.type, x.type, varpar) THEN
-        IF ~varpar THEN OAG.ValueParam(x)
+        IF ~varpar THEN OaG.ValueParam(x)
         ELSE (*par.class = Par*)
           IF ~par.rdo THEN CheckReadOnly(x) END ;
-          OAG.VarParam(x, par.type)
+          OaG.VarParam(x, par.type)
         END
       ELSIF (x.type.form = ORB.Array) & (par.type.form = ORB.Array) &
           (x.type.base = par.type.base) & (par.type.len < 0) THEN
         IF ~par.rdo THEN CheckReadOnly(x) END ;
-        OAG.OpenArrayParam(x)
+        OaG.OpenArrayParam(x)
       ELSIF (x.type.form = ORB.String) & varpar & par.rdo & (par.type.form = ORB.Array) & 
-          (par.type.base.form = ORB.Char) & (par.type.len < 0) THEN OAG.StringParam(x)
-      ELSIF ~varpar & (par.type.form = ORB.Int) & (x.type.form = ORB.Int) THEN OAG.ValueParam(x)  (*BYTE*)
+          (par.type.base.form = ORB.Char) & (par.type.len < 0) THEN OaG.StringParam(x)
+      ELSIF ~varpar & (par.type.form = ORB.Int) & (x.type.form = ORB.Int) THEN OaG.ValueParam(x)  (*BYTE*)
       ELSIF (x.type.form = ORB.String) & (x.b = 2) & (par.class = ORB.Var) & (par.type.form = ORB.Char) THEN
-        OAG.StrToChar(x); OAG.ValueParam(x)
+        OaG.StrToChar(x); OaG.ValueParam(x)
       ELSIF (par.type.form = ORB.Array) & (par.type.base = ORB.byteType) & 
           (par.type.len >= 0) & (par.type.size = x.type.size) THEN
-        OAG.VarParam(x, par.type)
+        OaG.VarParam(x, par.type)
       ELSE ORS.Mark("incompatible parameters")
       END
     END
@@ -319,7 +319,7 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
 ---
 **ParamList** consumes the function call parameters, resulting in a function call prologue.
   end-procedure-description *)
-  PROCEDURE ParamList(VAR x: OAG.Item);
+  PROCEDURE ParamList(VAR x: OaG.Item);
     VAR n: INTEGER; par: ORB.Object;
   BEGIN par := x.type.dsc; n := 0;
     IF sym # ORS.rparen THEN
@@ -343,44 +343,44 @@ MODULE OaP; (*N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 
 
 Standard functions include: `ABS` `ODD` `FLOOR` `FLT` `ORD` `CHR` `LEN` `ADC` `SBC` `UML` `BIT` `REG` `VAL` `ADR` `SIZE` `COND` `H`
   end-procedure-description *)
-  PROCEDURE StandFunc(VAR x: OAG.Item; fct: LONGINT; restyp: ORB.Type);
-    VAR y: OAG.Item; n, npar: LONGINT;
+  PROCEDURE StandFunc(VAR x: OaG.Item; fct: LONGINT; restyp: ORB.Type);
+    VAR y: OaG.Item; n, npar: LONGINT;
   BEGIN Check(ORS.lparen, "no (");
     npar := fct MOD 10; fct := fct DIV 10; expression(x); n := 1;
     WHILE sym = ORS.comma DO ORS.Get(sym); expression(y); INC(n) END ;
     Check(ORS.rparen, "no )");
     IF n = npar THEN
       IF fct = 0 THEN (*ABS*)
-        IF x.type.form IN {ORB.Int, ORB.Real} THEN OAG.Abs(x); restyp := x.type ELSE ORS.Mark("bad type") END
-      ELSIF fct = 1 THEN (*ODD*) CheckInt(x); OAG.Odd(x)
-      ELSIF fct = 2 THEN (*FLOOR*) CheckReal(x); OAG.Floor(x)
-      ELSIF fct = 3 THEN (*FLT*) CheckInt(x); OAG.Float(x)
+        IF x.type.form IN {ORB.Int, ORB.Real} THEN OaG.Abs(x); restyp := x.type ELSE ORS.Mark("bad type") END
+      ELSIF fct = 1 THEN (*ODD*) CheckInt(x); OaG.Odd(x)
+      ELSIF fct = 2 THEN (*FLOOR*) CheckReal(x); OaG.Floor(x)
+      ELSIF fct = 3 THEN (*FLT*) CheckInt(x); OaG.Float(x)
       ELSIF fct = 4 THEN (*ORD*)
-        IF x.type.form <= ORB.Proc THEN OAG.Ord(x)
-        ELSIF (x.type.form = ORB.String) & (x.b = 2) THEN OAG.StrToChar(x)
+        IF x.type.form <= ORB.Proc THEN OaG.Ord(x)
+        ELSIF (x.type.form = ORB.String) & (x.b = 2) THEN OaG.StrToChar(x)
         ELSE ORS.Mark("bad type")
         END
-      ELSIF fct = 5 THEN (*CHR*) CheckInt(x); OAG.Ord(x)
+      ELSIF fct = 5 THEN (*CHR*) CheckInt(x); OaG.Ord(x)
       ELSIF fct = 6 THEN (*LEN*)
-          IF x.type.form = ORB.Array THEN OAG.Len(x) ELSE ORS.Mark("not an array") END
+          IF x.type.form = ORB.Array THEN OaG.Len(x) ELSE ORS.Mark("not an array") END
       ELSIF fct IN {7, 8, 9} THEN (*LSL, ASR, ROR*) CheckInt(y);
-        IF x.type.form IN {ORB.Int, ORB.Set} THEN OAG.Shift(fct-7, x, y); restyp := x.type ELSE ORS.Mark("bad type") END
-      ELSIF fct = 11 THEN (*ADC*) OAG.ADC(x, y)
-      ELSIF fct = 12 THEN (*SBC*) OAG.SBC(x, y)
-      ELSIF fct = 13 THEN (*UML*) OAG.UML(x, y)
-      ELSIF fct = 14 THEN (*BIT*) CheckInt(x); CheckInt(y); OAG.Bit(x, y)
-      ELSIF fct = 15 THEN (*REG*) CheckConst(x); CheckInt(x); OAG.Register(x)
+        IF x.type.form IN {ORB.Int, ORB.Set} THEN OaG.Shift(fct-7, x, y); restyp := x.type ELSE ORS.Mark("bad type") END
+      ELSIF fct = 11 THEN (*ADC*) OaG.ADC(x, y)
+      ELSIF fct = 12 THEN (*SBC*) OaG.SBC(x, y)
+      ELSIF fct = 13 THEN (*UML*) OaG.UML(x, y)
+      ELSIF fct = 14 THEN (*BIT*) CheckInt(x); CheckInt(y); OaG.Bit(x, y)
+      ELSIF fct = 15 THEN (*REG*) CheckConst(x); CheckInt(x); OaG.Register(x)
       ELSIF fct = 16 THEN (*VAL*)
         IF (x.mode= ORB.Typ) & (x.type.size <= y.type.size) THEN restyp := x.type; x := y
         ELSE ORS.Mark("casting not allowed")
         END
-      ELSIF fct = 17 THEN (*ADR*) OAG.Adr(x)
+      ELSIF fct = 17 THEN (*ADR*) OaG.Adr(x)
       ELSIF fct = 18 THEN (*SIZE*)
-        IF x.mode = ORB.Typ THEN OAG.MakeConstItem(x, ORB.intType, x.type.size)
+        IF x.mode = ORB.Typ THEN OaG.MakeConstItem(x, ORB.intType, x.type.size)
         ELSE ORS.Mark("must be a type")
         END
-      ELSIF fct = 19 THEN (*COND*) CheckConst(x); CheckInt(x); OAG.Condition(x)
-      ELSIF fct = 20 THEN (*H*) CheckConst(x); CheckInt(x); OAG.H(x)
+      ELSIF fct = 19 THEN (*COND*) CheckConst(x); CheckInt(x); OaG.Condition(x)
+      ELSIF fct = 20 THEN (*H*) CheckConst(x); CheckInt(x); OaG.H(x)
       END ;
       x.type := restyp
     ELSE ORS.Mark("wrong nof params")
@@ -391,11 +391,11 @@ Standard functions include: `ABS` `ODD` `FLOOR` `FLT` `ORD` `CHR` `LEN` `ADC` `S
 ---
 **element** produces a reference to an element in a set.
   end-procedure-description *)
-  PROCEDURE element(VAR x: OAG.Item);
-    VAR y: OAG.Item;
+  PROCEDURE element(VAR x: OaG.Item);
+    VAR y: OaG.Item;
   BEGIN expression(x); CheckSetVal(x);
-    IF sym = ORS.upto THEN ORS.Get(sym); expression(y); CheckSetVal(y); OAG.Set(x, y)
-    ELSE OAG.Singleton(x)
+    IF sym = ORS.upto THEN ORS.Get(sym); expression(y); CheckSetVal(y); OaG.Set(x, y)
+    ELSE OaG.Singleton(x)
     END ;
     x.type := ORB.setType
   END element;
@@ -404,18 +404,18 @@ Standard functions include: `ABS` `ODD` `FLOOR` `FLT` `ORD` `CHR` `LEN` `ADC` `S
 ---
 **set** produces a set from elements.
   end-procedure-description *)
-  PROCEDURE set(VAR x: OAG.Item);
-    VAR y: OAG.Item;
+  PROCEDURE set(VAR x: OaG.Item);
+    VAR y: OaG.Item;
   BEGIN
     IF sym >= ORS.if THEN
       IF sym # ORS.rbrace THEN ORS.Mark(" } missing") END ;
-      OAG.MakeConstItem(x, ORB.setType, 0) (*empty set*)
+      OaG.MakeConstItem(x, ORB.setType, 0) (*empty set*)
     ELSE element(x);
       WHILE (sym < ORS.rparen) OR (sym > ORS.rbrace) DO
         IF sym = ORS.comma THEN ORS.Get(sym)
         ELSIF sym # ORS.rbrace THEN ORS.Mark("missing comma")
         END ;
-        element(y); OAG.SetOp(ORS.plus, x, y)
+        element(y); OaG.SetOp(ORS.plus, x, y)
       END
     END
   END set; 
@@ -424,7 +424,7 @@ Standard functions include: `ABS` `ODD` `FLOOR` `FLT` `ORD` `CHR` `LEN` `ADC` `S
 ---
 **factor** generates code that produces a value from identifiers, applications of functions and procedures, etc. for use in a calculation or assignment.
   end-procedure-description *)
-  PROCEDURE factor(VAR x: OAG.Item);
+  PROCEDURE factor(VAR x: OaG.Item);
     VAR obj: ORB.Object; rx: LONGINT;
   BEGIN (*sync*)
     IF (sym < ORS.char) OR (sym > ORS.ident) THEN ORS.Mark("expression expected");
@@ -433,26 +433,26 @@ Standard functions include: `ABS` `ODD` `FLOOR` `FLT` `ORD` `CHR` `LEN` `ADC` `S
     IF sym = ORS.ident THEN
       qualident(obj);  
       IF obj.class = ORB.SFunc THEN StandFunc(x, obj.val, obj.type)
-      ELSE OAG.MakeItem(x, obj, level); selector(x);
+      ELSE OaG.MakeItem(x, obj, level); selector(x);
         IF sym = ORS.lparen THEN
           ORS.Get(sym);
           IF (x.type.form = ORB.Proc) & (x.type.base.form # ORB.NoTyp) THEN
-            OAG.PrepCall(x, rx); ParamList(x); OAG.Call(x, rx); x.type := x.type.base
+            OaG.PrepCall(x, rx); ParamList(x); OaG.Call(x, rx); x.type := x.type.base
           ELSE ORS.Mark("not a function"); ParamList(x)
           END
         END
       END
-    ELSIF sym = ORS.int THEN OAG.MakeConstItem(x, ORB.intType, ORS.ival); ORS.Get(sym)
-    ELSIF sym = ORS.real THEN OAG.MakeRealItem(x, ORS.rval); ORS.Get(sym)
-    ELSIF sym = ORS.char THEN OAG.MakeConstItem(x, ORB.charType, ORS.ival); ORS.Get(sym)
-    ELSIF sym = ORS.nil THEN ORS.Get(sym); OAG.MakeConstItem(x, ORB.nilType, 0)
-    ELSIF sym = ORS.string THEN OAG.MakeStringItem(x, ORS.slen); ORS.Get(sym)
+    ELSIF sym = ORS.int THEN OaG.MakeConstItem(x, ORB.intType, ORS.ival); ORS.Get(sym)
+    ELSIF sym = ORS.real THEN OaG.MakeRealItem(x, ORS.rval); ORS.Get(sym)
+    ELSIF sym = ORS.char THEN OaG.MakeConstItem(x, ORB.charType, ORS.ival); ORS.Get(sym)
+    ELSIF sym = ORS.nil THEN ORS.Get(sym); OaG.MakeConstItem(x, ORB.nilType, 0)
+    ELSIF sym = ORS.string THEN OaG.MakeStringItem(x, ORS.slen); ORS.Get(sym)
     ELSIF sym = ORS.lparen THEN ORS.Get(sym); expression(x); Check(ORS.rparen, "no )")
     ELSIF sym = ORS.lbrace THEN ORS.Get(sym); set(x); Check(ORS.rbrace, "no }")
-    ELSIF sym = ORS.not THEN ORS.Get(sym); factor(x); CheckBool(x); OAG.Not(x)
-    ELSIF sym = ORS.false THEN ORS.Get(sym); OAG.MakeConstItem(x, ORB.boolType, 0)
-    ELSIF sym = ORS.true THEN ORS.Get(sym); OAG.MakeConstItem(x, ORB.boolType, 1)
-    ELSE ORS.Mark("not a factor"); OAG.MakeConstItem(x, ORB.intType, 0)
+    ELSIF sym = ORS.not THEN ORS.Get(sym); factor(x); CheckBool(x); OaG.Not(x)
+    ELSIF sym = ORS.false THEN ORS.Get(sym); OaG.MakeConstItem(x, ORB.boolType, 0)
+    ELSIF sym = ORS.true THEN ORS.Get(sym); OaG.MakeConstItem(x, ORB.boolType, 1)
+    ELSE ORS.Mark("not a factor"); OaG.MakeConstItem(x, ORB.intType, 0)
     END
   END factor;
 
@@ -460,25 +460,25 @@ Standard functions include: `ABS` `ODD` `FLOOR` `FLT` `ORD` `CHR` `LEN` `ADC` `S
 ---
 **term** combines factors via multiplication and division, resulting in a value.
   end-procedure-description *)
-  PROCEDURE term(VAR x: OAG.Item);
-    VAR y: OAG.Item; op, f: INTEGER;
+  PROCEDURE term(VAR x: OaG.Item);
+    VAR y: OaG.Item; op, f: INTEGER;
   BEGIN factor(x); f := x.type.form;
     WHILE (sym >= ORS.times) & (sym <= ORS.and) DO
       op := sym; ORS.Get(sym);
       IF op = ORS.times THEN
-        IF f = ORB.Int THEN factor(y); CheckInt(y); OAG.MulOp(x, y)
-        ELSIF f = ORB.Real THEN factor(y); CheckReal(y); OAG.RealOp(op, x, y)
-        ELSIF f = ORB.Set THEN factor(y); CheckSet(y); OAG.SetOp(op, x, y)
+        IF f = ORB.Int THEN factor(y); CheckInt(y); OaG.MulOp(x, y)
+        ELSIF f = ORB.Real THEN factor(y); CheckReal(y); OaG.RealOp(op, x, y)
+        ELSIF f = ORB.Set THEN factor(y); CheckSet(y); OaG.SetOp(op, x, y)
         ELSE ORS.Mark("bad type")
         END
       ELSIF (op = ORS.div) OR (op = ORS.mod) THEN
-        CheckInt(x); factor(y); CheckInt(y); OAG.DivOp(op, x, y)
+        CheckInt(x); factor(y); CheckInt(y); OaG.DivOp(op, x, y)
       ELSIF op = ORS.rdiv THEN
-        IF f = ORB.Real THEN factor(y); CheckReal(y); OAG.RealOp(op, x, y)
-        ELSIF f = ORB.Set THEN factor(y); CheckSet(y); OAG.SetOp(op, x, y)
+        IF f = ORB.Real THEN factor(y); CheckReal(y); OaG.RealOp(op, x, y)
+        ELSIF f = ORB.Set THEN factor(y); CheckSet(y); OaG.SetOp(op, x, y)
         ELSE ORS.Mark("bad type")
         END
-      ELSE (*op = and*) CheckBool(x); OAG.And1(x); factor(y); CheckBool(y); OAG.And2(x, y)
+      ELSE (*op = and*) CheckBool(x); OaG.And1(x); factor(y); CheckBool(y); OaG.And2(x, y)
       END
     END
   END term;
@@ -487,20 +487,20 @@ Standard functions include: `ABS` `ODD` `FLOOR` `FLT` `ORD` `CHR` `LEN` `ADC` `S
 ---
 **SimpleExpression** combines terms via addition, subtraction, boolean, and set operations, resulting in a value.
   end-procedure-description *)
-  PROCEDURE SimpleExpression(VAR x: OAG.Item);
-    VAR y: OAG.Item; op: INTEGER;
+  PROCEDURE SimpleExpression(VAR x: OaG.Item);
+    VAR y: OaG.Item; op: INTEGER;
   BEGIN
     IF sym = ORS.minus THEN ORS.Get(sym); term(x);
-      IF x.type.form IN {ORB.Int, ORB.Real, ORB.Set} THEN OAG.Neg(x) ELSE CheckInt(x) END
+      IF x.type.form IN {ORB.Int, ORB.Real, ORB.Set} THEN OaG.Neg(x) ELSE CheckInt(x) END
     ELSIF sym = ORS.plus THEN ORS.Get(sym); term(x);
     ELSE term(x)
     END ;
     WHILE (sym >= ORS.plus) & (sym <= ORS.or) DO
       op := sym; ORS.Get(sym);
-      IF op = ORS.or THEN OAG.Or1(x); CheckBool(x); term(y); CheckBool(y); OAG.Or2(x, y)
-      ELSIF x.type.form = ORB.Int THEN term(y); CheckInt(y); OAG.AddOp(op, x, y)
-      ELSIF x.type.form = ORB.Real THEN term(y); CheckReal(y); OAG.RealOp(op, x, y)
-      ELSE CheckSet(x); term(y); CheckSet(y); OAG.SetOp(op, x, y)
+      IF op = ORS.or THEN OaG.Or1(x); CheckBool(x); term(y); CheckBool(y); OaG.Or2(x, y)
+      ELSIF x.type.form = ORB.Int THEN term(y); CheckInt(y); OaG.AddOp(op, x, y)
+      ELSIF x.type.form = ORB.Real THEN term(y); CheckReal(y); OaG.RealOp(op, x, y)
+      ELSE CheckSet(x); term(y); CheckSet(y); OaG.SetOp(op, x, y)
       END
     END
   END SimpleExpression;
@@ -512,41 +512,41 @@ Standard functions include: `ABS` `ODD` `FLOOR` `FLT` `ORD` `CHR` `LEN` `ADC` `S
 expression0 is assigned to the procedure variable `expression` to allow the forward reference.
 
   end-procedure-description *)
-  PROCEDURE expression0(VAR x: OAG.Item);
-    VAR y: OAG.Item; obj: ORB.Object; rel, xf, yf: INTEGER;
+  PROCEDURE expression0(VAR x: OaG.Item);
+    VAR y: OaG.Item; obj: ORB.Object; rel, xf, yf: INTEGER;
   BEGIN SimpleExpression(x);
     IF (sym >= ORS.eql) & (sym <= ORS.geq) THEN
       rel := sym; ORS.Get(sym); SimpleExpression(y); xf := x.type.form; yf := y.type.form;
       IF x.type = y.type THEN
-        IF (xf IN {ORB.Char, ORB.Int}) THEN OAG.IntRelation(rel, x, y)
-        ELSIF xf = ORB.Real THEN OAG.RealRelation(rel, x, y)
+        IF (xf IN {ORB.Char, ORB.Int}) THEN OaG.IntRelation(rel, x, y)
+        ELSIF xf = ORB.Real THEN OaG.RealRelation(rel, x, y)
         ELSIF (xf IN {ORB.Set, ORB.Pointer, ORB.Proc, ORB.NilTyp, ORB.Bool}) THEN
-          IF rel <= ORS.neq THEN OAG.IntRelation(rel, x, y) ELSE ORS.Mark("only = or #") END
+          IF rel <= ORS.neq THEN OaG.IntRelation(rel, x, y) ELSE ORS.Mark("only = or #") END
         ELSIF (xf = ORB.Array) & (x.type.base.form = ORB.Char) OR (xf = ORB.String) THEN
-          OAG.StringRelation(rel, x, y)
+          OaG.StringRelation(rel, x, y)
         ELSE ORS.Mark("illegal comparison")
         END
       ELSIF (xf IN {ORB.Pointer, ORB.Proc}) & (yf = ORB.NilTyp)
           OR (yf IN {ORB.Pointer, ORB.Proc}) & (xf = ORB.NilTyp) THEN
-        IF rel <= ORS.neq THEN OAG.IntRelation(rel, x,  y) ELSE ORS.Mark("only = or #") END
+        IF rel <= ORS.neq THEN OaG.IntRelation(rel, x,  y) ELSE ORS.Mark("only = or #") END
       ELSIF (xf = ORB.Pointer) & (yf = ORB.Pointer) &
           (IsExtension(x.type.base, y.type.base) OR IsExtension(y.type.base, x.type.base))
           OR (xf = ORB.Proc) & (yf = ORB.Proc) & EqualSignatures(x.type, y.type) THEN
-        IF rel <= ORS.neq THEN OAG.IntRelation(rel,  x, y) ELSE ORS.Mark("only = or #") END
+        IF rel <= ORS.neq THEN OaG.IntRelation(rel,  x, y) ELSE ORS.Mark("only = or #") END
       ELSIF (xf = ORB.Array) & (x.type.base.form = ORB.Char) &
             ((yf = ORB.String) OR (yf = ORB.Array) & (y.type.base.form = ORB.Char))
           OR (yf = ORB.Array) & (y.type.base.form = ORB.Char) & (xf = ORB.String) THEN
-        OAG.StringRelation(rel, x, y)
+        OaG.StringRelation(rel, x, y)
       ELSIF (xf = ORB.Char) & (yf = ORB.String) & (y.b = 2) THEN
-        OAG.StrToChar(y); OAG.IntRelation(rel, x, y)
+        OaG.StrToChar(y); OaG.IntRelation(rel, x, y)
       ELSIF (yf = ORB.Char) & (xf = ORB.String) & (x.b = 2) THEN
-        OAG.StrToChar(x); OAG.IntRelation(rel, x, y)
-      ELSIF (xf = ORB.Int) & (yf = ORB.Int) THEN OAG.IntRelation(rel,  x, y)  (*BYTE*)
+        OaG.StrToChar(x); OaG.IntRelation(rel, x, y)
+      ELSIF (xf = ORB.Int) & (yf = ORB.Int) THEN OaG.IntRelation(rel,  x, y)  (*BYTE*)
       ELSE ORS.Mark("illegal comparison")
       END ;
       x.type := ORB.boolType
     ELSIF sym = ORS.in THEN
-      ORS.Get(sym); CheckInt(x); SimpleExpression(y); CheckSet(y); OAG.In(x, y) ;
+      ORS.Get(sym); CheckInt(x); SimpleExpression(y); CheckSet(y); OaG.In(x, y) ;
       x.type := ORB.boolType
     ELSIF sym = ORS.is THEN
       ORS.Get(sym); qualident(obj); TypeTest(x, obj.type, FALSE) ;
@@ -566,7 +566,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
   end-procedure-description *)
   PROCEDURE StandProc(pno: LONGINT);
     VAR nap, npar: LONGINT; (*nof actual/formal parameters*)
-      x, y, z: OAG.Item;
+      x, y, z: OaG.Item;
   BEGIN Check(ORS.lparen, "no (");
     npar := pno MOD 10; pno := pno DIV 10; expression(x); nap := 1;
     IF sym = ORS.comma THEN
@@ -579,23 +579,23 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
       IF pno IN {0, 1} THEN (*INC, DEC*)
         CheckInt(x); CheckReadOnly(x);
         IF y.type # ORB.noType THEN CheckInt(y) END ;
-        OAG.Increment(pno, x, y)
+        OaG.Increment(pno, x, y)
       ELSIF pno IN {2, 3} THEN (*INCL, EXCL*)
-        CheckSet(x); CheckReadOnly(x); CheckInt(y); OAG.Include(pno-2, x, y)
-      ELSIF pno = 4 THEN CheckBool(x); OAG.Assert(x)
+        CheckSet(x); CheckReadOnly(x); CheckInt(y); OaG.Include(pno-2, x, y)
+      ELSIF pno = 4 THEN CheckBool(x); OaG.Assert(x)
       ELSIF pno = 5 THEN(*NEW*) CheckReadOnly(x);
-         IF (x.type.form = ORB.Pointer) & (x.type.base.form = ORB.Record) THEN OAG.New(x)
+         IF (x.type.form = ORB.Pointer) & (x.type.base.form = ORB.Record) THEN OaG.New(x)
          ELSE ORS.Mark("not a pointer to record")
          END
-      ELSIF pno = 6 THEN CheckReal(x); CheckInt(y); CheckReadOnly(x); OAG.Pack(x, y)
-      ELSIF pno = 7 THEN CheckReal(x); CheckInt(y); CheckReadOnly(x); OAG.Unpk(x, y)
+      ELSIF pno = 6 THEN CheckReal(x); CheckInt(y); CheckReadOnly(x); OaG.Pack(x, y)
+      ELSIF pno = 7 THEN CheckReal(x); CheckInt(y); CheckReadOnly(x); OaG.Unpk(x, y)
       ELSIF pno = 8 THEN
-        IF x.type.form <= ORB.Set THEN OAG.Led(x) ELSE ORS.Mark("bad type") END
-      ELSIF pno = 10 THEN CheckInt(x); OAG.Get(x, y)
-      ELSIF pno = 11 THEN CheckInt(x); OAG.Put(x, y)
-      ELSIF pno = 12 THEN CheckInt(x); CheckInt(y); CheckInt(z); OAG.Copy(x, y, z)
-      ELSIF pno = 13 THEN CheckConst(x); CheckInt(x); OAG.LDPSR(x)
-      ELSIF pno = 14 THEN CheckInt(x); OAG.LDREG(x, y)
+        IF x.type.form <= ORB.Set THEN OaG.Led(x) ELSE ORS.Mark("bad type") END
+      ELSIF pno = 10 THEN CheckInt(x); OaG.Get(x, y)
+      ELSIF pno = 11 THEN CheckInt(x); OaG.Put(x, y)
+      ELSIF pno = 12 THEN CheckInt(x); CheckInt(y); CheckInt(z); OaG.Copy(x, y, z)
+      ELSIF pno = 13 THEN CheckConst(x); CheckInt(x); OaG.LDPSR(x)
+      ELSIF pno = 14 THEN CheckInt(x); OaG.LDREG(x, y)
       END
     ELSE ORS.Mark("wrong nof parameters")
     END
@@ -608,21 +608,21 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
   PROCEDURE StatSequence;
     VAR obj: ORB.Object;
       orgtype: ORB.Type; (*original type of case var*)
-      x, y, z, w: OAG.Item;
+      x, y, z, w: OaG.Item;
       L0, L1, rx: LONGINT;
 
   (* begin-procedure-description
 **TypeCase** (interior procedure)
   end-procedure-description *)
-    PROCEDURE TypeCase(obj: ORB.Object; VAR x: OAG.Item);
+    PROCEDURE TypeCase(obj: ORB.Object; VAR x: OaG.Item);
       VAR typobj: ORB.Object;
     BEGIN
       IF sym = ORS.ident THEN
-        qualident(typobj); OAG.MakeItem(x, obj, level);
+        qualident(typobj); OaG.MakeItem(x, obj, level);
         IF typobj.class # ORB.Typ THEN ORS.Mark("not a type") END ;
         TypeTest(x, typobj.type, FALSE); obj.type := typobj.type;
-        OAG.CFJump(x); Check(ORS.colon, ": expected"); StatSequence
-      ELSE OAG.CFJump(x); ORS.Mark("type id expected")
+        OaG.CFJump(x); Check(ORS.colon, ": expected"); StatSequence
+      ELSE OaG.CFJump(x); ORS.Mark("type id expected")
       END
      END TypeCase;
 
@@ -642,77 +642,77 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
         REPEAT ORS.Get(sym) UNTIL (sym >= ORS.ident)
       END ;
       IF sym = ORS.ident THEN
-        qualident(obj); OAG.MakeItem(x, obj, level);
+        qualident(obj); OaG.MakeItem(x, obj, level);
         IF x.mode = ORB.SProc THEN StandProc(obj.val)
         ELSE selector(x);
           IF sym = ORS.becomes THEN (*assignment*)
             ORS.Get(sym); CheckReadOnly(x); expression(y);
             IF CompTypes(x.type, y.type, FALSE) THEN
-              IF (x.type.form <= ORB.Pointer) OR (x.type.form = ORB.Proc) THEN OAG.Store(x, y)
-              ELSE OAG.StoreStruct(x, y)
+              IF (x.type.form <= ORB.Pointer) OR (x.type.form = ORB.Proc) THEN OaG.Store(x, y)
+              ELSE OaG.StoreStruct(x, y)
               END
             ELSIF (x.type.form = ORB.Array) & (y.type.form = ORB.Array) & (x.type.base = y.type.base) & (y.type.len < 0) THEN
-              OAG.StoreStruct(x, y)
+              OaG.StoreStruct(x, y)
             ELSIF (x.type.form = ORB.Array) & (x.type.base.form = ORB.Char) & (y.type.form = ORB.String) THEN
-              OAG.CopyString(x, y)
-            ELSIF (x.type.form = ORB.Int) & (y.type.form = ORB.Int) THEN OAG.Store(x, y)  (*BYTE*)
+              OaG.CopyString(x, y)
+            ELSIF (x.type.form = ORB.Int) & (y.type.form = ORB.Int) THEN OaG.Store(x, y)  (*BYTE*)
             ELSIF (x.type.form = ORB.Char) & (y.type.form = ORB.String) & (y.b = 2) THEN
-              OAG.StrToChar(y); OAG.Store(x, y)
+              OaG.StrToChar(y); OaG.Store(x, y)
             ELSE ORS.Mark("illegal assignment")
             END
           ELSIF sym = ORS.eql THEN ORS.Mark("should be :="); ORS.Get(sym); expression(y)
           ELSIF sym = ORS.lparen THEN (*procedure call*)
             ORS.Get(sym);
             IF (x.type.form = ORB.Proc) & (x.type.base.form = ORB.NoTyp) THEN
-              OAG.PrepCall(x, rx); ParamList(x); OAG.Call(x, rx)
+              OaG.PrepCall(x, rx); ParamList(x); OaG.Call(x, rx)
             ELSE ORS.Mark("not a procedure"); ParamList(x)
             END
           ELSIF x.type.form = ORB.Proc THEN (*procedure call without parameters*)
             IF x.type.nofpar > 0 THEN ORS.Mark("missing parameters") END ;
-            IF x.type.base.form = ORB.NoTyp THEN OAG.PrepCall(x, rx); OAG.Call(x, rx) ELSE ORS.Mark("not a procedure") END
+            IF x.type.base.form = ORB.NoTyp THEN OaG.PrepCall(x, rx); OaG.Call(x, rx) ELSE ORS.Mark("not a procedure") END
           ELSIF x.mode = ORB.Typ THEN ORS.Mark("illegal assignment")
           ELSE ORS.Mark("not a procedure")
           END
         END
       ELSIF sym = ORS.if THEN
-        ORS.Get(sym); expression(x); CheckBool(x); OAG.CFJump(x);
+        ORS.Get(sym); expression(x); CheckBool(x); OaG.CFJump(x);
         Check(ORS.then, "no THEN");
         StatSequence; L0 := 0;
         WHILE sym = ORS.elsif DO
-          ORS.Get(sym); OAG.FJump(L0); OAG.Fixup(x); expression(x); CheckBool(x);
-          OAG.CFJump(x); Check(ORS.then, "no THEN"); StatSequence
+          ORS.Get(sym); OaG.FJump(L0); OaG.Fixup(x); expression(x); CheckBool(x);
+          OaG.CFJump(x); Check(ORS.then, "no THEN"); StatSequence
         END ;
-        IF sym = ORS.else THEN ORS.Get(sym); OAG.FJump(L0); OAG.Fixup(x); StatSequence
-        ELSE OAG.Fixup(x)
+        IF sym = ORS.else THEN ORS.Get(sym); OaG.FJump(L0); OaG.Fixup(x); StatSequence
+        ELSE OaG.Fixup(x)
         END ;
-        OAG.FixLink(L0); Check(ORS.end, "no END")
+        OaG.FixLink(L0); Check(ORS.end, "no END")
       ELSIF sym = ORS.while THEN
-        ORS.Get(sym); L0 := OAG.Here(); expression(x); CheckBool(x); OAG.CFJump(x);
-        Check(ORS.do, "no DO"); StatSequence; OAG.BJump(L0);
+        ORS.Get(sym); L0 := OaG.Here(); expression(x); CheckBool(x); OaG.CFJump(x);
+        Check(ORS.do, "no DO"); StatSequence; OaG.BJump(L0);
         WHILE sym = ORS.elsif DO
-          ORS.Get(sym); OAG.Fixup(x); expression(x); CheckBool(x); OAG.CFJump(x);
-          Check(ORS.do, "no DO"); StatSequence; OAG.BJump(L0)
+          ORS.Get(sym); OaG.Fixup(x); expression(x); CheckBool(x); OaG.CFJump(x);
+          Check(ORS.do, "no DO"); StatSequence; OaG.BJump(L0)
         END ;
-        OAG.Fixup(x); Check(ORS.end, "no END")
+        OaG.Fixup(x); Check(ORS.end, "no END")
       ELSIF sym = ORS.repeat THEN
-        ORS.Get(sym); L0 := OAG.Here(); StatSequence;
+        ORS.Get(sym); L0 := OaG.Here(); StatSequence;
         IF sym = ORS.until THEN
-          ORS.Get(sym); expression(x); CheckBool(x); OAG.CBJump(x, L0)
+          ORS.Get(sym); expression(x); CheckBool(x); OaG.CBJump(x, L0)
         ELSE ORS.Mark("missing UNTIL")
         END
       ELSIF sym = ORS.for THEN
         ORS.Get(sym);
         IF sym = ORS.ident THEN
-          qualident(obj); OAG.MakeItem(x, obj, level); CheckInt(x); CheckReadOnly(x);
+          qualident(obj); OaG.MakeItem(x, obj, level); CheckInt(x); CheckReadOnly(x);
           IF sym = ORS.becomes THEN
-            ORS.Get(sym); expression(y); CheckInt(y); OAG.For0(x, y); L0 := OAG.Here();
+            ORS.Get(sym); expression(y); CheckInt(y); OaG.For0(x, y); L0 := OaG.Here();
             Check(ORS.to, "no TO"); expression(z); CheckInt(z); obj.rdo := TRUE;
             IF sym = ORS.by THEN ORS.Get(sym); expression(w); CheckConst(w); CheckInt(w)
-            ELSE OAG.MakeConstItem(w, ORB.intType, 1)
+            ELSE OaG.MakeConstItem(w, ORB.intType, 1)
             END ;
-            Check(ORS.do, "no DO"); OAG.For1(x, y, z, w, L1);
+            Check(ORS.do, "no DO"); OaG.For1(x, y, z, w, L1);
             StatSequence; Check(ORS.end, "no END");
-            OAG.For2(x, y, w); OAG.BJump(L0); OAG.FixLink(L1); obj.rdo := FALSE
+            OaG.For2(x, y, w); OaG.BJump(L0); OaG.FixLink(L1); obj.rdo := FALSE
           ELSE ORS.Mark(":= expected")
           END
         ELSE ORS.Mark("identifier expected")
@@ -724,9 +724,9 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
           IF (orgtype.form = ORB.Pointer) OR (orgtype.form = ORB.Record) & (obj.class = ORB.Par) THEN
             Check(ORS.of, "OF expected"); TypeCase(obj, x); L0 := 0;
             WHILE sym = ORS.bar DO
-              ORS.Get(sym); OAG.FJump(L0); OAG.Fixup(x); obj.type := orgtype; TypeCase(obj, x)
+              ORS.Get(sym); OaG.FJump(L0); OaG.Fixup(x); obj.type := orgtype; TypeCase(obj, x)
             END ;
-            OAG.Fixup(x); OAG.FixLink(L0); obj.type := orgtype
+            OaG.Fixup(x); OaG.FixLink(L0); obj.type := orgtype
           ELSE ORS.Mark("numeric case not implemented");
             Check(ORS.of, "OF expected"); SkipCase;
             WHILE sym = ORS.bar DO SkipCase END
@@ -735,7 +735,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
         END ;
         Check(ORS.end, "no END")
       END ;
-      OAG.CheckRegs;
+      OaG.CheckRegs;
       IF sym = ORS.semicolon THEN ORS.Get(sym)
       ELSIF sym < ORS.semicolon THEN ORS.Mark("missing semicolon?")
       END
@@ -773,7 +773,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
 **ArrayType** matches the definiton of an Array Type or marks an error.
   end-procedure-description *)
   PROCEDURE ArrayType(VAR type: ORB.Type);
-    VAR x: OAG.Item; typ: ORB.Type; len: LONGINT;
+    VAR x: OaG.Item; typ: ORB.Type; len: LONGINT;
   BEGIN NEW(typ); typ.form := ORB.NoTyp;
     expression(x);
     IF (x.mode = ORB.Const) & (x.type.form = ORB.Int) & (x.a >= 0) THEN len := x.a
@@ -849,8 +849,8 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
     IdentList(cl, first); FormalType(tp, 0); rdo := FALSE;
     IF (cl = ORB.Var) & (tp.form >= ORB.Array) THEN cl := ORB.Par; rdo := TRUE END ;
     IF (tp.form = ORB.Array) & (tp.len < 0) OR (tp.form = ORB.Record) THEN
-      parsize := 2*OAG.WordSize  (*open array or record, needs second word for length or type tag*)
-    ELSE parsize := OAG.WordSize
+      parsize := 2*OaG.WordSize  (*open array or record, needs second word for length or type tag*)
+    ELSE parsize := OaG.WordSize
     END ;
     obj := first;
     WHILE obj # NIL DO
@@ -901,11 +901,11 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
     ELSIF sym = ORS.array THEN
       ORS.Get(sym); Check(ORS.of, "OF ?");
       IF dim >= 1 THEN ORS.Mark("multi-dimensional open arrays not implemented") END ;
-      NEW(typ); typ.form := ORB.Array; typ.len := -1; typ.size := 2*OAG.WordSize; 
+      NEW(typ); typ.form := ORB.Array; typ.len := -1; typ.size := 2*OaG.WordSize; 
       FormalType(typ.base, dim+1)
     ELSIF sym = ORS.procedure THEN
       ORS.Get(sym); ORB.OpenScope;
-      NEW(typ); typ.form := ORB.Proc; typ.size := OAG.WordSize; dmy := 0; ProcedureType(typ, dmy);
+      NEW(typ); typ.form := ORB.Proc; typ.size := OaG.WordSize; dmy := 0; ProcedureType(typ, dmy);
       typ.dsc := ORB.topScope.next; ORB.CloseScope
     ELSE ORS.Mark("identifier expected"); typ := ORB.noType
     END
@@ -941,7 +941,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
       ORS.Get(sym); RecordType(type); Check(ORS.end, "no END")
     ELSIF sym = ORS.pointer THEN
       ORS.Get(sym); Check(ORS.to, "no TO");
-      NEW(type);  type.form := ORB.Pointer; type.size := OAG.WordSize; type.base := ORB.intType;
+      NEW(type);  type.form := ORB.Pointer; type.size := OaG.WordSize; type.base := ORB.intType;
       IF sym = ORS.ident THEN
         obj := ORB.thisObj();
         IF obj # NIL THEN
@@ -960,7 +960,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
       END
     ELSIF sym = ORS.procedure THEN
       ORS.Get(sym); ORB.OpenScope;
-      NEW(type); type.form := ORB.Proc; type.size := OAG.WordSize; dmy := 0;
+      NEW(type); type.form := ORB.Proc; type.size := OaG.WordSize; dmy := 0;
       ProcedureType(type, dmy); type.dsc := ORB.topScope.next; ORB.CloseScope
     ELSE ORS.Mark("illegal type")
     END
@@ -972,7 +972,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
   end-procedure-description *)
   PROCEDURE Declarations(VAR varsize: LONGINT);
     VAR obj, first: ORB.Object;
-      x: OAG.Item; tp: ORB.Type; ptbase: PtrBase;
+      x: OaG.Item; tp: ORB.Type; ptbase: PtrBase;
       expo: BOOLEAN; id: ORS.Ident;
   BEGIN (*sync*) pbsList := NIL;
     IF (sym < ORS.const) & (sym # ORS.end) & (sym # ORS.return) THEN ORS.Mark("declaration?");
@@ -984,7 +984,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
         ORS.CopyId(id); ORS.Get(sym); CheckExport(expo);
         IF sym = ORS.eql THEN ORS.Get(sym) ELSE ORS.Mark("= ?") END;
         expression(x);
-        IF (x.type.form = ORB.String) & (x.b = 2) THEN OAG.StrToChar(x) END ;
+        IF (x.type.form = ORB.String) & (x.b = 2) THEN OaG.StrToChar(x) END ;
         ORB.NewObj(obj, id, ORB.Const); obj.expo := expo;
         IF x.mode = ORB.Const THEN obj.val := x.a; obj.lev := x.b; obj.type := x.type
         ELSE ORS.Mark("expression not constant"); obj.type := ORB.intType
@@ -1007,7 +1007,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
             IF obj.name = ptbase.name THEN ptbase.type.base := obj.type END ;
             ptbase := ptbase.next
           END ;
-          IF level = 0 THEN OAG.BuildTD(tp, dc) END    (*type descriptor; len used as its address*)
+          IF level = 0 THEN OaG.BuildTD(tp, dc) END    (*type descriptor; len used as its address*)
         END ;
         Check(ORS.semicolon, "; missing")
       END
@@ -1044,7 +1044,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
     VAR proc: ORB.Object;
       type: ORB.Type;
       procid: ORS.Ident;
-      x: OAG.Item;
+      x: OaG.Item;
       locblksize, parblksize, L: LONGINT;
       int: BOOLEAN;
   BEGIN (* ProcedureDecl *) int := FALSE; ORS.Get(sym); 
@@ -1053,7 +1053,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
       ORS.CopyId(procid); ORS.Get(sym);
       ORB.NewObj(proc, ORS.id, ORB.Const);
       IF int THEN parblksize := 12 ELSE parblksize := 4 END ;
-      NEW(type); type.form := ORB.Proc; type.size := OAG.WordSize;
+      NEW(type); type.form := ORB.Proc; type.size := OaG.WordSize;
       proc.type := type; proc.val := -1; proc.lev := level; 
       CheckExport(proc.expo);
       IF proc.expo THEN proc.exno := exno; INC(exno) END ;
@@ -1061,13 +1061,13 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
       ProcedureType(type, parblksize);  (*formal parameter list*)
       Check(ORS.semicolon, "no ;"); locblksize := parblksize; 
       Declarations(locblksize);
-      proc.val := OAG.Here() * 4; proc.type.dsc := ORB.topScope.next;
+      proc.val := OaG.Here() * 4; proc.type.dsc := ORB.topScope.next;
       IF sym = ORS.procedure THEN
-        L := 0; OAG.FJump(L);
+        L := 0; OaG.FJump(L);
         REPEAT ProcedureDecl; Check(ORS.semicolon, "no ;") UNTIL sym # ORS.procedure;
-        OAG.FixOne(L); proc.val := OAG.Here() * 4; proc.type.dsc := ORB.topScope.next
+        OaG.FixOne(L); proc.val := OaG.Here() * 4; proc.type.dsc := ORB.topScope.next
       END ;
-      OAG.Enter(parblksize, locblksize, int);
+      OaG.Enter(parblksize, locblksize, int);
       IF sym = ORS.begin THEN ORS.Get(sym); StatSequence END ;
       IF sym = ORS.return THEN
         ORS.Get(sym); expression(x);
@@ -1077,7 +1077,7 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
       ELSIF type.base.form # ORB.NoTyp THEN
         ORS.Mark("function without result"); type.base := ORB.noType
       END ;
-      OAG.Return(type.base.form, x, locblksize, int);
+      OaG.Return(type.base.form, x, locblksize, int);
       ORB.CloseScope; DEC(level); Check(ORS.end, "no END");
       IF sym = ORS.ident THEN
         IF ORS.id # procid THEN ORS.Mark("no match") END ;
@@ -1131,9 +1131,9 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
         WHILE sym = ORS.comma DO ORS.Get(sym); Import END ;
         Check(ORS.semicolon, "; missing")
       END ;
-      OAG.Open(version); Declarations(dc); OAG.SetDataSize((dc + 3) DIV 4 * 4);
+      OaG.Open(version); Declarations(dc); OaG.SetDataSize((dc + 3) DIV 4 * 4);
       WHILE sym = ORS.procedure DO ProcedureDecl; Check(ORS.semicolon, "no ;") END ;
-      OAG.Header;
+      OaG.Header;
       IF sym = ORS.begin THEN ORS.Get(sym); StatSequence END ;
       Check(ORS.end, "no END");
       IF sym = ORS.ident THEN
@@ -1147,8 +1147,8 @@ expression0 is assigned to the procedure variable `expression` to allow the forw
         IF newSF THEN Texts.WriteString(W, " new symbol file") END
       END ;
       IF ORS.errcnt = 0 THEN
-        OAG.Close(modid, key, exno);
-        Texts.WriteInt(W, OAG.pc, 6); Texts.WriteInt(W, dc, 6); Texts.WriteHex(W, key)
+        OaG.Close(modid, key, exno);
+        Texts.WriteInt(W, OaG.pc, 6); Texts.WriteInt(W, dc, 6); Texts.WriteHex(W, key)
       ELSE Texts.WriteLn(W); Texts.WriteString(W, "compilation FAILED")
       END ;
       Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
