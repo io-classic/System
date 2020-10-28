@@ -1,8 +1,9 @@
 (* begin-module-use-description
 Module ORTool provides symbol file, module file, and loaded module reporting tools.
 
-ORTool uses SYSTEM, Files, Modules, Texts, Oberon, ORB
-
+ORP.Compile Target.Mod/s ~
+ORTool.DecSym Target.smb ~
+ORTool.DecObj Target.rsc ~
 
 end-module-use-description *)
 MODULE ORTool;  (*NW 18.2.2013*)

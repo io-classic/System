@@ -1,6 +1,10 @@
 (* begin-module-use-description
 Module OITool provides symbol file, module file, and loaded module reporting tools for x86_64 binary modules.
 
+OIP.Compile Target.Mod/s ~
+OITool.DecSym Target.smb ~
+OITool.DecObj Target.rsc ~
+
 end-module-use-description *)
 MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
   IMPORT SYSTEM, Files, Texts, Oberon, ORB;

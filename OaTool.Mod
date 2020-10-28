@@ -1,6 +1,10 @@
 (* begin-module-use-description
 Module OaTool provides symbol file, module file, and loaded module reporting tools for 32-bit ARM module binaries.
 
+OaP.Compile Target.Mod/s ~
+OaTool.DecSym Target.smb ~
+OaTool.DecObj Target.rsc ~
+
 end-module-use-description *)
 MODULE OaTool;  (*NW 18.2.2013 / CP 2020*)
   IMPORT SYSTEM, Files, Texts, Oberon, ORB;
