@@ -3,7 +3,7 @@
 
 (N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / CP 2020 adapted for x86_64)
 
-**ORG** is called from ORP and generates machine code various Oberon language constructs for the Oberon RISC5 architeture.
+**OIG** is called from OIP and generates machine code various Oberon language constructs for the Oberon x86_64 architeture.
 
 
   ## Imports:
@@ -12,8 +12,8 @@
 ## Constants:
 ```
 
-    WordSize* = 4;
-    StkOrg0 = -64; VarOrg0 = 0;  (*for RISC-0 only*)
+    WordSize* = 8;
+    StkOrg0 = -64; VarOrg0 = 0;  (*for x86_64-0 only*)
     MT = 12; SP = 14; LNK = 15;   (*dedicated registers*)
     maxCode = 8000; maxStrx = 2400; maxTD = 160; C24 = 1000000H;
     Reg = 10; RegI = 11; Cond = 12;  (*internal item modes*)

@@ -12,8 +12,8 @@
 ## Constants:
 ```
 
-    WordSize* = 4;
-    StkOrg0 = -64; VarOrg0 = 0;  (*for RISC-0 only*)
+    WordSize* = 8;
+    StkOrg0 = -64; VarOrg0 = 0;  (*for aarch64-0 only*)
     MT = 12; SP = 14; LNK = 15;   (*dedicated registers*)
     maxCode = 8000; maxStrx = 2400; maxTD = 160; C24 = 1000000H;
     Reg = 10; RegI = 11; Cond = 12;  (*internal item modes*)
