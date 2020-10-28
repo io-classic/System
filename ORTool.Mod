@@ -180,7 +180,7 @@ MODULE ORTool;  (*NW 18.2.2013*)
       END ;
       Texts.Append(Oberon.Log, W.buf)
     END
-  END DecObj;
+  END DecBin;
 
   PROCEDURE DecObj*;   (*decode object file*)
     VAR class, i, n, key, size, fix, adr, data, len: INTEGER;
