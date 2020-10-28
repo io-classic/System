@@ -1,15 +1,22 @@
 (* begin-module-use-description
 Module ORLinker transforms a RISC5 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
-    
+   
+ORP.Compile Modules.Mod
+ORLinker.Link Modules
+ORLinker.Load Modules
+
+ORP.Compile BareMetalR.Mod
+ORLinker.Strip BareMetalR
+ 
 end-module-use-description *) 
 (* begin-module-develop-description
     
-(Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014)
+(Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 / 28.10.2020)
     
 **ORLinker** can generate and install a bootable inner core binary for the Oberon RISC5 architeture.
   
 end-module-develop-description *)
-MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 *)
+MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 28.10.2020*)
   IMPORT SYSTEM, Files, Modules, Kernel, Texts, Oberon;
 
   CONST versionkey = 1X; MT = 12; DescSize = 80;
@@ -25,6 +32,16 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
     Mlist: ARRAY 16 OF Modules.ModuleName;
  
 
+  (* begin-section-description
+## ---------- Utility Procedures
+  end-section-description *)
+
+  (*instruction assemblers according to formats*)
+
+  (* begin-procedure-description
+---
+**ThisFile** returns a file handle for the compiled module.
+  end-procedure-description *)
   PROCEDURE ThisFile(name: ARRAY OF CHAR): Files.File;
     VAR i: INTEGER;
       filename: Modules.ModuleName;
@@ -34,6 +51,10 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
     RETURN Files.Old(filename)
   END ThisFile;
 
+  (* begin-procedure-description
+---
+**Zero** clears the contents of a string buffer.
+  end-procedure-description *) 
   PROCEDURE zero( VAR s: ARRAY OF CHAR);
     VAR i : INTEGER;
   BEGIN i:=0;
@@ -41,6 +62,10 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
   END zero;
 
 
+  (* begin-procedure-description
+---
+**ThisBinFile** returns a file handle for output of the linked or stripped binary.
+  end-procedure-description *) 
   PROCEDURE ThisBinFile(name: ARRAY OF CHAR): Files.File;
     VAR i: INTEGER;
       filename: Modules.ModuleName;
@@ -51,10 +76,18 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
   END ThisBinFile;
 
 
+  (* begin-procedure-description
+---
+**error** sets an error value.
+  end-procedure-description *) 
   PROCEDURE error(n: INTEGER; name: Modules.ModuleName);
   BEGIN res := n; importing := name
   END error;
 
+  (* begin-procedure-description
+---
+**check** sets an error if a filename is invalid.
+  end-procedure-description *) 
   PROCEDURE Check(s: ARRAY OF CHAR);
     VAR i: INTEGER; ch: CHAR;
   BEGIN ch := s[0]; res := 1; i := 1;
@@ -66,6 +99,10 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
     END
   END Check;
 
+  (* begin-procedure-description
+---
+**ck** ??
+  end-procedure-description *) 
   PROCEDURE ck( i : INTEGER );
    VAR  t : INTEGER;
   BEGIN
@@ -81,12 +118,10 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
 
   END ck;
 
-  PROCEDURE Read(VAR R: Files.Rider; VAR n: INTEGER);
-    VAR b: BYTE;
-  BEGIN Files.ReadByte(R, b);
-    IF b < 80H THEN n := b ELSE n := b - 100H END
-  END Read;
-
+  (* begin-procedure-description
+---
+**LinkOne** recursively assembles the just-loaded-state of a module and the modules it imports to an area of Oberon's module section.
+  end-procedure-description *)
   PROCEDURE LinkOne*(name: ARRAY OF CHAR; VAR newmod: Modules.Module);
     VAR mod, impmod: Modules.Module;
       i, n, key, impkey, mno, nofimps, size: INTEGER;
@@ -244,10 +279,18 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
   END LinkOne;
 
 
+  (* begin-procedure-description
+---
+**Load** places a binary file in the boot sectors of the Oberon filesystem.
+  end-procedure-description *)
   PROCEDURE Load*;
   BEGIN
   END Load;
 
+  (* begin-procedure-description
+---
+**Strip** writes a new file containing only the code section of a compiled module.
+  end-procedure-description *)
   PROCEDURE Strip*;
     VAR
       class, i, n, key, size, fix, adr, data, len: INTEGER;
@@ -270,7 +313,7 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
             Files.Set(R, F, 0); 
             Files.Set(B, G, 0); 
             Files.ReadString(R, name);
-            Files.ReadInt(R, key); Read(R, class); 
+            Files.ReadInt(R, key); Files.ReadByte(R, class);
             Files.ReadInt(R, size); Texts.WriteString(W, "Size: "); Texts.WriteInt(W, size, 8); Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
             Files.ReadString(R, name);
             WHILE name[0] # 0X DO (* shouldn't be other than 0x *)
@@ -300,6 +343,10 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
     END
   END Strip;
 
+  (* begin-procedure-description
+---
+**Link** writes a new file containing the just-loaded-state of a module and the modules it imports.
+  end-procedure-description *)
   PROCEDURE Link*;
     VAR
       T: Texts.Text;
@@ -365,6 +412,10 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
    Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf) 
   END Link;
 
+  (* begin-procedure-description
+---
+**ThisCommand** dispatches command procedures.
+  end-procedure-description *)
   PROCEDURE ThisCommand*(mod: Modules.Module; name: ARRAY OF CHAR): Modules.Command;
     VAR k, adr, w: INTEGER; ch: CHAR;
       s: ARRAY 32 OF CHAR;
@@ -382,7 +433,11 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
     RETURN SYSTEM.VAL(Modules.Command, w)
   END ThisCommand;
 
+  (* begin-procedure-description
+---
+**The initialzation code for this module** opens a text writer for output.
+  end-procedure-description *)
 BEGIN 
-  Texts.OpenWriter(W); Texts.WriteString(W, "OR Linker 22.05.2014");
+  Texts.OpenWriter(W); Texts.WriteString(W, "OR Linker 28.10.2020");
   Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
 END ORLinker.

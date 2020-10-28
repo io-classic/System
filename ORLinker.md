@@ -1,7 +1,7 @@
 
 ## [MODULE ORLinker](https://github.com/io-core/Build/blob/main/ORLinker.Mod)
     
-(Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014)
+(Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 / 28.10.2020)
     
 **ORLinker** can generate and install a bootable inner core binary for the Oberon RISC5 architeture.
   
@@ -33,39 +33,61 @@
 ```
 ## Procedures:
 ---
+## ---------- Utility Procedures
+---
+**ThisFile** returns a file handle for the compiled module.
 
-`  PROCEDURE ThisFile(name: ARRAY OF CHAR): Files.File;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L28)
+`  PROCEDURE ThisFile(name: ARRAY OF CHAR): Files.File;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L45)
 
+---
+**Zero** clears the contents of a string buffer.
 
-`  PROCEDURE zero( VAR s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L37)
+`  PROCEDURE zero( VAR s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L58)
 
+---
+**ThisBinFile** returns a file handle for output of the linked or stripped binary.
 
-`  PROCEDURE ThisBinFile(name: ARRAY OF CHAR): Files.File;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L44)
+`  PROCEDURE ThisBinFile(name: ARRAY OF CHAR): Files.File;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L69)
 
+---
+**error** sets an error value.
 
-`  PROCEDURE error(n: INTEGER; name: Modules.ModuleName);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L54)
+`  PROCEDURE error(n: INTEGER; name: Modules.ModuleName);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L83)
 
+---
+**check** sets an error if a filename is invalid.
 
-`  PROCEDURE Check(s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L58)
+`  PROCEDURE Check(s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L91)
 
+---
+**ck** ??
 
-`  PROCEDURE ck( i : INTEGER );` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L69)
+`  PROCEDURE ck( i : INTEGER );` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L106)
 
+---
+**LinkOne** recursively assembles the just-loaded-state of a module and the modules it imports to an area of Oberon's module section.
 
-`  PROCEDURE Read(VAR R: Files.Rider; VAR n: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L84)
+`  PROCEDURE LinkOne*(name: ARRAY OF CHAR; VAR newmod: Modules.Module);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L125)
 
+---
+**Load** places a binary file in the boot sectors of the Oberon filesystem.
 
-`  PROCEDURE LinkOne*(name: ARRAY OF CHAR; VAR newmod: Modules.Module);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L90)
+`  PROCEDURE Load*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L286)
 
+---
+**Strip** writes a new file containing only the code section of a compiled module.
 
-`  PROCEDURE Load*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L247)
+`  PROCEDURE Strip*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L294)
 
+---
+**Link** writes a new file containing the just-loaded-state of a module and the modules it imports.
 
-`  PROCEDURE Strip*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L251)
+`  PROCEDURE Link*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L350)
 
+---
+**ThisCommand** dispatches command procedures.
 
-`  PROCEDURE Link*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L303)
+`  PROCEDURE ThisCommand*(mod: Modules.Module; name: ARRAY OF CHAR): Modules.Command;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L419)
 
-
-`  PROCEDURE ThisCommand*(mod: Modules.Module; name: ARRAY OF CHAR): Modules.Command;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L368)
-
+---
+**The initialzation code for this module** opens a text writer for output.

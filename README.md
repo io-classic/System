@@ -591,7 +591,14 @@ Module OAaG generates the 32-bit ARM processor-specific instructions for executi
 
 #### ORLinker.Mod [_doc_](https://github.com/io-orig/System/blob/main/ORLinker.md) [_src_](https://github.com/io-orig/System/blob/main/ORLinker.Mod)
 Module ORLinker transforms a RISC5 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
-    
+   
+ORP.Compile Modules.Mod
+ORLinker.Link Modules
+ORLinker.Load Modules
+
+ORP.Compile BareMetalR.Mod
+ORLinker.Strip BareMetalR
+ 
 
   **imports:** ` SYSTEM Files Modules Kernel Texts Oberon`
 
