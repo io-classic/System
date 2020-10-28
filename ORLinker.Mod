@@ -262,7 +262,7 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
     Texts.Scan(S);
     IF S.class = Texts.Name THEN
         NEW(T); Texts.Open(T, S.s);
-        Texts.WriteString(W, S.s); 
+        Texts.WriteString(W, S.s); Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
         F:= ThisFile( S.s );
         IF F # NIL THEN 
           G:=ThisBinFile(S.s);
@@ -271,12 +271,13 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
             Files.Set(B, G, 0); 
             Files.ReadString(R, name);
             Files.ReadInt(R, key); Read(R, class); 
-            Files.ReadInt(R, size); 
+            Files.ReadInt(R, size); Texts.WriteString(W, "Size: "); Texts.WriteInt(W, size, 8); Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
+            Files.ReadString(R, name);
             WHILE name[0] # 0X DO (* shouldn't be other than 0x *)
               Files.ReadInt(R, key); 
-              Texts.WriteString(W, "Error: Found an import in what should be a RISC0 module.");
-              Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
-              Files.ReadString(R, name)
+              Texts.WriteString(W, "Imports:");
+              Files.ReadString(R, name);
+              Texts.WriteString(W,name); Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
             END ;
             
             Files.ReadInt(R, n); n := n DIV 4; i := 0; 
@@ -284,7 +285,7 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
               Files.ReadInt(R, data);
               INC(i)
             END ; 
-            
+            Files.ReadInt(R, data);            
             Files.ReadInt(R, n); i := 0;
             WHILE i < n DO Files.Read(R, ch); INC(i) END ;
             
@@ -293,6 +294,7 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
               Files.ReadInt(R, data); Files.WriteInt(B, data);
               INC(i)
             END ;
+            Files.Register(G);
           END
         END
     END

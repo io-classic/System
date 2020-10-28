@@ -64,8 +64,8 @@
 `  PROCEDURE Strip*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L251)
 
 
-`  PROCEDURE Link*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L301)
+`  PROCEDURE Link*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L303)
 
 
-`  PROCEDURE ThisCommand*(mod: Modules.Module; name: ARRAY OF CHAR): Modules.Command;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L366)
+`  PROCEDURE ThisCommand*(mod: Modules.Module; name: ARRAY OF CHAR): Modules.Command;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L368)
 
