@@ -318,7 +318,7 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
             Files.Set(R, F, 0); 
             Files.Set(B, G, 0); 
             Files.ReadString(R, name);
-            Files.ReadInt(R, key); Files.ReadByte(R, class);
+            Files.ReadInt(R, key); Files.ReadByte(R, ch);
             Files.ReadInt(R, size); Texts.WriteString(W, "Size: "); Texts.WriteInt(W, size, 8); Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
             Files.ReadString(R, name);
             WHILE name[0] # 0X DO (* shouldn't be other than 0x *)
