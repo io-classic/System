@@ -132,7 +132,7 @@ MODULE TextFrames; (*JG 8.10.90 / NW 10.5.2013 / 11.2.2017*)
     IF pos > T.len THEN pos := T.len
     ELSIF pos > 0 THEN
       DEC(pos); Texts.OpenReader(R, T, pos);
-      REPEAT Texts.Read(R, nextCh); INC(pos) UNTIL R.eot OR (nextch = NL) OR (nextch = CR)
+      REPEAT Texts.Read(R, nextCh); INC(pos) UNTIL R.eot OR (nextCh = NL) OR (nextCh = CR)
     ELSE pos := 0
     END
   END Validate;
