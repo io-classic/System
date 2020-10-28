@@ -16,7 +16,7 @@ MODULE Texts; (*JG 21.11.90 / NW 11.7.90 / 24.12.95 / 22.11.10 / 18.11.2014 / 10
     (* TextBlock = TextTag offset run {run} "0" len {AsciiCode}.
       run = fnt [name] col voff len. *)
 
-    TAB = 9X; CR = 0DX;
+    TAB = 9X; CR = 0DX; NL = 0AX; 
     TextTag = 0F1X;
     replace* = 0; insert* = 1; delete* = 2; unmark* = 3;  (*op-codes*)
 
@@ -343,8 +343,8 @@ MODULE Texts; (*JG 21.11.90 / NW 11.7.90 / 24.12.95 / 22.11.10 / 18.11.2014 / 10
       i, j, h, d, e, n, s: INTEGER;
       x: REAL;
   BEGIN ch := S.nextCh; i := 0;
-    WHILE (ch = " ") OR (ch = TAB) OR (ch = CR) DO
-      IF ch = CR THEN INC(S.line) END ;
+    WHILE (ch = " ") OR (ch = TAB) OR (ch = NL) OR (ch = CR) DO
+      IF (ch = CR) OR (ch = NL) THEN INC(S.line) END ;
       Read(S, ch)
     END ;
     IF ("A" <= ch) & (ch <= "Z") OR ("a" <= ch) & (ch <= "z") THEN (*name*)
@@ -435,7 +435,7 @@ MODULE Texts; (*JG 21.11.90 / NW 11.7.90 / 24.12.95 / 22.11.10 / 18.11.2014 / 10
   END Write;
 
   PROCEDURE WriteLn* (VAR W: Writer);
-  BEGIN Write(W, CR)
+  BEGIN Write(W, NL)
   END WriteLn;
 
   PROCEDURE WriteString* (VAR W: Writer; s: ARRAY OF CHAR);

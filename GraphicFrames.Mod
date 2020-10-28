@@ -213,7 +213,7 @@ MODULE GraphicFrames; (*NW 18.4.88 / 18.11.2013 / 27.8.2018*)
       cap: Graphics.Caption;
       pat: INTEGER;
       R: Texts.Reader;
-  BEGIN Texts.Write(W, 0DX);
+  BEGIN Texts.Write(W, 0AX);
     NEW(cap); cap.len := end - beg;
     cap.pos := Graphics.T.len + 1; cap.do := Graphics.CapMethod;
     Texts.OpenReader(R, T, beg); Texts.Read(R, ch); W.fnt := R.fnt; W.col := R.col; w := 0;
@@ -320,7 +320,7 @@ MODULE GraphicFrames; (*NW 18.4.88 / 18.11.2013 / 27.8.2018*)
   END Edit;
 
   PROCEDURE NewCaption(F: Frame; col: INTEGER; font: Fonts.Font);
-  BEGIN Texts.Write(W, 0DX);
+  BEGIN Texts.Write(W, 0AX);
     NEW(newcap); newcap.x := F.mark.x - F.x; newcap.y := F.mark.y - F.y + font.minY;
     newcap.w := 0; newcap.h := font.height; newcap.col := col;
     newcap.pos := Graphics.T.len + 1; newcap.len := 0; newcap.do := Graphics.CapMethod;

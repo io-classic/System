@@ -5,8 +5,9 @@ end-module-use-description *)
 MODULE TextFrames; (*JG 8.10.90 / NW 10.5.2013 / 11.2.2017*)
   IMPORT Modules, Input, Display, Viewers, Fonts, Texts, Oberon, MenuViewers;
 
-  CONST replace* = 0; insert* = 1; delete* = 2; unmark* = 3; (*message id*)
-    BS = 8X; TAB = 9X; CR = 0DX; DEL = 7FX;
+  CONST 
+    replace* = 0; insert* = 1; delete* = 2; unmark* = 3; (*message id*)
+    BS = 8X; TAB = 9X; CR = 0DX; NL = 0AX; DEL = 7FX
 
   TYPE Line = POINTER TO LineDesc;
     LineDesc = RECORD
@@ -114,7 +115,7 @@ MODULE TextFrames; (*JG 8.10.90 / NW 10.5.2013 / 11.2.2017*)
     VAR R: Texts.Reader; X, Y: INTEGER; len: LONGINT);
     VAR patadr, NX,  dx, x, y, w, h: INTEGER;
   BEGIN NX := F.X + F.W;
-    WHILE (nextCh # CR) & (R.fnt # NIL) DO
+    WHILE (nextCh # NL) & (nextCh # CR) & (R.fnt # NIL) DO
       Fonts.GetPat(R.fnt, nextCh, dx, x, y, w, h, patadr);
       IF (X + x + w <= NX) & (h # 0) THEN
         Display.CopyPattern(R.col, patadr, X + x, Y + y, Display.invert)
@@ -131,8 +132,8 @@ MODULE TextFrames; (*JG 8.10.90 / NW 10.5.2013 / 11.2.2017*)
     IF pos > T.len THEN pos := T.len
     ELSIF pos > 0 THEN
       DEC(pos); Texts.OpenReader(R, T, pos);
-      REPEAT Texts.Read(R, nextCh); INC(pos) UNTIL R.eot OR (nextCh = CR)
-    ELSE pos := 0
+      REPEAT Texts.Read(R, nextCh); INC(pos) UNTIL R.eot or (nextch = NL)  or (nextch = CR)
+    ELSE pos :=CR
     END
   END Validate;
 
@@ -636,7 +637,7 @@ MODULE TextFrames; (*JG 8.10.90 / NW 10.5.2013 / 11.2.2017*)
       IF F.hasSel THEN
         NEW(TBuf); Texts.OpenBuf(TBuf); Texts.Delete(F.text, F.selbeg.pos, F.selend.pos, TBuf)
       END
-    ELSIF (20X <= ch) & (ch <= DEL) OR (ch = CR) OR (ch = TAB) THEN
+    ELSIF (20X <= ch) & (ch <= DEL) OR (ch = NL) OR (ch = CR) OR (ch = TAB) THEN
       KW.fnt := fnt; KW.col := col; KW.voff := voff; Texts.Write(KW, ch);
       Texts.Insert(F.text, F.carloc.pos, KW.buf);
       SetCaret(F, F.carloc.pos + 1)
