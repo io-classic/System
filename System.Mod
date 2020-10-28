@@ -16,7 +16,7 @@ MODULE System; (*JG 3.10.90 / NW 12.10.93 / NW 20.6.2016*)
 
   CONST
     StandardMenu = "System.Close System.Copy System.Grow Edit.Search Edit.Store";
-    LogMenu = "Edit.Locate Edit.Search System.Copy System.Grow System.Clear";
+    LogMenu = "Edit.Locate Edit.Search System.Copy System.Grow System.Clear Halt.Now";
 
   TYPE
 

@@ -8,7 +8,7 @@
 ```
 
     StandardMenu = "System.Close System.Copy System.Grow Edit.Search Edit.Store";
-    LogMenu = "Edit.Locate Edit.Search System.Copy System.Grow System.Clear";
+    LogMenu = "Edit.Locate Edit.Search System.Copy System.Grow System.Clear Halt.Now";
 
 ```
 ## Types:
