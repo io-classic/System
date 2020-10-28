@@ -2,8 +2,9 @@
 Module OATool provides symbol file, module file, and loaded module reporting tools for aarch64 module binaries.
 
 OAP.Compile Target.Mod/s ~
-OATool.DecSym Target.smb ~
-OATool.DecObj Target.rsc ~
+OATool.DecSym Target.smb ~ (if a regular module)
+OATool.DecObj Target.a64 ~ (if a regular module)
+OATool.DecBin Target.bin ~ (if a bare metal module)
 
 end-module-use-description *)
 MODULE OATool;  (*NW 18.2.2013 / CP 2020*)
@@ -71,7 +72,7 @@ MODULE OATool;  (*NW 18.2.2013 / CP 2020*)
       S: Texts.Scanner;
   BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
     IF S.class = Texts.Name THEN
-      Texts.WriteString(W, "OR-decode "); Texts.WriteString(W, S.s);
+      Texts.WriteString(W, "smb-decode "); Texts.WriteString(W, S.s);
       Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
       F := Files.Old(S.s);
       IF F # NIL THEN
@@ -167,7 +168,7 @@ MODULE OATool;  (*NW 18.2.2013 / CP 2020*)
       S: Texts.Scanner;
   BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
     IF S.class = Texts.Name THEN
-      Texts.WriteString(W, "decode "); Texts.WriteString(W, S.s); F := Files.Old(S.s);
+      Texts.WriteString(W, "rsc-decode "); Texts.WriteString(W, S.s); F := Files.Old(S.s);
       IF F # NIL THEN
         Files.Set(R, F, 0); Files.ReadString(R, name); Texts.WriteLn(W); Texts.WriteString(W, name);
         Files.ReadInt(R, key); Texts.WriteHex(W, key); Read(R, class); Texts.WriteInt(W, class, 4); (*version*)

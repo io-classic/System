@@ -2,8 +2,9 @@
 Module ORTool provides symbol file, module file, and loaded module reporting tools.
 
 ORP.Compile Target.Mod/s ~
-ORTool.DecSym Target.smb ~
-ORTool.DecObj Target.rsc ~
+ORTool.DecSym Target.smb ~ (if a regular module)
+ORTool.DecObj Target.rsc ~ (if a regular module)
+ORTool.DecBin Target.bin ~ (if a bare metal module)
 
 end-module-use-description *)
 MODULE ORTool;  (*NW 18.2.2013*)
@@ -71,7 +72,7 @@ MODULE ORTool;  (*NW 18.2.2013*)
       S: Texts.Scanner;
   BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
     IF S.class = Texts.Name THEN
-      Texts.WriteString(W, "OR-decode "); Texts.WriteString(W, S.s);
+      Texts.WriteString(W, "smb-decode "); Texts.WriteString(W, S.s);
       Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
       F := Files.Old(S.s);
       IF F # NIL THEN
@@ -159,6 +160,28 @@ MODULE ORTool;  (*NW 18.2.2013*)
   BEGIN Files.WriteByte(R, x)  (* -128 <= x < 128 *)
   END Write;
 
+  PROCEDURE DecBin*;   (*decode bare metal binary file*)
+    VAR class, i, n, key, size, fix, adr, data, len: INTEGER;
+      ch: CHAR;
+      name: ARRAY 32 OF CHAR;
+      F: Files.File; R: Files.Rider;
+      S: Texts.Scanner;
+  BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
+    IF S.class = Texts.Name THEN
+      Texts.WriteString(W, "bin-decode "); Texts.WriteString(W, S.s); F := Files.Old(S.s);
+      IF F # NIL THEN
+        Files.Set(R, F, 0); 
+        Texts.WriteString(W, "code"); Texts.WriteLn(W);
+        WHILE ~R.eof DO
+          Files.ReadInt(R, data); Texts.WriteInt(W, i, 4); Texts.Write(W, 9X); Texts.WriteHex(W, data);
+          Texts.Write(W, 9X); opcode(data); Texts.WriteLn(W); INC(i)
+        END ;
+      ELSE Texts.WriteString(W, " not found"); Texts.WriteLn(W)
+      END ;
+      Texts.Append(Oberon.Log, W.buf)
+    END
+  END DecObj;
+
   PROCEDURE DecObj*;   (*decode object file*)
     VAR class, i, n, key, size, fix, adr, data, len: INTEGER;
       ch: CHAR;
@@ -167,7 +190,7 @@ MODULE ORTool;  (*NW 18.2.2013*)
       S: Texts.Scanner;
   BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
     IF S.class = Texts.Name THEN
-      Texts.WriteString(W, "decode "); Texts.WriteString(W, S.s); F := Files.Old(S.s);
+      Texts.WriteString(W, "rsc-decode "); Texts.WriteString(W, S.s); F := Files.Old(S.s);
       IF F # NIL THEN
         Files.Set(R, F, 0); Files.ReadString(R, name); Texts.WriteLn(W); Texts.WriteString(W, name);
         Files.ReadInt(R, key); Texts.WriteHex(W, key); Read(R, class); Texts.WriteInt(W, class, 4); (*version*)

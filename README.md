@@ -472,8 +472,9 @@ Module ORS does lexical analysis of the Oberon source code and defines symbols a
 Module ORTool provides symbol file, module file, and loaded module reporting tools.
 
 ORP.Compile Target.Mod/s ~
-ORTool.DecSym Target.smb ~
-ORTool.DecObj Target.rsc ~
+ORTool.DecSym Target.smb ~ (if a regular module)
+ORTool.DecObj Target.rsc ~ (if a regular module)
+ORTool.DecBin Target.bin ~ (if a bare metal module)
 
 
   **imports:** ` SYSTEM Files Texts Oberon ORB`
@@ -484,8 +485,9 @@ ORTool.DecObj Target.rsc ~
 Module OITool provides symbol file, module file, and loaded module reporting tools for x86_64 binary modules.
 
 OIP.Compile Target.Mod/s ~
-OITool.DecSym Target.smb ~
-OITool.DecObj Target.rsc ~
+OITool.DecSym Target.smb ~ (if a regular module)
+OITool.DecObj Target.i64 ~ (if a regular module)
+OITool.DecBin Target.bin ~ (if a bare metal module)
 
 
   **imports:** ` SYSTEM Files Texts Oberon ORB`
@@ -496,8 +498,9 @@ OITool.DecObj Target.rsc ~
 Module OATool provides symbol file, module file, and loaded module reporting tools for aarch64 module binaries.
 
 OAP.Compile Target.Mod/s ~
-OATool.DecSym Target.smb ~
-OATool.DecObj Target.rsc ~
+OATool.DecSym Target.smb ~ (if a regular module)
+OATool.DecObj Target.a64 ~ (if a regular module)
+OATool.DecBin Target.bin ~ (if a bare metal module)
 
 
   **imports:** ` SYSTEM Files Texts Oberon ORB`
@@ -508,8 +511,9 @@ OATool.DecObj Target.rsc ~
 Module OaTool provides symbol file, module file, and loaded module reporting tools for 32-bit ARM module binaries.
 
 OaP.Compile Target.Mod/s ~
-OaTool.DecSym Target.smb ~
-OaTool.DecObj Target.rsc ~
+OaTool.DecSym Target.smb ~ (if a regular module)
+OaTool.DecObj Target.a32 ~ (if a regular module)
+OaTool.DecBin Target.bin ~ (if a bare metal module)
 
 
   **imports:** ` SYSTEM Files Texts Oberon ORB`
