@@ -37,58 +37,58 @@
 ---
 **ThisFile** returns a file handle for the compiled module.
 
-`  PROCEDURE ThisFile(name: ARRAY OF CHAR): Files.File;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L45)
+`  PROCEDURE ThisFile(name: ARRAY OF CHAR): Files.File;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L47)
 
 ---
 **Zero** clears the contents of a string buffer.
 
-`  PROCEDURE zero( VAR s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L58)
+`  PROCEDURE zero( VAR s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L60)
 
 ---
 **ThisBinFile** returns a file handle for output of the linked or stripped binary.
 
-`  PROCEDURE ThisBinFile(name: ARRAY OF CHAR): Files.File;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L69)
+`  PROCEDURE ThisBinFile(name: ARRAY OF CHAR): Files.File;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L71)
 
 ---
 **error** sets an error value.
 
-`  PROCEDURE error(n: INTEGER; name: Modules.ModuleName);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L83)
+`  PROCEDURE error(n: INTEGER; name: Modules.ModuleName);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L85)
 
 ---
 **check** sets an error if a filename is invalid.
 
-`  PROCEDURE Check(s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L91)
+`  PROCEDURE Check(s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L93)
 
 ---
 **ck** ??
 
-`  PROCEDURE ck( i : INTEGER );` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L106)
+`  PROCEDURE ck( i : INTEGER );` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L108)
 
 ---
 **LinkOne** recursively assembles the just-loaded-state of a module and the modules it imports to an area of Oberon's module section.
 
-`  PROCEDURE LinkOne*(name: ARRAY OF CHAR; VAR newmod: Modules.Module);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L125)
+`  PROCEDURE LinkOne*(name: ARRAY OF CHAR; VAR newmod: Modules.Module);` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L127)
 
 ## ---------- Commands
 ---
 **Load** places a binary file in the boot sectors of the Oberon filesystem.
 
-`  PROCEDURE Load*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L289)
+`  PROCEDURE Load*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L291)
 
 ---
 **Strip** writes a new file containing only the code section of a compiled module.
 
-`  PROCEDURE Strip*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L297)
+`  PROCEDURE Strip*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L299)
 
 ---
 **Link** writes a new file containing the just-loaded-state of a module and the modules it imports.
 
-`  PROCEDURE Link*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L353)
+`  PROCEDURE Link*;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L355)
 
 ---
 **ThisCommand** dispatches command procedures.
 
-`  PROCEDURE ThisCommand*(mod: Modules.Module; name: ARRAY OF CHAR): Modules.Command;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L422)
+`  PROCEDURE ThisCommand*(mod: Modules.Module; name: ARRAY OF CHAR): Modules.Command;` [(source)](https://github.com/io-orig/System/blob/main/ORLinker.Mod#L424)
 
 ## ---------- Initialization
 ---
