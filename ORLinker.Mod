@@ -1,15 +1,15 @@
 (* begin-module-use-description
-Module ILinker transforms an x86_64 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+Module ORLinker transforms a RISC5 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
     
 end-module-use-description *) 
 (* begin-module-develop-description
     
-(Link and create binary on x86_64; NW 20.10.2013 CP 21.05.2014 CP 2020)
+(Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014)
     
-**ILinker** can generate and install a bootable inner core binary for the Oberon x86_64 architeture.
+**ORLinker** can generate and install a bootable inner core binary for the Oberon RISC5 architeture.
   
 end-module-develop-description *)
-MODULE ILinker;  (*Link and create binary on x86_64; NW 20.10.2013 CP 21.05.2014 CP 2020 *)
+MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 *)
   IMPORT SYSTEM, Files, Modules, Kernel, Texts, Oberon;
 
   CONST versionkey = 1X; MT = 12; DescSize = 80;
@@ -81,6 +81,11 @@ MODULE ILinker;  (*Link and create binary on x86_64; NW 20.10.2013 CP 21.05.2014
 
   END ck;
 
+  PROCEDURE Read(VAR R: Files.Rider; VAR n: INTEGER);
+    VAR b: BYTE;
+  BEGIN Files.ReadByte(R, b);
+    IF b < 80H THEN n := b ELSE n := b - 100H END
+  END Read;
 
   PROCEDURE LinkOne*(name: ARRAY OF CHAR; VAR newmod: Modules.Module);
     VAR mod, impmod: Modules.Module;
@@ -243,6 +248,55 @@ MODULE ILinker;  (*Link and create binary on x86_64; NW 20.10.2013 CP 21.05.2014
   BEGIN
   END Load;
 
+  PROCEDURE Strip*;
+    VAR
+      class, i, n, key, size, fix, adr, data, len: INTEGER;
+      ch: CHAR;
+      name: ARRAY 32 OF CHAR;
+      T: Texts.Text;
+      S: Texts.Scanner;
+      F,G: Files.File;  R,B: Files.Rider;
+  BEGIN
+    Texts.OpenWriter(W); Texts.WriteString(W, "Stripping "); 
+    Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos);
+    Texts.Scan(S);
+    IF S.class = Texts.Name THEN
+        NEW(T); Texts.Open(T, S.s);
+        Texts.WriteString(W, S.s); 
+        F:= ThisFile( S.s );
+        IF F # NIL THEN 
+          G:=ThisBinFile(S.s);
+          IF G # NIL THEN 
+            Files.Set(R, F, 0); 
+            Files.Set(B, G, 0); 
+            Files.ReadString(R, name);
+            Files.ReadInt(R, key); Read(R, class); 
+            Files.ReadInt(R, size); 
+            WHILE name[0] # 0X DO (* shouldn't be other than 0x *)
+              Files.ReadInt(R, key); 
+              Texts.WriteString(W, "Error: Found an import in what should be a RISC0 module.");
+              Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
+              Files.ReadString(R, name)
+            END ;
+            
+            Files.ReadInt(R, n); n := n DIV 4; i := 0; 
+            WHILE i < n DO 
+              Files.ReadInt(R, data);
+              INC(i)
+            END ; 
+            
+            Files.ReadInt(R, n); i := 0;
+            WHILE i < n DO Files.Read(R, ch); INC(i) END ;
+            
+            Files.ReadInt(R, n); i := 0;
+            WHILE i < n DO
+              Files.ReadInt(R, data); Files.WriteInt(B, data);
+              INC(i)
+            END ;
+          END
+        END
+    END
+  END Strip;
 
   PROCEDURE Link*;
     VAR
@@ -327,6 +381,6 @@ MODULE ILinker;  (*Link and create binary on x86_64; NW 20.10.2013 CP 21.05.2014
   END ThisCommand;
 
 BEGIN 
-  Texts.OpenWriter(W); Texts.WriteString(W, "OI Linker 2020");
+  Texts.OpenWriter(W); Texts.WriteString(W, "OR Linker 22.05.2014");
   Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
-END ILinker.
+END ORLinker.

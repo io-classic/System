@@ -1,15 +1,15 @@
 (* begin-module-use-description
-Module ALinker transforms an aarch64 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+Module OILinker transforms an x86_64 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
     
 end-module-use-description *) 
 (* begin-module-develop-description
     
-(Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 CP 2020)
+(Link and create binary on x86_64; NW 20.10.2013 CP 21.05.2014 CP 2020)
     
-**ALinker** can generate and install a bootable inner core binary for the Oberon aarch64 architeture.
+**OILinker** can generate and install a bootable inner core binary for the Oberon x86_64 architeture.
   
 end-module-develop-description *)
-MODULE ALinker;  (*Link and create binary on aarch64; NW 20.10.2013 CP 21.05.2014 CP 2020*)
+MODULE OILinker;  (*Link and create binary on x86_64; NW 20.10.2013 CP 21.05.2014 CP 2020 *)
   IMPORT SYSTEM, Files, Modules, Kernel, Texts, Oberon;
 
   CONST versionkey = 1X; MT = 12; DescSize = 80;
@@ -327,6 +327,6 @@ MODULE ALinker;  (*Link and create binary on aarch64; NW 20.10.2013 CP 21.05.201
   END ThisCommand;
 
 BEGIN 
-  Texts.OpenWriter(W); Texts.WriteString(W, "AR Linker 2020");
+  Texts.OpenWriter(W); Texts.WriteString(W, "OI Linker 2020");
   Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
-END ALinker.
+END OILinker.

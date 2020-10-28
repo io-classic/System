@@ -1,15 +1,15 @@
 (* begin-module-use-description
-Module RLinker transforms a RISC5 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+Module OALinker transforms an aarch64 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
     
 end-module-use-description *) 
 (* begin-module-develop-description
     
-(Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014)
+(Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 CP 2020)
     
-**RLinker** can generate and install a bootable inner core binary for the Oberon RISC5 architeture.
+**OALinker** can generate and install a bootable inner core binary for the Oberon aarch64 architeture.
   
 end-module-develop-description *)
-MODULE RLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 *)
+MODULE OALinker;  (*Link and create binary on aarch64; NW 20.10.2013 CP 21.05.2014 CP 2020*)
   IMPORT SYSTEM, Files, Modules, Kernel, Texts, Oberon;
 
   CONST versionkey = 1X; MT = 12; DescSize = 80;
@@ -327,6 +327,6 @@ MODULE RLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 *
   END ThisCommand;
 
 BEGIN 
-  Texts.OpenWriter(W); Texts.WriteString(W, "OR Linker 22.05.2014");
+  Texts.OpenWriter(W); Texts.WriteString(W, "AR Linker 2020");
   Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
-END RLinker.
+END OALinker.

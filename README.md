@@ -17,7 +17,7 @@
 | [System](README.md#the-System-package) | prepares the user interface and manages viewers for the user. |
 |   | [System.Mod](README.md#SystemMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src) [Halt.Mod](README.md#HaltMod-doc-src)  |
 | [Build](README.md#the-Build-package) | provides the compiler and associated program building and debugging tools for Oberon. |
-|   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [OITool.Mod](README.md#OIToolMod-doc-src) [OATool.Mod](README.md#OAToolMod-doc-src) [OaTool.Mod](README.md#OaToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [OaP.Mod](README.md#OaPMod-doc-src) [OaG.Mod](README.md#OaGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [RLinker.Mod](README.md#RLinkerMod-doc-src) [ILinker.Mod](README.md#ILinkerMod-doc-src) [ALinker.Mod](README.md#ALinkerMod-doc-src) [BareMetalR.Mod](README.md#BareMetalRMod-doc-src) [BareMetalI.Mod](README.md#BareMetalIMod-doc-src) [BareMetalA.Mod](README.md#BareMetalAMod-doc-src) [BareMetala.Mod](README.md#BareMetalaMod-doc-src)  |
+|   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [OITool.Mod](README.md#OIToolMod-doc-src) [OATool.Mod](README.md#OAToolMod-doc-src) [OaTool.Mod](README.md#OaToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [OaP.Mod](README.md#OaPMod-doc-src) [OaG.Mod](README.md#OaGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORLinker.Mod](README.md#ORLinkerMod-doc-src) [OILinker.Mod](README.md#OILinkerMod-doc-src) [OALinker.Mod](README.md#OALinkerMod-doc-src) [BareMetalR.Mod](README.md#BareMetalRMod-doc-src) [BareMetalI.Mod](README.md#BareMetalIMod-doc-src) [BareMetalA.Mod](README.md#BareMetalAMod-doc-src) [BareMetala.Mod](README.md#BareMetalaMod-doc-src)  |
 | [Extras](README.md#the-Extras-package) | contains extra modules demonstrating Oberon. |
 |   | [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [Sierpinski.Mod](README.md#SierpinskiMod-doc-src) [Hilbert.Mod](README.md#HilbertMod-doc-src) [Checkers.Mod](README.md#CheckersMod-doc-src)  |
 
@@ -386,7 +386,7 @@ Module Halt halts the processor in some emulators of RISC Oberon.
 
 ---
 ## The Build Package
-includes: [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [OITool.Mod](README.md#OIToolMod-doc-src) [OATool.Mod](README.md#OAToolMod-doc-src) [OaTool.Mod](README.md#OaToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [OaP.Mod](README.md#OaPMod-doc-src) [OaG.Mod](README.md#OaGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [RLinker.Mod](README.md#RLinkerMod-doc-src) [ILinker.Mod](README.md#ILinkerMod-doc-src) [ALinker.Mod](README.md#ALinkerMod-doc-src) [BareMetalR.Mod](README.md#BareMetalRMod-doc-src) [BareMetalI.Mod](README.md#BareMetalIMod-doc-src) [BareMetalA.Mod](README.md#BareMetalAMod-doc-src) [BareMetala.Mod](README.md#BareMetalaMod-doc-src)  
+includes: [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [OITool.Mod](README.md#OIToolMod-doc-src) [OATool.Mod](README.md#OAToolMod-doc-src) [OaTool.Mod](README.md#OaToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [OaP.Mod](README.md#OaPMod-doc-src) [OaG.Mod](README.md#OaGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORLinker.Mod](README.md#ORLinkerMod-doc-src) [OILinker.Mod](README.md#OILinkerMod-doc-src) [OALinker.Mod](README.md#OALinkerMod-doc-src) [BareMetalR.Mod](README.md#BareMetalRMod-doc-src) [BareMetalI.Mod](README.md#BareMetalIMod-doc-src) [BareMetalA.Mod](README.md#BareMetalAMod-doc-src) [BareMetala.Mod](README.md#BareMetalaMod-doc-src)  
 
 ### _Package Overview:_
 Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
@@ -589,24 +589,24 @@ Module OAaG generates the 32-bit ARM processor-specific instructions for executi
 
 
 
-#### RLinker.Mod [_doc_](https://github.com/io-orig/System/blob/main/RLinker.md) [_src_](https://github.com/io-orig/System/blob/main/RLinker.Mod)
-Module RLinker transforms a RISC5 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+#### ORLinker.Mod [_doc_](https://github.com/io-orig/System/blob/main/ORLinker.md) [_src_](https://github.com/io-orig/System/blob/main/ORLinker.Mod)
+Module ORLinker transforms a RISC5 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
     
 
   **imports:** ` SYSTEM Files Modules Kernel Texts Oberon`
 
 
 
-#### ILinker.Mod [_doc_](https://github.com/io-orig/System/blob/main/ILinker.md) [_src_](https://github.com/io-orig/System/blob/main/ILinker.Mod)
-Module ILinker transforms an x86_64 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+#### OILinker.Mod [_doc_](https://github.com/io-orig/System/blob/main/OILinker.md) [_src_](https://github.com/io-orig/System/blob/main/OILinker.Mod)
+Module OILinker transforms an x86_64 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
     
 
   **imports:** ` SYSTEM Files Modules Kernel Texts Oberon`
 
 
 
-#### ALinker.Mod [_doc_](https://github.com/io-orig/System/blob/main/ALinker.md) [_src_](https://github.com/io-orig/System/blob/main/ALinker.Mod)
-Module ALinker transforms an aarch64 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+#### OALinker.Mod [_doc_](https://github.com/io-orig/System/blob/main/OALinker.md) [_src_](https://github.com/io-orig/System/blob/main/OALinker.Mod)
+Module OALinker transforms an aarch64 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
     
 
   **imports:** ` SYSTEM Files Modules Kernel Texts Oberon`
