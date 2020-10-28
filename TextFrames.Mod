@@ -7,7 +7,7 @@ MODULE TextFrames; (*JG 8.10.90 / NW 10.5.2013 / 11.2.2017*)
 
   CONST 
     replace* = 0; insert* = 1; delete* = 2; unmark* = 3; (*message id*)
-    BS = 8X; TAB = 9X; CR = 0DX; NL = 0AX; DEL = 7FX
+    BS = 8X; TAB = 9X; CR = 0DX; NL = 0AX; DEL = 7FX;
 
   TYPE Line = POINTER TO LineDesc;
     LineDesc = RECORD
@@ -132,8 +132,8 @@ MODULE TextFrames; (*JG 8.10.90 / NW 10.5.2013 / 11.2.2017*)
     IF pos > T.len THEN pos := T.len
     ELSIF pos > 0 THEN
       DEC(pos); Texts.OpenReader(R, T, pos);
-      REPEAT Texts.Read(R, nextCh); INC(pos) UNTIL R.eot or (nextch = NL)  or (nextch = CR)
-    ELSE pos :=CR
+      REPEAT Texts.Read(R, nextCh); INC(pos) UNTIL R.eot OR (nextch = NL) OR (nextch = CR)
+    ELSE pos := 0
     END
   END Validate;
 

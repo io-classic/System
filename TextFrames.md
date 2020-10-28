@@ -8,7 +8,7 @@
 ```
  
     replace* = 0; insert* = 1; delete* = 2; unmark* = 3; (*message id*)
-    BS = 8X; TAB = 9X; CR = 0DX; NL = 0AX; DEL = 7FX
+    BS = 8X; TAB = 9X; CR = 0DX; NL = 0AX; DEL = 7FX;
 
 ```
 ## Types:
