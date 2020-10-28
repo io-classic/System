@@ -278,6 +278,9 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
     newmod :=  mod;
   END LinkOne;
 
+  (* begin-section-description
+## ---------- Commands
+  end-section-description *)
 
   (* begin-procedure-description
 ---
@@ -432,6 +435,10 @@ MODULE ORLinker;  (*Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 
     END
     RETURN SYSTEM.VAL(Modules.Command, w)
   END ThisCommand;
+
+  (* begin-section-description
+## ---------- Initialization
+  end-section-description *)
 
   (* begin-procedure-description
 ---
