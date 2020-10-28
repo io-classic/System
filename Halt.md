@@ -1,5 +1,7 @@
 
 ## [MODULE Halt](https://github.com/io-core/System/blob/main/Halt.Mod)
+Module Halt halts the processor in some emulators of RISC Oberon.
+
 
   ## Imports:
 ` SYSTEM`

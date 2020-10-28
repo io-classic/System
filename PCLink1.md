@@ -1,5 +1,7 @@
 
 ## [MODULE PCLink1](https://github.com/io-core/System/blob/main/PCLink1.Mod)
+Module PCLink1 provides for serial connection between Oberon machines or Oberon and a host computer.
+
 
   ## Imports:
 ` SYSTEM Files Texts Oberon`

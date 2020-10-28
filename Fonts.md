@@ -1,5 +1,7 @@
 
 ## [MODULE Fonts](https://github.com/io-core/Edit/blob/main/Fonts.Mod)
+Module Fonts provides the glyphs used by the Text system and the Graphics system to represent characters.
+
 
   ## Imports:
 ` SYSTEM Files`

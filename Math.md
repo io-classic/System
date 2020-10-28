@@ -1,5 +1,7 @@
 
 ## [MODULE Math](https://github.com/io-core/Extras/blob/main/Math.Mod)
+Module Math provides standard math functions in Oberon.
+
 
 ## Constants:
 ```

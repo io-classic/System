@@ -1,5 +1,7 @@
 
 ## [MODULE Texts](https://github.com/io-core/Edit/blob/main/Texts.Mod)
+Module Texts defines the 'text' abstract data type used pervasively in the Oberon system.
+
 
   ## Imports:
 ` Files Fonts`

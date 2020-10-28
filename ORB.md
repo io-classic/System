@@ -1,5 +1,8 @@
 
 ## [MODULE ORB](https://github.com/io-core/Build/blob/main/ORB.Mod)
+Module ORB manages the symbol table for the Oberon compiler and reads and writes 'smb' files
+
+
 
 (NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07)
 

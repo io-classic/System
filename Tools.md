@@ -1,5 +1,7 @@
 
 ## [MODULE Tools](https://github.com/io-core/System/blob/main/Tools.Mod)
+Module Tools provides commands for inspecting memory, disk, etc.
+
 
   ## Imports:
 ` SYSTEM Kernel Files Modules Input Texts Viewers MenuViewers TextFrames Oberon`

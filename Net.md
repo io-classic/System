@@ -1,5 +1,7 @@
 
 ## [MODULE Net](https://github.com/io-core/System/blob/main/Net.Mod)
+Module Net provides for client-server communication in Oberon.
+
 
   ## Imports:
 ` SYSTEM SCC Files Viewers Texts TextFrames MenuViewers Oberon`

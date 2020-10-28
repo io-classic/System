@@ -1,5 +1,7 @@
 
 ## [MODULE System](https://github.com/io-core/System/blob/main/System.Mod)
+Module System presents the Oberon user with tools and commands for interacting Displays and Tracks and Files and other miscelaneous features.
+
 
   ## Imports:
 ` SYSTEM Kernel FileDir Files Modules Input Display Viewers Fonts Texts Oberon MenuViewers TextFrames`

@@ -1,5 +1,7 @@
 
 ## [MODULE SCC](https://github.com/io-core/System/blob/main/SCC.Mod)
+Module SCC provides for wireless communication in RISC Oberon.
+
 
   ## Imports:
 ` SYSTEM Kernel`

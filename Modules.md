@@ -1,5 +1,7 @@
 
 ## [MODULE Modules](https://github.com/io-core/Modules/blob/main/Modules.Mod)
+Module Modules is the heart of how separately compiled Oberon programs are loaded and linked.
+
 
 (Link and load on RISC; NW 20.10.2013 / 8.1.2019)
 

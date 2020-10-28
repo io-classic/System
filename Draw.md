@@ -1,5 +1,7 @@
 
 ## [MODULE Draw](https://github.com/io-core/Draw/blob/main/Draw.Mod)
+Module Edit provides document editing capability.
+
 
   ## Imports:
 ` Files Fonts Viewers Texts Oberon

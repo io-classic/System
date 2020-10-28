@@ -1,5 +1,8 @@
 
 ## [MODULE Viewers](https://github.com/io-core/Oberon/blob/main/Viewers.Mod)
+Module Viewers introduces rectangular areas of the display that present information and 
+react to user input -- 'tracks' and 'viewers'.
+
 
 (JG 14.9.90 / NW 15.9.2013)
 

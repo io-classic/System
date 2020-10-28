@@ -1,5 +1,9 @@
 
 ## [MODULE Batch](https://github.com/io-core/System/blob/main/Batch.Mod)
+Module Batch provides for automatic sequential execution of Oberon commands.
+
+Module Batch provides for automatic sequential execution of Oberon commands.
+
 
   ## Imports:
 ` Kernel FileDir Files Display Texts TextFrames Viewers Oberon`

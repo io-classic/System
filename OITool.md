@@ -1,5 +1,12 @@
 
 ## [MODULE OITool](https://github.com/io-core/Build/blob/main/OITool.Mod)
+Module OITool provides symbol file, module file, and loaded module reporting tools for x86_64 binary modules.
+
+OIP.Compile Target.Mod/s ~
+OITool.DecSym Target.smb ~ (if a regular module)
+OITool.DecObj Target.i64 ~ (if a regular module)
+OITool.DecBin Target.bin ~ (if a bare metal module)
+
 
   ## Imports:
 ` SYSTEM Files Texts Oberon ORB`

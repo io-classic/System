@@ -1,5 +1,7 @@
 
 ## [MODULE Oberon](https://github.com/io-core/Oberon/blob/main/Oberon.Mod)
+Module Oberon coordinates the interaction of the user with the system.
+
 
 (JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015)
 

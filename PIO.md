@@ -1,5 +1,7 @@
 
 ## [MODULE PIO](https://github.com/io-core/System/blob/main/PIO.Mod)
+Module PIO implements PIC input/output for RISC Oberon.
+
 
   ## Imports:
 ` SYSTEM`

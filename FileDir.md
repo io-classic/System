@@ -1,5 +1,14 @@
 
 ## [MODULE FileDir](https://github.com/io-core/Files/blob/main/FileDir.Mod)
+Module FileDir implements the following operations on the binary tree of directory pages stored on disk:
+* inserting directory entries
+* deleting directory entries
+* searching for directory entries
+* enumerating directory entries
+* initializing the Kernel sector table bitmap
+
+FileDir is not intended for use by regular programs. The FileDir interface is used by the Files module which regular programs may access.
+
 
   ## Imports:
 ` SYSTEM Kernel`

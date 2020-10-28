@@ -1,5 +1,7 @@
 
 ## [MODULE OILinker](https://github.com/io-core/Build/blob/main/OILinker.Mod)
+Module OILinker transforms an x86_64 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+    
     
 (Link and create binary on x86_64; NW 20.10.2013 CP 21.05.2014 CP 2020)
     

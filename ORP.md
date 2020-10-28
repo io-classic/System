@@ -1,6 +1,9 @@
 
 ## [MODULE ORP](https://github.com/io-core/Build/blob/main/ORP.Mod)
 
+Module ORP reads the source code of an Oberon program and produces a RISC5 executable binary module.
+
+
 (N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07)
 
 **ORP** implements a one-pass recursive descent parser for the language Oberon.

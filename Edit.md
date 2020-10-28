@@ -1,5 +1,7 @@
 
 ## [MODULE Edit](https://github.com/io-core/Edit/blob/main/Edit.Mod)
+Module Edit provides document editing capability.
+
 
   ## Imports:
 ` Files Fonts Texts Display Viewers Oberon MenuViewers TextFrames`

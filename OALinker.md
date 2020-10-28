@@ -1,5 +1,7 @@
 
 ## [MODULE OALinker](https://github.com/io-core/Build/blob/main/OALinker.Mod)
+Module OALinker transforms an aarch64 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+    
     
 (Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 CP 2020)
     

@@ -1,5 +1,7 @@
 
 ## [MODULE Blink](https://github.com/io-core/Extras/blob/main/Blink.Mod)
+Module Edit provides document editing capability.
+
 
   ## Imports:
 ` SYSTEM Oberon`

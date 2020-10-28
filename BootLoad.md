@@ -1,5 +1,10 @@
 
 ## [MODULE BootLoad](https://github.com/io-core/Kernel/blob/main/BootLoad.Mod)
+Module BootLoad is the firmware for the RISC Oberon platform.
+
+    ORP.Compile BootLoad.Mod ~
+    ORF.WriteFile BootLoad.rsc prom.mem ~                      
+
 
 (NW 20.10.2013 / PR 4.2.2014; boot from SDHC disk or line)
 

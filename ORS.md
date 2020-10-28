@@ -1,5 +1,7 @@
 
 ## [MODULE ORS](https://github.com/io-core/Build/blob/main/ORS.Mod)
+Module ORS does lexical analysis of the Oberon source code and defines symbols and operations
+
 
 (NW 19.9.93 / 20.3.2017  Scanner in Oberon-07)
 

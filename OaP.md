@@ -1,6 +1,9 @@
 
 ## [MODULE OaP](https://github.com/io-core/Build/blob/main/OaP.Mod)
 
+Module OaP reads the source code of an Oberon program and produces a 32-bit ARM executable binary module.
+
+
 (N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 / CP 2020 adapted to 32-bit ARM)
 
 **OaP** implements a one-pass recursive descent parser for the language Oberon.

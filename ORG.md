@@ -1,5 +1,10 @@
 
 ## [MODULE ORG](https://github.com/io-core/Build/blob/main/ORG.Mod)
+Module ORG generates the processor-specific instructions for executing an Oberon program. 
+
+ORG uses SYSTEM, Files, ORS, ORB
+
+
 
 (N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC)
 

@@ -1,6 +1,9 @@
 
 ## [MODULE OAP](https://github.com/io-core/Build/blob/main/OAP.Mod)
 
+Module OAP reads the source code of an Oberon program and produces an aarch64 executable binary module.
+
+
 (N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 / CP 2020 adapted to aarch64)
 
 **OAP** implements a one-pass recursive descent parser for the language Oberon.

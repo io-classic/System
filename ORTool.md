@@ -1,5 +1,12 @@
 
 ## [MODULE ORTool](https://github.com/io-core/Build/blob/main/ORTool.Mod)
+Module ORTool provides symbol file, module file, and loaded module reporting tools.
+
+ORP.Compile Target.Mod/s ~
+ORTool.DecSym Target.smb ~ (if a regular module)
+ORTool.DecObj Target.rsc ~ (if a regular module)
+ORTool.DecBin Target.bin ~ (if a bare metal module)
+
 
   ## Imports:
 ` SYSTEM Files Texts Oberon ORB`

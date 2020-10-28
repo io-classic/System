@@ -1,6 +1,9 @@
 
 ## [MODULE OIP](https://github.com/io-core/Build/blob/main/OIP.Mod)
 
+Module OIP reads the source code of an Oberon program and produces an executable x86_64 binary module.
+
+
 (N. Wirth 1.7.97 / 8.3.2020  Oberon compiler for RISC in Oberon-07 / CP 2020 adapted to x86_64)
 
 **OIP** implements a one-pass recursive descent parser for the language Oberon.

@@ -1,5 +1,10 @@
 
 ## [MODULE MenuViewers](https://github.com/io-core/System/blob/main/MenuViewers.Mod)
+Module MenuViewers implements the top-of-pane 'menu' functionality of the Oberon user interface. 
+
+MenuViewers uses Input, Display, Viewers, Oberon
+
+
 
   ## Imports:
 ` Input Display Viewers Oberon`

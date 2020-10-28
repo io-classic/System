@@ -1,5 +1,12 @@
 
 ## [MODULE OATool](https://github.com/io-core/Build/blob/main/OATool.Mod)
+Module OATool provides symbol file, module file, and loaded module reporting tools for aarch64 module binaries.
+
+OAP.Compile Target.Mod/s ~
+OATool.DecSym Target.smb ~ (if a regular module)
+OATool.DecObj Target.a64 ~ (if a regular module)
+OATool.DecBin Target.bin ~ (if a bare metal module)
+
 
   ## Imports:
 ` SYSTEM Files Texts Oberon ORB`

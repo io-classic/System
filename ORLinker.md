@@ -1,5 +1,16 @@
 
 ## [MODULE ORLinker](https://github.com/io-core/Build/blob/main/ORLinker.Mod)
+Module ORLinker transforms a RISC5 linkable binary module into a standalone binary suitable for installation in the boot area of an Oberon filesystem.
+
+```
+ORP.Compile Modules.Mod
+ORLinker.Link Modules
+ORLinker.Load Modules
+
+ORP.Compile BareMetalR.Mod
+ORLinker.Strip BareMetalR
+``` 
+
     
 (Link and create binary on RISC; NW 20.10.2013 CP 21.05.2014 / 28.10.2020)
     

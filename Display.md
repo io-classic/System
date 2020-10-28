@@ -1,5 +1,9 @@
 
 ## [MODULE Display](https://github.com/io-core/Oberon/blob/main/Display.Mod)
+Module Display implements the drawing primitives for the frame buffer device in Oberon.
+
+A pattern is an array of bytes; the first is its width (< 32), the second its height, the rest the raster data.
+
 
 (NW 5.11.2013 / 17.1.2019 / PDW 21.1.2019)
 

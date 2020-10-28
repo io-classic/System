@@ -1,5 +1,12 @@
 
 ## [MODULE Kernel](https://github.com/io-core/Kernel/blob/main/Kernel.Mod)
+Module Kernel handles:
+* Memory use by the shared Oberon heap including garbage collection
+* Reading and writing to SD Card 512-byte blocks
+* Allocating, Deallocating, Reading and Writing 1024-byte sectors on the SD card
+* Using the sytem timer and clock
+* Setting the trap handler and dispatching traps.
+
 
   ## Imports:
 ` SYSTEM`

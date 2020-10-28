@@ -1,5 +1,7 @@
 
 ## [MODULE OIG](https://github.com/io-core/Build/blob/main/OIG.Mod)
+Module OIG generates the x86_64 processor-specific instructions for executing an Oberon program. 
+
 
 (N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / CP 2020 adapted for x86_64)
 

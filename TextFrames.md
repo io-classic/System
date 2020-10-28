@@ -1,5 +1,7 @@
 
 ## [MODULE TextFrames](https://github.com/io-core/Edit/blob/main/TextFrames.Mod)
+Module TextFrames defines the messages and default handlers for text operations in panes in the Oberon user interface.
+
 
   ## Imports:
 ` Modules Input Display Viewers Fonts Texts Oberon MenuViewers`
