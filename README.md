@@ -477,7 +477,7 @@ ORTool.DecObj Target.rsc ~ (if a regular module)
 ORTool.DecBin Target.bin ~ (if a bare metal module)
 
 
-  **imports:** ` SYSTEM Files Texts Oberon ORB`
+  **imports:** ` SYSTEM Files Modules Input Texts Viewers MenuViewers TextFrames Oberon ORB`
 
 
 
@@ -490,7 +490,7 @@ OITool.DecObj Target.i64 ~ (if a regular module)
 OITool.DecBin Target.bin ~ (if a bare metal module)
 
 
-  **imports:** ` SYSTEM Files Texts Oberon ORB`
+  **imports:** ` SYSTEM Files Modules Input Texts Viewers MenuViewers TextFrames Oberon ORB OIDis`
 
 
 

@@ -7,11 +7,43 @@ ORTool.DecObj Target.rsc ~ (if a regular module)
 ORTool.DecBin Target.bin ~ (if a bare metal module)
 
 end-module-use-description *)
-MODULE ORTool;  (*NW 18.2.2013*)
-  IMPORT SYSTEM, Files, Texts, Oberon, ORB;
-  VAR W: Texts.Writer;
+(* begin-module-develop-description
+
+(NW 18.2.2013 / CP 2020)
+
+**ORTool** reports on and transforms the object files produced by the compiler's code generation module ORG.
+
+Any change to ORG is likely to require a matching change in ORTool.
+
+end-module-develop-description *)
+MODULE ORTool;  (*NW 18.2.2013 / CP 2020*)
+  IMPORT SYSTEM, Files, Modules, Input, Texts, Viewers, MenuViewers, TextFrames, Oberon, ORB;
+  VAR 
+    T: Texts.Text; V: MenuViewers.Viewer; W: Texts.Writer;
     Form: INTEGER;  (*result of ReadType*)
     mnemo0, mnemo1: ARRAY 16, 4 OF CHAR;  (*mnemonics*)
+
+  PROCEDURE OpenViewer(T: Texts.Text; title: ARRAY OF CHAR);
+    VAR X, Y: INTEGER;
+  BEGIN
+    Oberon.AllocateUserViewer(0, X, Y);
+    V := MenuViewers.New(
+        TextFrames.NewMenu(title, "System.Close  System.Copy  System.Grow  Edit.Search  Edit.Store"),
+        TextFrames.NewText(T, 0), TextFrames.menuH, X, Y)
+  END OpenViewer;
+
+  PROCEDURE Clear*;  (*used to clear output*)
+    VAR buf: Texts.Buffer;
+  BEGIN NEW(buf); Texts.OpenBuf(buf); Texts.Delete(T, 0, T.len, buf)
+  END Clear;
+
+  PROCEDURE Recall*;
+    VAR M: Viewers.ViewerMsg;
+  BEGIN
+    IF (V # NIL) & (V.state = 0) THEN
+      Viewers.Open(V, V.X, V.Y + V.H); M.id := Viewers.restore; V.handle(V, M)
+    END
+  END Recall;
 
   PROCEDURE Read(VAR R: Files.Rider; VAR n: INTEGER);
     VAR b: BYTE;
@@ -73,7 +105,7 @@ MODULE ORTool;  (*NW 18.2.2013*)
   BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
     IF S.class = Texts.Name THEN
       Texts.WriteString(W, "smb-decode "); Texts.WriteString(W, S.s);
-      Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
+      Texts.WriteLn(W); Texts.Append(T, W.buf);
       F := Files.Old(S.s);
       IF F # NIL THEN
         Files.Set(R, F, 0); Files.ReadInt(R, k); Files.ReadInt(R, k);
@@ -93,14 +125,14 @@ MODULE ORTool;  (*NW 18.2.2013*)
             ELSIF (class = ORB.Const) OR (class = ORB.Var) THEN
               Files.ReadNum(R, k); Texts.WriteInt(W, k, 5);  (*Reals, Strings!*)
             END ;
-            Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
+            Texts.WriteLn(W); Texts.Append(T, W.buf);
             Read(R, class)
           END
         ELSE Texts.WriteString(W, " bad symfile version")
         END
       ELSE Texts.WriteString(W, " not found")
       END ;
-      Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf)
+      Texts.WriteLn(W); Texts.Append(T, W.buf)
     END
   END DecSym;
   
@@ -178,7 +210,7 @@ MODULE ORTool;  (*NW 18.2.2013*)
         END ;
       ELSE Texts.WriteString(W, " not found"); Texts.WriteLn(W)
       END ;
-      Texts.Append(Oberon.Log, W.buf)
+      Texts.Append(T, W.buf)
     END
   END DecBin;
 
@@ -246,12 +278,13 @@ MODULE ORTool;  (*NW 18.2.2013*)
       (* Sync(R); *)
       ELSE Texts.WriteString(W, " not found"); Texts.WriteLn(W)
       END ;
-      Texts.Append(Oberon.Log, W.buf)
+      Texts.Append(T, W.buf)
     END
   END DecObj;
 
-BEGIN Texts.OpenWriter(W); Texts.WriteString(W, "ORTool 18.2.2013");
-  Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
+BEGIN
+  Texts.OpenWriter(W); T := TextFrames.Text(""); OpenViewer(T, "ORTool.Text");
+  Texts.WriteString(W, "ORTool 2020"); Texts.WriteLn(W); Texts.Append(T, W.buf);
   mnemo0[0] := "MOV";
   mnemo0[1] := "LSL";
   mnemo0[2] := "ASR";

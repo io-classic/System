@@ -7,11 +7,43 @@ OITool.DecObj Target.i64 ~ (if a regular module)
 OITool.DecBin Target.bin ~ (if a bare metal module)
 
 end-module-use-description *)
+(* begin-module-develop-description 
+
+(NW 18.2.2013 / CP 2020)
+
+**OITool** reports on and transforms the object files produced by the compiler's code generation module OIG.
+
+Any change to OIG is likely to require a matching change in OITool.
+
+end-module-develop-description *)
 MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
-  IMPORT SYSTEM, Files, Texts, Oberon, ORB;
-  VAR W: Texts.Writer;
+  IMPORT SYSTEM, Files, Modules, Input, Texts, Viewers, MenuViewers, TextFrames, Oberon, ORB, OIDis;
+  VAR 
+    T: Texts.Text; V: MenuViewers.Viewer; W: Texts.Writer;
     Form: INTEGER;  (*result of ReadType*)
     mnemo0, mnemo1: ARRAY 16, 4 OF CHAR;  (*mnemonics*)
+
+  PROCEDURE OpenViewer(T: Texts.Text; title: ARRAY OF CHAR);
+    VAR X, Y: INTEGER;
+  BEGIN
+    Oberon.AllocateUserViewer(0, X, Y);
+    V := MenuViewers.New(
+        TextFrames.NewMenu(title, "System.Close  System.Copy  System.Grow  Edit.Search  Edit.Store"),
+        TextFrames.NewText(T, 0), TextFrames.menuH, X, Y)
+  END OpenViewer;
+
+  PROCEDURE Clear*;  (*used to clear output*)
+    VAR buf: Texts.Buffer;
+  BEGIN NEW(buf); Texts.OpenBuf(buf); Texts.Delete(T, 0, T.len, buf)
+  END Clear;
+
+  PROCEDURE Recall*;
+    VAR M: Viewers.ViewerMsg;
+  BEGIN
+    IF (V # NIL) & (V.state = 0) THEN
+      Viewers.Open(V, V.X, V.Y + V.H); M.id := Viewers.restore; V.handle(V, M)
+    END
+  END Recall;
 
   PROCEDURE Read(VAR R: Files.Rider; VAR n: INTEGER);
     VAR b: BYTE;
@@ -73,7 +105,7 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
   BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
     IF S.class = Texts.Name THEN
       Texts.WriteString(W, "smb-decode "); Texts.WriteString(W, S.s);
-      Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
+      Texts.WriteLn(W); Texts.Append(T, W.buf);
       F := Files.Old(S.s);
       IF F # NIL THEN
         Files.Set(R, F, 0); Files.ReadInt(R, k); Files.ReadInt(R, k);
@@ -93,19 +125,19 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
             ELSIF (class = ORB.Const) OR (class = ORB.Var) THEN
               Files.ReadNum(R, k); Texts.WriteInt(W, k, 5);  (*Reals, Strings!*)
             END ;
-            Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
+            Texts.WriteLn(W); Texts.Append(T, W.buf);
             Read(R, class)
           END
         ELSE Texts.WriteString(W, " bad symfile version")
         END
       ELSE Texts.WriteString(W, " not found")
       END ;
-      Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf)
+      Texts.WriteLn(W); Texts.Append(T, W.buf)
     END
   END DecSym;
   
 (* ---------------------------------------------------*)
-
+(*
   PROCEDURE WriteReg(r: LONGINT);
   BEGIN Texts.Write(W, " ");
     IF r < 12 THEN Texts.WriteString(W, " R"); Texts.WriteInt(W, r MOD 10H, 1)
@@ -115,10 +147,12 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
     ELSE Texts.WriteString(W, "LNK")
     END
   END WriteReg;
-
+*)
   PROCEDURE opcode(w: LONGINT);
     VAR k, op, u, a, b, c: LONGINT;
-  BEGIN
+  BEGIN 
+      Texts.WriteString(W, "???");
+(*
       k := w DIV 40000000H MOD 4;
       a := w DIV 1000000H MOD 10H;
       b := w DIV 100000H MOD 10H;
@@ -149,6 +183,7 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
           Texts.WriteInt(W, w, 8)
         END
       END
+*)
   END opcode;
 
   PROCEDURE Sync(VAR R: Files.Rider);
@@ -159,6 +194,28 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
   PROCEDURE Write(VAR R: Files.Rider; x: INTEGER);
   BEGIN Files.WriteByte(R, x)  (* -128 <= x < 128 *)
   END Write;
+
+  PROCEDURE DecBin*;   (*decode bare metal binary file*)
+    VAR class, i, n, key, size, fix, adr, data, len: INTEGER;
+      ch: CHAR;
+      name: ARRAY 32 OF CHAR;
+      F: Files.File; R: Files.Rider;
+      S: Texts.Scanner;
+  BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
+    IF S.class = Texts.Name THEN
+      Texts.WriteString(W, "bin-decode "); Texts.WriteString(W, S.s); F := Files.Old(S.s);
+      IF F # NIL THEN
+        Files.Set(R, F, 0);
+        Texts.WriteString(W, "code"); Texts.WriteLn(W);
+        WHILE ~R.eof DO
+          Files.ReadInt(R, data); Texts.WriteInt(W, i, 4); Texts.Write(W, 9X); Texts.WriteHex(W, data);
+          Texts.Write(W, 9X); opcode(data); Texts.WriteLn(W); INC(i)
+        END ;
+      ELSE Texts.WriteString(W, " not found"); Texts.WriteLn(W)
+      END ;
+      Texts.Append(T, W.buf)
+    END
+  END DecBin;
 
   PROCEDURE DecObj*;   (*decode object file*)
     VAR class, i, n, key, size, fix, adr, data, len: INTEGER;
@@ -224,12 +281,13 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
       (* Sync(R); *)
       ELSE Texts.WriteString(W, " not found"); Texts.WriteLn(W)
       END ;
-      Texts.Append(Oberon.Log, W.buf)
+      Texts.Append(T, W.buf)
     END
   END DecObj;
 
-BEGIN Texts.OpenWriter(W); Texts.WriteString(W, "ORTool 18.2.2013");
-  Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf);
+BEGIN
+  Texts.OpenWriter(W); T := TextFrames.Text(""); OpenViewer(T, "OITool.Text");
+  Texts.WriteString(W, "OITool 2020"); Texts.WriteLn(W); Texts.Append(T, W.buf);
   mnemo0[0] := "MOV";
   mnemo0[1] := "LSL";
   mnemo0[2] := "ASR";
