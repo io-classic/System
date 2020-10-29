@@ -49,7 +49,7 @@ MODULE OIG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     Cond  cond   Fchain  Tchain  *)
 
   VAR 
-    pc*, varsize: LONGINT;   (*program counter, data index*)
+    pc*, pcb* varsize: LONGINT;   (*program counter, data index*)
     tdx, strx: LONGINT;
     entry: LONGINT;   (*main entry point*)
     RH: LONGINT;  (*available registers R[0] ... R[H-1]*)
@@ -69,6 +69,15 @@ MODULE OIG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   end-section-description *)
 
   (*instruction assemblers according to formats*)
+
+  (* begin-procedure-description
+---
+**PutHex4** 
+  end-procedure-description *)
+  PROCEDURE PutHex4(a, b, c, d: INTEGER);
+  BEGIN 
+    code[pc] := (d * 1000000H) + (c * 10000H) + (b * 100H) + a; INC(pc)
+  END PutHex4;
 
   (* begin-procedure-description
 ---
@@ -1427,8 +1436,8 @@ MODULE OIG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 **Open** initializes the ORG module code generation engine.     
   end-procedure-description *)
   PROCEDURE Open*(v: INTEGER);
-  BEGIN pc := 0; tdx := 0; strx := 0; RH := 0; fixorgP := 0; fixorgD := 0; fixorgT := 0; check := v # 0; version := v;
-    IF v = 0 THEN pc := 1;
+  BEGIN pc := 0; pcb := 0; tdx := 0; strx := 0; RH := 0; fixorgP := 0; fixorgD := 0; fixorgT := 0; check := v # 0; version := v;
+    IF v = 0 THEN pc := 2;
       REPEAT code[pc] := 0; INC(pc) UNTIL pc = 8
     END
   END Open;
@@ -1447,7 +1456,8 @@ MODULE OIG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   end-procedure-description *)
   PROCEDURE Header*;
   BEGIN entry := pc*4;
-    IF version = 0 THEN code[0] := 0E7000000H-1 + pc;  Put1a(Mov, SP, 0, StkOrg0)  (*RISC-0*)
+    IF version = 0 THEN code[0]:=0E9FE8948H;  code[1]:=0000003FH;  (*mov rsi, rdi; jmp 0x3F --  RISC-0*)
+      (* code[0] := 0E7000000H-1 + pc;  Put1a(Mov, SP, 0, StkOrg0) *)  (*RISC-0*) 
     ELSE Put1(Sub, SP, SP, 4); Put2(Str, LNK, SP, 0)
     END
   END Header;
@@ -1496,8 +1506,8 @@ MODULE OIG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
       name: ORS.Ident;
       F: Files.File; R: Files.Rider;
   BEGIN  (*exit code*)
-    IF version = 0 THEN Put1(Mov, 0, 0, 0); Put3(BR, 7, 0)  (*RISC-0*)
-    ELSE Put2(Ldr, LNK, SP, 0); Put1(Add, SP, SP, 4); Put3(BR, 7, LNK)
+    IF version = 0 THEN Put1(Mov, 0, 0, 0); Put3(BR, 7, 0)  (*RISC-0 infinite loop*)
+    ELSE Put2(Ldr, LNK, SP, 0); Put1(Add, SP, SP, 4); Put3(BR, 7, LNK)  (*return from parameterless module init*)
     END ;
     obj := ORB.topScope.next; nofimps := 0; comsize := 4; nofptrs := 0;
     WHILE obj # NIL DO
