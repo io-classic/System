@@ -207,8 +207,9 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
       IF F # NIL THEN
         Files.Set(R, F, 0);
         Texts.WriteString(W, "code"); Texts.WriteLn(W);
+        i:=0;
         WHILE ~R.eof DO
-          Files.ReadInt(R, data); Texts.WriteInt(W, i, 4); Texts.Write(W, 9X); Texts.WriteHex(W, data);
+          Files.ReadInt(R, data); Texts.WriteInt(W, i*4, 4); Texts.Write(W, 9X); Texts.WriteHex(W, data);
           Texts.Write(W, 9X); opcode(data); Texts.WriteLn(W); INC(i)
         END ;
       ELSE Texts.WriteString(W, " not found"); Texts.WriteLn(W)
@@ -249,7 +250,7 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
         Texts.WriteString(W, "code"); Texts.WriteLn(W);
         Files.ReadInt(R, n); i := 0;
         WHILE i < n DO
-          Files.ReadInt(R, data); Texts.WriteInt(W, i, 4); Texts.Write(W, 9X); Texts.WriteHex(W, data);
+          Files.ReadInt(R, data); Texts.WriteInt(W, i*4, 4); Texts.Write(W, 9X); Texts.WriteHex(W, data);
           Texts.Write(W, 9X); opcode(data); Texts.WriteLn(W); INC(i)
         END ;
       (* Sync(R); *)

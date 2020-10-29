@@ -64,5 +64,5 @@ Any change to OIG is likely to require a matching change in OITool.
 `  PROCEDURE DecBin*;   (*decode bare metal binary file*)` [(source)](https://github.com/io-orig/System/blob/main/OITool.Mod#L198)
 
 
-`  PROCEDURE DecObj*;   (*decode object file*)` [(source)](https://github.com/io-orig/System/blob/main/OITool.Mod#L220)
+`  PROCEDURE DecObj*;   (*decode object file*)` [(source)](https://github.com/io-orig/System/blob/main/OITool.Mod#L221)
 

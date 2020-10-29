@@ -64,5 +64,5 @@ Any change to ORG is likely to require a matching change in ORTool.
 `  PROCEDURE DecBin*;   (*decode bare metal binary file*)` [(source)](https://github.com/io-orig/System/blob/main/ORTool.Mod#L195)
 
 
-`  PROCEDURE DecObj*;   (*decode object file*)` [(source)](https://github.com/io-orig/System/blob/main/ORTool.Mod#L217)
+`  PROCEDURE DecObj*;   (*decode object file*)` [(source)](https://github.com/io-orig/System/blob/main/ORTool.Mod#L218)
 
