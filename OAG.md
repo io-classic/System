@@ -578,17 +578,17 @@ Module OAG generates the aarch-64 processor-specific instructions for executing 
 ---
 **NofPtrs** determines the number of Garbage Collection Roots.
 
-`  PROCEDURE NofPtrs(typ: ORB.Type): LONGINT;` [(source)](https://github.com/io-orig/System/blob/main/OAG.Mod#L1459)
+`  PROCEDURE NofPtrs(typ: ORB.Type): LONGINT;` [(source)](https://github.com/io-orig/System/blob/main/OAG.Mod#L1460)
 
 ---
 **FindPtrs** locates Garbage Collection roots.
 
-`  PROCEDURE FindPtrs(VAR R: Files.Rider; typ: ORB.Type; adr: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/OAG.Mod#L1476)
+`  PROCEDURE FindPtrs(VAR R: Files.Rider; typ: ORB.Type; adr: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/OAG.Mod#L1477)
 
 ---
 **Close** writes the completed binary to disk.
 
-`  PROCEDURE Close*(VAR modid: ORS.Ident; key, nofent: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/OAG.Mod#L1493)
+`  PROCEDURE Close*(VAR modid: ORS.Ident; key, nofent: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/OAG.Mod#L1494)
 
 ---
 **The initialzation code for this module** merely sets the 6 values in the global relmap array.

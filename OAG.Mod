@@ -1447,8 +1447,9 @@ MODULE OAG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   end-procedure-description *)
   PROCEDURE Header*;
   BEGIN entry := pc*4;
-    IF version = 0 THEN code[0] := 0E7000000H-1 + pc;  Put1a(Mov, SP, 0, StkOrg0)  (*RISC-0*)
-    ELSE Put1(Sub, SP, SP, 4); Put2(Str, LNK, SP, 0)
+    IF version = 0 THEN code[0] := 0E7000000H-1 + pc;  Put1a(Mov, SP, 0, StkOrg0)  (*aarch_64-0*)
+    ELSE code[0] := 0E92D5000H; INC(pc); (* was Put1(Sub, SP, SP, 4);*) (* STM SP, {FP, LNK} prolog module M *)
+         code[1] := 0E1A0C00DH; INC(pc); (* was Put2(Str, LNK, SP, 0)*) (* MOV FP R0 SP  *)
     END
   END Header;
 

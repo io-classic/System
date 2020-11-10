@@ -17,7 +17,7 @@ Any change to OIG is likely to require a matching change in OITool.
 
 end-module-develop-description *)
 MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
-  IMPORT SYSTEM, Files, Modules, Input, Texts, Viewers, MenuViewers, TextFrames, Oberon, ORB, OIDis;
+  IMPORT SYSTEM, Files, Modules, Input, Texts, Viewers, MenuViewers, TextFrames, Oberon, ORB, OXToolState, OIDis;
   VAR 
     T: Texts.Text; V: MenuViewers.Viewer; W: Texts.Writer;
     Form: INTEGER;  (*result of ReadType*)
@@ -137,6 +137,37 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
   END DecSym;
   
 (* ---------------------------------------------------*)
+
+  PROCEDURE WriteHexBytes (x: LONGINT);
+    VAR i: INTEGER; y: LONGINT;
+      a: ARRAY 10 OF CHAR;
+  BEGIN i := 0; Texts.Write(W, " ");
+    REPEAT y := x MOD 10H;
+      IF y < 10 THEN a[i] := CHR(y + 30H) ELSE a[i] := CHR(y + 37H) END;
+      x := x DIV 10H; INC(i)
+    UNTIL i = 8;
+    Texts.Write(W, a[1]);Texts.Write(W, a[0]);Texts.Write(W, " ");
+    Texts.Write(W, a[3]);Texts.Write(W, a[2]);Texts.Write(W, " ");
+    Texts.Write(W, a[5]);Texts.Write(W, a[4]);Texts.Write(W, " ");
+    Texts.Write(W, a[7]);Texts.Write(W, a[6]);Texts.Write(W, " ");
+  END WriteHexBytes;
+
+  PROCEDURE HighNib(b: BYTE): CHAR;
+    VAR ch: CHAR;
+  BEGIN
+    ch := CHR((b DIV 16) MOD 16 + ORD("0"));
+    IF ch > "9" THEN ch := CHR(ORD(ch) + 7) END;
+  RETURN ch
+  END HighNib;
+
+  PROCEDURE LowNib(b: BYTE): CHAR;
+    VAR ch: CHAR;
+  BEGIN
+    ch := CHR(b MOD 16 + ORD("0"));
+    IF ch > "9" THEN ch := CHR(ORD(ch) + 7) END;
+  RETURN ch
+  END LowNib;
+
 (*
   PROCEDURE WriteReg(r: LONGINT);
   BEGIN Texts.Write(W, " ");
@@ -196,7 +227,7 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
   END Write;
 
   PROCEDURE DecBin*;   (*decode bare metal binary file*)
-    VAR class, i, n, key, size, fix, adr, data, len: INTEGER;
+    VAR class, i, n, key, size, fix, adr, data, len, e: INTEGER;
       ch: CHAR;
       name: ARRAY 32 OF CHAR;
       F: Files.File; R: Files.Rider;
@@ -208,8 +239,9 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
         Files.Set(R, F, 0);
         Texts.WriteString(W, "code"); Texts.WriteLn(W);
         i:=0;
+        e := OIDis.originate(R,F,0,Files.Length(F),0);
         WHILE ~R.eof DO
-          Files.ReadInt(R, data); Texts.WriteInt(W, i*4, 4); Texts.Write(W, 9X); Texts.WriteHex(W, data);
+          Files.ReadInt(R, data); Texts.WriteInt(W, i*4, 4); Texts.Write(W, 9X); WriteHexBytes(data);
           Texts.Write(W, 9X); opcode(data); Texts.WriteLn(W); INC(i)
         END ;
       ELSE Texts.WriteString(W, " not found"); Texts.WriteLn(W)
@@ -219,14 +251,14 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
   END DecBin;
 
   PROCEDURE DecObj*;   (*decode object file*)
-    VAR class, i, n, key, size, fix, adr, data, len: INTEGER;
+    VAR class, i, n, key, size, fix, adr, data, len, s, e, x: INTEGER;
       ch: CHAR;
       name: ARRAY 32 OF CHAR;
       F: Files.File; R: Files.Rider;
       S: Texts.Scanner;
   BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
     IF S.class = Texts.Name THEN
-      Texts.WriteString(W, "rsc-decode "); Texts.WriteString(W, S.s); F := Files.Old(S.s);
+      Texts.WriteString(W, "obj-decode "); Texts.WriteString(W, S.s); F := Files.Old(S.s);
       IF F # NIL THEN
         Files.Set(R, F, 0); Files.ReadString(R, name); Texts.WriteLn(W); Texts.WriteString(W, name);
         Files.ReadInt(R, key); Texts.WriteHex(W, key); Read(R, class); Texts.WriteInt(W, class, 4); (*version*)
@@ -249,11 +281,24 @@ MODULE OITool;  (*NW 18.2.2013 / CP 2020*)
         Texts.WriteLn(W);
         Texts.WriteString(W, "code"); Texts.WriteLn(W);
         Files.ReadInt(R, n); i := 0;
+        s := Files.Pos(R);
+        e := OIDis.originate(R,F,s,n*4,0);
+        WHILE e # OXToolState.FINISH DO
+          e := OIDis.decode();
+          Texts.WriteInt(W, OXToolState.at, 4); Texts.Write(W, 9X); 
+          i:=0;WHILE i < OXToolState.isz DO 
+            Texts.Write(W, HighNib(OXToolState.ibytes[i])); Texts.Write(W, LowNib(OXToolState.ibytes[i])); Texts.Write(W, " "); 
+            INC(i);
+          END;
+          Texts.Write(W, 9X); Texts.WriteString(W, OXToolState.istr); Texts.WriteLn(W);
+        END;
+(*
         WHILE i < n DO
-          Files.ReadInt(R, data); Texts.WriteInt(W, i*4, 4); Texts.Write(W, 9X); Texts.WriteHex(W, data);
+          Files.ReadInt(R, data); Texts.WriteInt(W, i*4, 4); Texts.Write(W, 9X); WriteHexBytes(data);
           Texts.Write(W, 9X); opcode(data); Texts.WriteLn(W); INC(i)
         END ;
-      (* Sync(R); *)
+*)      (* Sync(R); *)
+        Files.Set(R,F,s+(n*4));
         Texts.WriteString(W, "commands:"); Texts.WriteLn(W);
         Files.ReadString(R, name);
         WHILE name[0] # 0X DO

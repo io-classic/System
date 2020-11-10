@@ -1,12 +1,12 @@
 (* begin-module-use-description
-Module OAaG generates the 32-bit ARM processor-specific instructions for executing an Oberon program. 
+Module OaG generates the 32-bit ARM processor-specific instructions for executing an Oberon program. 
 
 end-module-use-description *)
 (* begin-module-develop-description
 
 (N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / CP 2020 adapted to 32-bit ARM)
 
-**OAG** is called from OaP and generates machine code various Oberon language constructs for the Oberon 32-bit ARM architeture.
+**OaG** is called from OaP and generates machine code various Oberon language constructs for the Oberon 32-bit ARM architeture.
 
 end-module-develop-description *)
 MODULE OaG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code generator for RISC / CP 2020 adapted to 32-bit ARM*)
@@ -17,18 +17,93 @@ MODULE OaG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 
   CONST
     WordSize* = 4;
-    StkOrg0 = -64; VarOrg0 = 0;  (*for RISC-0 only*)
-    MT = 12; SP = 14; LNK = 15;   (*dedicated registers*)
-    maxCode = 8000; maxStrx = 2400; maxTD = 160; C24 = 1000000H;
+(*    StkOrg0 = -64; VarOrg0 = 0;  (*for RISC-0 only*) *)
+(*    MT = 12; SP = 14; LNK = 15;   (*dedicated registers*) *)
+(*    maxCode = 8000; maxStrx = 2400; maxTD = 160; C24 = 1000000H; *)
+(*    Reg = 10; RegI = 11; Cond = 12;  (*internal item modes*) *)
+
+  (*frequently used opcodes*) (* U = 2000H; *) V = 1000H;
+(*    Mov = 0; Lsl = 1; Asr = 2; Ror= 3; And = 4; Ann = 5; Ior = 6; Xor = 7;
+    Add = 8; Sub = 9; Cmp = 9; Mul = 10; Div = 11;
+    Fad = 12; Fsb = 13; Fml = 14; Fdv = 15; *)
+(*    Ldr = 8; Str = 10; *)
+(*    BR = 0; BLR = 1; BC = 2; BL = 3; *)
+(*    MI = 0; PL = 8; EQ = 1; NE = 9; LT = 5; GE = 13; LE = 6; GT = 14;*)
+
+                ObjMark = 0F5X;
+                CodeLength = 32768; (* 128K Code. Don't make it bigger (because of fixup list limits! *)
+                ConstLength = 1024; (* in Words *)
+                StrConstLength = 4096; (* in Bytes, ziemlich willkrlich, kann ruhig VIEL groesser sein *)
+                MaxConstDist = ConstLength-15; (* in Words including a safety range *)
+                MaxUnknownProcs = 128;
+                MaxPtrs = 512; MaxRecs = 128; MaxComs = 40; MaxExts = 15;
+
+                (* Constants for Bit x set *)
+                C22 = 400000H; C23 = 800000H; C24 = 1000000H; C25 = 2000000H;
+
+                (* Op-Codes Single Data Transfer (SDT) *)
+                LDR* = 51H; (* LDR, pre-indexed, no write-back *)
+                STR* = 50H; (* STR, pre-indexed, no write-back *)
+                LDRB* = 55H; (* LDRB, pre-indexed, no write-back *)
+                STRB* = 54H; (* STRB, pre-indexed, no write-back *)
+                        LDRpost* = 41H; (* LDR, post-indexed, no write-back-bit *)
+                STRpost* = 40H; (* STR, post-indexed, no write-back-bit *)
+                LDRBpost* = 45H; (* LDRB, post-indexed, no write-back-bit *)
+                STRBpost* = 44H; (* STRB, post-indexed, no write-back-bit *)
+                        (* Op-Codes Halfword Data Transfer (HDT) *)
+                LDRSH* = 11000F0H; (* LDRSH, pre-indexed, no write-back *)
+                STRH* = 10000B0H; (* STRH, pre-indexed, no write-back *)
+                LDRSB* = 11000D0H; (* LDRSB, pre-indexed, no write-back *)
+
+                (* Op-Codes Block Data Transfer (BDT) *)
+                LDMIA* = 89H; STMIA* = 88H; STMDB* = 90H;
+
+                (* Op-Codes Data Processing: S-Bit is always set (except for MOV and RSBnoflags ) ! *)
+                AND* = 1; EOR* = 3; SUB* = 5; RSBnoflags* = 6; RSB* = 7; ADD* = 9; ADCop = 11; SBCop = 13; RSC = 15; TST* = 17;
+                TEQ = 19;
+                CMP* = 21; CMN* = 23;  ORR* = 25; MOV* = 26; MOVS* = 27; BIC* = 29; MVN* = 30; MVNS = 31;
+
+                (* Op-Codes Branch Instructions *)
+                (* B* = 10; BL* = 11; *)
+
+                (* Op-Codes Multiplication *)
+                MUL* = 0; MLA* = 200000H;
+
+                (* Op-Codes Long Multiplication *)
+                SMULL* = 00C00090H;
+
+                (* Conditions *)
+                EQ* = 0; NE* = 1; CS* = 2; CC* = 3;  MI* = 4; PL* = 5; VS* = 6; VC* = 7;
+                HI* = 8; LS* = 9; GE* = 10; LT* = 11;  GT* = 12; LE* = 13; AL* = 14; NV* = 15;
+
+                (* Register Numbers *)
+                PC* = 15; LR* = 14; SP* = 13; FP* = 12; FirstUniversalReg = 9;
+
+                (* Const Types *)
+                Constant = 0; StringAddr = 1; ProcAddr = 2; ExtAddr = 3;
+
+    StkOrg0 = -64; VarOrg0 = 0;
+
+    MT = 10; SB = 11; (*SP = 13; *) LNK = 14;   (*dedicated registers*)
+(*    MT = 12; SB = 13; SP = 14; LNK = 15;  *) (*dedicated registers - RISC*)
+    maxCode = 8000; maxStrx = 2400; maxTD = 120; (*C24 = 1000000H; *)
     Reg = 10; RegI = 11; Cond = 12;  (*internal item modes*)
 
-  (*frequently used opcodes*)  U = 2000H; V = 1000H;
-    Mov = 0; Lsl = 1; Asr = 2; Ror= 3; And = 4; Ann = 5; Ior = 6; Xor = 7;
-    Add = 8; Sub = 9; Cmp = 9; Mul = 10; Div = 11;
+  (*opcode formats*)
+   DPfmt = 0; MULfmt = 1; MULLfmt = 2; SDSfmt = 3; BEfmt = 4; HDTRfmt = 5; HDTIfmt = 6;   SDTfmt = 7; UNDfmt = 8; BDTfmt = 9; BRfmt = 10; CDTfmt = 11; CDOfmt = 12; CRTfmt = 13; SWIfmt = 14;
+
+  (*frequently used opcodes*)  U = 2000H;    And = 0; Eor = 1; Sub = 2; Rsb = 3; Add = 4; Adc = 5; Sbc = 6; Rsc = 7;    Tst = 8; Teq = 9; Cmp = 10; Cmn = 11; Orr = 12; Mov = 13; Bic = 14; Mvn = 15;
+    Lsl = 1; Asr = 2; Ror= 3;  Ann = 5; Ior = 6; Xor = 7;
+    Mul = 10; Div = 11;
     Fad = 12; Fsb = 13; Fml = 14; Fdv = 15;
-    Ldr = 8; Str = 10;
-    BR = 0; BLR = 1; BC = 2; BL = 3;
-    MI = 0; PL = 8; EQ = 1; NE = 9; LT = 5; GE = 13; LE = 6; GT = 14;
+    Ldr = 51H; Str = 50H;
+ (*   Ldr = 8; Str = 10; *)
+    BR = 0; BLR = 1; BC = 2;  BL = 3;
+  (*  MI = 0;  PL = 8; EQ = 1; NE = 9; LT = 5; GE = 13; LE = 6; GT = 14; *)
+
+
+
+
 
   TYPE 
     Item* = RECORD
@@ -70,13 +145,35 @@ MODULE OaG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
 
   (*instruction assemblers according to formats*)
 
+(*  From OSAG.Mod:
+
+PROCEDURE Put0(op, dst, src0, src1: LONGINT); (*register operation*)
+PROCEDURE Put0a(op, dst, src0, src1, shmd, shcnt: LONGINT); (*register operation with shift*)
+PROCEDURE Put0b(op, dst, src0, src1, shmd, shreg: LONGINT); (*register operation with shift cnt from reg*)
+PROCEDURE Put0c(op, dst, src0, src1, src2: LONGINT); (*multiply*)
+PROCEDURE Put1(op, dst, src, imm: LONGINT); (*register operation with immediate*)
+PROCEDURE Put2(op, reg, base, offset: LONGINT); (*Load/store with offset literal*)
+PROCEDURE Put3(op, reg, base, offreg, shift: LONGINT); (*Load/store with offset from register*)
+PROCEDURE Put4(op, base: LONGINT; regs: SET); (*Load/Store multiple*)
+PROCEDURE Put5(cond, offset: LONGINT); (*Branch conditional*)
+PROCEDURE Put5a(offset: LONGINT); (*Branch and Link*)
+PROCEDURE Put6(cond, num: LONGINT); (*SWI conditional*)
+
+*)
+
   (* begin-procedure-description
 ---
 **Put0** 
   end-procedure-description *)
   PROCEDURE Put0(op, a, b, c: LONGINT);
   BEGIN (*emit format-0 instruction*)
-    code[pc] := ((a*10H + b) * 10H + op) * 10000H + c; INC(pc)
+    IF  (c >= -100H) & (c <= 0FFH) THEN
+      code[pc] := (AL * 10000000H) + (op*200000H) + (b * 10000H) + (a * 1000H) + c
+    ELSE
+      ORS.Mark("Put0 c overflow")
+    END;
+    INC(pc)
+(* was   code[pc] := ((a*10H + b) * 10H + op) * 10000H + c; INC(pc) *)
   END Put0;
 
   PROCEDURE Put1(op, a, b, im: LONGINT);
@@ -1117,7 +1214,9 @@ MODULE OaG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   BEGIN
     IF form # ORB.NoTyp THEN load(x) END ;
     IF ~int THEN (*procedure epilog*)
-      Put2(Ldr, LNK, SP, 0); Put1(Add, SP, SP, size); Put3(BR, 7, LNK)
+      Put2(Ldr, LNK, SP, 0); 
+      Put1(Add, SP, SP, size); 
+      Put3(BR, 7, LNK)
     ELSE (*interrupt return, restore R2, R1, R0*)
       Put2(Ldr, 2, SP, 8); Put2(Ldr, 1, SP, 4); Put2(Ldr, 0, SP, 0); Put1(Add, SP, SP, size);
       Put3(BR, 7, 10H) (*RTI*)
@@ -1447,8 +1546,9 @@ MODULE OaG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
   end-procedure-description *)
   PROCEDURE Header*;
   BEGIN entry := pc*4;
-    IF version = 0 THEN code[0] := 0E7000000H-1 + pc;  Put1a(Mov, SP, 0, StkOrg0)  (*RISC-0*)
-    ELSE Put1(Sub, SP, SP, 4); Put2(Str, LNK, SP, 0)
+    IF version = 0 THEN code[0] := 0E7000000H-1 + pc;  Put1a(Mov, SP, 0, StkOrg0)  (*arm32-0*)
+    ELSE code[0] := 0E92D5000H; INC(pc); (* was Put1(Sub, SP, SP, 4);*) (* STM SP, {FP, LNK} prolog module M *)
+         code[1] := 0E1A0C00DH; INC(pc); (* was Put2(Str, LNK, SP, 0)*) (* MOV FP R0 SP  0b1110.0001.1010.0000.1100.0000.0000.1101 *) 
     END
   END Header;
 

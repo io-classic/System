@@ -49,7 +49,7 @@ MODULE OIG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 31.5.2019  Oberon compiler; code 
     Cond  cond   Fchain  Tchain  *)
 
   VAR 
-    pc*, pcb* varsize: LONGINT;   (*program counter, data index*)
+    pc*, pcb*, varsize: LONGINT;   (*program counter, data index*)
     tdx, strx: LONGINT;
     entry: LONGINT;   (*main entry point*)
     RH: LONGINT;  (*available registers R[0] ... R[H-1]*)

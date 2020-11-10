@@ -53,7 +53,7 @@ Module OIG generates the x86_64 processor-specific instructions for executing an
 ## Variables:
 ```
  
-    pc*, pcb* varsize: LONGINT;   (*program counter, data index*)
+    pc*, pcb*, varsize: LONGINT;   (*program counter, data index*)
     tdx, strx: LONGINT;
     entry: LONGINT;   (*main entry point*)
     RH: LONGINT;  (*available registers R[0] ... R[H-1]*)

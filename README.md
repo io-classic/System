@@ -17,7 +17,7 @@
 | [System](README.md#the-System-package) | prepares the user interface and manages viewers for the user. |
 |   | [System.Mod](README.md#SystemMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src) [Halt.Mod](README.md#HaltMod-doc-src)  |
 | [Build](README.md#the-Build-package) | provides the compiler and associated program building and debugging tools for Oberon. |
-|   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [OITool.Mod](README.md#OIToolMod-doc-src) [OATool.Mod](README.md#OAToolMod-doc-src) [OaTool.Mod](README.md#OaToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [OaP.Mod](README.md#OaPMod-doc-src) [OaG.Mod](README.md#OaGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORLinker.Mod](README.md#ORLinkerMod-doc-src) [BareMetalR.Mod](README.md#BareMetalRMod-doc-src) [BareMetalI.Mod](README.md#BareMetalIMod-doc-src) [BareMetalA.Mod](README.md#BareMetalAMod-doc-src) [BareMetala.Mod](README.md#BareMetalaMod-doc-src)  |
+|   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [OXTool.Mod](README.md#OXToolMod-doc-src) [OXDis.Mod](README.md#OXDisMod-doc-src) [ORDis.Mod](README.md#ORDisMod-doc-src) [OIDis.Mod](README.md#OIDisMod-doc-src) [OADis.Mod](README.md#OADisMod-doc-src) [OaDis.Mod](README.md#OaDisMod-doc-src) [OVDis.Mod](README.md#OVDisMod-doc-src) [OvDis.Mod](README.md#OvDisMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [OaP.Mod](README.md#OaPMod-doc-src) [OaG.Mod](README.md#OaGMod-doc-src) [OVP.Mod](README.md#OVPMod-doc-src) [OVG.Mod](README.md#OVGMod-doc-src) [OvP.Mod](README.md#OvPMod-doc-src) [OvG.Mod](README.md#OvGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORLinker.Mod](README.md#ORLinkerMod-doc-src) [BareMetalR.Mod](README.md#BareMetalRMod-doc-src) [BareMetalI.Mod](README.md#BareMetalIMod-doc-src) [BareMetalA.Mod](README.md#BareMetalAMod-doc-src) [BareMetala.Mod](README.md#BareMetalaMod-doc-src) [BareMetalV.Mod](README.md#BareMetalVMod-doc-src) [BareMetalv.Mod](README.md#BareMetalvMod-doc-src)  |
 | [Extras](README.md#the-Extras-package) | contains extra modules demonstrating Oberon. |
 |   | [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [Sierpinski.Mod](README.md#SierpinskiMod-doc-src) [Hilbert.Mod](README.md#HilbertMod-doc-src) [Checkers.Mod](README.md#CheckersMod-doc-src)  |
 
@@ -386,7 +386,7 @@ Module Halt halts the processor in some emulators of RISC Oberon.
 
 ---
 ## The Build Package
-includes: [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [ORTool.Mod](README.md#ORToolMod-doc-src) [OITool.Mod](README.md#OIToolMod-doc-src) [OATool.Mod](README.md#OAToolMod-doc-src) [OaTool.Mod](README.md#OaToolMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [OaP.Mod](README.md#OaPMod-doc-src) [OaG.Mod](README.md#OaGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORLinker.Mod](README.md#ORLinkerMod-doc-src) [BareMetalR.Mod](README.md#BareMetalRMod-doc-src) [BareMetalI.Mod](README.md#BareMetalIMod-doc-src) [BareMetalA.Mod](README.md#BareMetalAMod-doc-src) [BareMetala.Mod](README.md#BareMetalaMod-doc-src)  
+includes: [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [OXTool.Mod](README.md#OXToolMod-doc-src) [OXDis.Mod](README.md#OXDisMod-doc-src) [ORDis.Mod](README.md#ORDisMod-doc-src) [OIDis.Mod](README.md#OIDisMod-doc-src) [OADis.Mod](README.md#OADisMod-doc-src) [OaDis.Mod](README.md#OaDisMod-doc-src) [OVDis.Mod](README.md#OVDisMod-doc-src) [OvDis.Mod](README.md#OvDisMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [OaP.Mod](README.md#OaPMod-doc-src) [OaG.Mod](README.md#OaGMod-doc-src) [OVP.Mod](README.md#OVPMod-doc-src) [OVG.Mod](README.md#OVGMod-doc-src) [OvP.Mod](README.md#OvPMod-doc-src) [OvG.Mod](README.md#OvGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORLinker.Mod](README.md#ORLinkerMod-doc-src) [BareMetalR.Mod](README.md#BareMetalRMod-doc-src) [BareMetalI.Mod](README.md#BareMetalIMod-doc-src) [BareMetalA.Mod](README.md#BareMetalAMod-doc-src) [BareMetala.Mod](README.md#BareMetalaMod-doc-src) [BareMetalV.Mod](README.md#BareMetalVMod-doc-src) [BareMetalv.Mod](README.md#BareMetalvMod-doc-src)  
 
 ### _Package Overview:_
 Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
@@ -468,55 +468,73 @@ Module ORS does lexical analysis of the Oberon source code and defines symbols a
 
 
 
-#### ORTool.Mod [_doc_](https://github.com/io-orig/System/blob/main/ORTool.md) [_src_](https://github.com/io-orig/System/blob/main/ORTool.Mod)
-Module ORTool provides symbol file, module file, and loaded module reporting tools.
+#### OXTool.Mod [_doc_](https://github.com/io-orig/System/blob/main/OXTool.md) [_src_](https://github.com/io-orig/System/blob/main/OXTool.Mod)
+Module OXTool provides symbol file, module file, and loaded module reporting tools.
 
 ORP.Compile Target.Mod/s ~
-ORTool.DecSym Target.smb ~ (if a regular module)
-ORTool.DecObj Target.rsc ~ (if a regular module)
-ORTool.DecBin Target.bin ~ (if a bare metal module)
+OXTool.DecSym Target.smb ~ (if a regular module)
+OXTool.DecObj Target.rsc ~ (if a regular module)
+OXTool.DecBin Target.bin ~ (if a bare metal module)
 
 
-  **imports:** ` SYSTEM Files Modules Input Texts Viewers MenuViewers TextFrames Oberon ORB`
+  **imports:** ` SYSTEM Files Modules Input Texts Viewers MenuViewers TextFrames Oberon OXDis`
+ (*ORDis OIDis OaDis OADis`
+ *)
 
 
-
-#### OITool.Mod [_doc_](https://github.com/io-orig/System/blob/main/OITool.md) [_src_](https://github.com/io-orig/System/blob/main/OITool.Mod)
-Module OITool provides symbol file, module file, and loaded module reporting tools for x86_64 binary modules.
-
-OIP.Compile Target.Mod/s ~
-OITool.DecSym Target.smb ~ (if a regular module)
-OITool.DecObj Target.i64 ~ (if a regular module)
-OITool.DecBin Target.bin ~ (if a bare metal module)
+#### OXDis.Mod [_doc_](https://github.com/io-orig/System/blob/main/OXDis.md) [_src_](https://github.com/io-orig/System/blob/main/OXDis.Mod)
+Module OXDis provides an interface for disassembling opcodes.
 
 
-  **imports:** ` SYSTEM Files Modules Input Texts Viewers MenuViewers TextFrames Oberon ORB OIDis`
+  **imports:** ` SYSTEM Files ORDis OIDis OADis OaDis OVDis OvDis`
 
 
 
-#### OATool.Mod [_doc_](https://github.com/io-orig/System/blob/main/OATool.md) [_src_](https://github.com/io-orig/System/blob/main/OATool.Mod)
-Module OATool provides symbol file, module file, and loaded module reporting tools for aarch64 module binaries.
-
-OAP.Compile Target.Mod/s ~
-OATool.DecSym Target.smb ~ (if a regular module)
-OATool.DecObj Target.a64 ~ (if a regular module)
-OATool.DecBin Target.bin ~ (if a bare metal module)
+#### ORDis.Mod [_doc_](https://github.com/io-orig/System/blob/main/ORDis.md) [_src_](https://github.com/io-orig/System/blob/main/ORDis.Mod)
+Module ORDis disassembles RISC5 opcodes.
 
 
-  **imports:** ` SYSTEM Files Texts Oberon ORB`
+  **imports:** ` SYSTEM Files Oberon`
 
 
 
-#### OaTool.Mod [_doc_](https://github.com/io-orig/System/blob/main/OaTool.md) [_src_](https://github.com/io-orig/System/blob/main/OaTool.Mod)
-Module OaTool provides symbol file, module file, and loaded module reporting tools for 32-bit ARM module binaries.
-
-OaP.Compile Target.Mod/s ~
-OaTool.DecSym Target.smb ~ (if a regular module)
-OaTool.DecObj Target.a32 ~ (if a regular module)
-OaTool.DecBin Target.bin ~ (if a bare metal module)
+#### OIDis.Mod [_doc_](https://github.com/io-orig/System/blob/main/OIDis.md) [_src_](https://github.com/io-orig/System/blob/main/OIDis.Mod)
+Module OIDis disassembles x86_64 opcodes.
 
 
-  **imports:** ` SYSTEM Files Texts Oberon ORB`
+  **imports:** ` SYSTEM Files Oberon`
+
+
+
+#### OADis.Mod [_doc_](https://github.com/io-orig/System/blob/main/OADis.md) [_src_](https://github.com/io-orig/System/blob/main/OADis.Mod)
+Module OADis disassembles aarch64 opcodes.
+
+
+  **imports:** ` SYSTEM Files Oberon`
+
+
+
+#### OaDis.Mod [_doc_](https://github.com/io-orig/System/blob/main/OaDis.md) [_src_](https://github.com/io-orig/System/blob/main/OaDis.Mod)
+Module OaDis disassembles 32-bit ARM opcodes.
+
+
+  **imports:** ` SYSTEM Files Oberon`
+
+
+
+#### OVDis.Mod [_doc_](https://github.com/io-orig/System/blob/main/OVDis.md) [_src_](https://github.com/io-orig/System/blob/main/OVDis.Mod)
+Module OVDis disassembles 64-bit RISCV opcodes.
+
+
+  **imports:** ` SYSTEM Files Oberon`
+
+
+
+#### OvDis.Mod [_doc_](https://github.com/io-orig/System/blob/main/OvDis.md) [_src_](https://github.com/io-orig/System/blob/main/OvDis.Mod)
+Module OvDis disassembles 32-bit RISCV opcodes.
+
+
+  **imports:** ` SYSTEM Files Oberon`
 
 
 
@@ -570,7 +588,41 @@ Module OaP reads the source code of an Oberon program and produces a 32-bit ARM 
 
 
 #### OaG.Mod [_doc_](https://github.com/io-orig/System/blob/main/OaG.md) [_src_](https://github.com/io-orig/System/blob/main/OaG.Mod)
-Module OAaG generates the 32-bit ARM processor-specific instructions for executing an Oberon program. 
+Module OaG generates the 32-bit ARM processor-specific instructions for executing an Oberon program. 
+
+
+  **imports:** ` SYSTEM Files ORS ORB`
+
+
+
+#### OVP.Mod [_doc_](https://github.com/io-orig/System/blob/main/OVP.md) [_src_](https://github.com/io-orig/System/blob/main/OVP.Mod)
+
+Module OVP reads the source code of an Oberon program and produces an 64-bit RISCV executable binary module.
+
+
+  **imports:** ` Texts Oberon ORS ORB OVG`
+
+
+
+#### OVG.Mod [_doc_](https://github.com/io-orig/System/blob/main/OVG.md) [_src_](https://github.com/io-orig/System/blob/main/OVG.Mod)
+Module OVG generates the 64-bit RISCV processor-specific instructions for executing an Oberon program. 
+
+
+  **imports:** ` SYSTEM Files ORS ORB`
+
+
+
+#### OvP.Mod [_doc_](https://github.com/io-orig/System/blob/main/OvP.md) [_src_](https://github.com/io-orig/System/blob/main/OvP.Mod)
+
+Module OvP reads the source code of an Oberon program and produces a 32-bit RISCV executable binary module.
+
+
+  **imports:** ` Texts Oberon ORS ORB OvG`
+
+
+
+#### OvG.Mod [_doc_](https://github.com/io-orig/System/blob/main/OvG.md) [_src_](https://github.com/io-orig/System/blob/main/OvG.Mod)
+Module OvG generates the 32-bit RISCV processor-specific instructions for executing an Oberon program. 
 
 
   **imports:** ` SYSTEM Files ORS ORB`
@@ -626,6 +678,18 @@ Module BareMetalA exercises features of the compiler in bringing Oberon up from 
 
 #### BareMetala.Mod [_doc_](https://github.com/io-orig/System/blob/main/BareMetala.md) [_src_](https://github.com/io-orig/System/blob/main/BareMetala.Mod)
 Module BareMetala exercises features of the compiler in bringing Oberon up from bare metal on 32-bit ARM.
+
+
+
+
+#### BareMetalV.Mod [_doc_](https://github.com/io-orig/System/blob/main/BareMetalV.md) [_src_](https://github.com/io-orig/System/blob/main/BareMetalV.Mod)
+Module BareMetalV exercises features of the compiler in bringing Oberon up from bare metal on 64-bit RISCV.
+
+
+
+
+#### BareMetalv.Mod [_doc_](https://github.com/io-orig/System/blob/main/BareMetalv.md) [_src_](https://github.com/io-orig/System/blob/main/BareMetalv.Mod)
+Module BareMetalv exercises features of the compiler in bringing Oberon up from bare metal on 32-bit RISCV.
 
 
 ---
