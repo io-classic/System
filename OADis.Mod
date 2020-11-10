@@ -1,18 +1,18 @@
 (* begin-module-use-description
-Module OIDis disassembles x86_64 opcodes.
+Module OADis disassembles aarch64 opcodes.
 
 end-module-use-description *)
 (* begin-module-develop-description
 
 (CP 2020)
 
-**OIDis** is a disassembler of x86_64 opcodes.
+**OADis** is a disassembler of aarch64 opcodes.
 The module sets up a state machine that operates on an input via repeated calls to decode.
 
 end-module-develop-description *)
-MODULE OIDis;   (*CP 2020*)
+MODULE OADis;   (*CP 2020*)
   IMPORT SYSTEM, Files, Oberon;
-  CONST 
+  CONST
     OK* = 0; FINISH* = 1; BAD* = 2;
     BADARCH=0; RISC5=1; X8664=2; AARCH64=3; ARM32=4; RISCV64=5; RISCV32=6;
     BYTEORIENTED=0; WORDORIENTED=1;
@@ -31,7 +31,27 @@ MODULE OIDis;   (*CP 2020*)
   PROCEDURE opcode(w: LONGINT; VAR s:ARRAY OF CHAR);
     VAR k, op, u, a, b, c: LONGINT;
   BEGIN
-    s:="UNDECODED X86_64"
+    IF (w DIV 8000000H MOD 1 = 0) THEN
+      IF (w DIV 10000000H MOD 1 = 0) THEN
+        s:="UNALLOCATED"
+      ELSE
+        IF (w DIV 4000000H MOD 1 = 0) THEN
+	  s:="IMMEDIATE"
+        ELSE
+          s:="BRANCH"
+        END
+      END
+    ELSE
+      IF (w DIV 2000000H MOD 1 = 0) THEN
+        s:="LOAD/STORE"
+      ELSE
+        IF (w DIV 4000000H MOD 1 = 0) THEN
+          s:="DP REGISTER"
+        ELSE
+          s:="DP SIMD"
+        END
+      END
+    END
   END opcode;
 
   PROCEDURE decode*():INTEGER;
@@ -75,15 +95,15 @@ MODULE OIDis;   (*CP 2020*)
     RETURN e
   END originate;
 
-BEGIN 
+BEGIN
   E := 0;
-  wo:= BYTEORIENTED;
+  wo := WORDORIENTED;
   vendor := 0;
   mode := 64;
   at := 0;
   pc := 0;
   isz := 0;
-  istr := "undecoded x86_64";
+  istr := "undecoded aarch64";
   cfo := 0;
   cfe := 0;
-END OIDis.
+END OADis.
