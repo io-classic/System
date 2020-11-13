@@ -17,7 +17,7 @@
 | [System](README.md#the-System-package) | prepares the user interface and manages viewers for the user. |
 |   | [System.Mod](README.md#SystemMod-doc-src) [MenuViewers.Mod](README.md#MenuViewersMod-doc-src) [PIO.Mod](README.md#PIOMod-doc-src) [Tools.Mod](README.md#ToolsMod-doc-src) [PCLink1.Mod](README.md#PCLink1Mod-doc-src) [RS232.Mod](README.md#RS232Mod-doc-src) [Net.Mod](README.md#NetMod-doc-src) [SCC.Mod](README.md#SCCMod-doc-src) [Batch.Mod](README.md#BatchMod-doc-src) [Halt.Mod](README.md#HaltMod-doc-src)  |
 | [Build](README.md#the-Build-package) | provides the compiler and associated program building and debugging tools for Oberon. |
-|   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [OXTool.Mod](README.md#OXToolMod-doc-src) [OXDis.Mod](README.md#OXDisMod-doc-src) [ORDis.Mod](README.md#ORDisMod-doc-src) [OIDis.Mod](README.md#OIDisMod-doc-src) [OADis.Mod](README.md#OADisMod-doc-src) [OaDis.Mod](README.md#OaDisMod-doc-src) [OVDis.Mod](README.md#OVDisMod-doc-src) [OvDis.Mod](README.md#OvDisMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [OaP.Mod](README.md#OaPMod-doc-src) [OaG.Mod](README.md#OaGMod-doc-src) [OVP.Mod](README.md#OVPMod-doc-src) [OVG.Mod](README.md#OVGMod-doc-src) [OvP.Mod](README.md#OvPMod-doc-src) [OvG.Mod](README.md#OvGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORLinker.Mod](README.md#ORLinkerMod-doc-src) [BareMetalR.Mod](README.md#BareMetalRMod-doc-src) [BareMetalI.Mod](README.md#BareMetalIMod-doc-src) [BareMetalA.Mod](README.md#BareMetalAMod-doc-src) [BareMetala.Mod](README.md#BareMetalaMod-doc-src) [BareMetalV.Mod](README.md#BareMetalVMod-doc-src) [BareMetalv.Mod](README.md#BareMetalvMod-doc-src)  |
+|   | [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [OXTool.Mod](README.md#OXToolMod-doc-src) [OXDis.Mod](README.md#OXDisMod-doc-src) [ORDis.Mod](README.md#ORDisMod-doc-src) [OIDis.Mod](README.md#OIDisMod-doc-src) [OADis.Mod](README.md#OADisMod-doc-src) [OaDis.Mod](README.md#OaDisMod-doc-src) [OvDis.Mod](README.md#OvDisMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [OaP.Mod](README.md#OaPMod-doc-src) [OaG.Mod](README.md#OaGMod-doc-src) [OVP.Mod](README.md#OVPMod-doc-src) [OVG.Mod](README.md#OVGMod-doc-src) [OvP.Mod](README.md#OvPMod-doc-src) [OvG.Mod](README.md#OvGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORLinker.Mod](README.md#ORLinkerMod-doc-src) [BareMetalR.Mod](README.md#BareMetalRMod-doc-src) [BareMetalI.Mod](README.md#BareMetalIMod-doc-src) [BareMetalA.Mod](README.md#BareMetalAMod-doc-src) [BareMetala.Mod](README.md#BareMetalaMod-doc-src) [BareMetalV.Mod](README.md#BareMetalVMod-doc-src) [BareMetalv.Mod](README.md#BareMetalvMod-doc-src)  |
 | [Extras](README.md#the-Extras-package) | contains extra modules demonstrating Oberon. |
 |   | [Blink.Mod](README.md#BlinkMod-doc-src) [Math.Mod](README.md#MathMod-doc-src) [RISC.Mod](README.md#RISCMod-doc-src) [Sierpinski.Mod](README.md#SierpinskiMod-doc-src) [Hilbert.Mod](README.md#HilbertMod-doc-src) [Checkers.Mod](README.md#CheckersMod-doc-src)  |
 
@@ -386,7 +386,7 @@ Module Halt halts the processor in some emulators of RISC Oberon.
 
 ---
 ## The Build Package
-includes: [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [OXTool.Mod](README.md#OXToolMod-doc-src) [OXDis.Mod](README.md#OXDisMod-doc-src) [ORDis.Mod](README.md#ORDisMod-doc-src) [OIDis.Mod](README.md#OIDisMod-doc-src) [OADis.Mod](README.md#OADisMod-doc-src) [OaDis.Mod](README.md#OaDisMod-doc-src) [OVDis.Mod](README.md#OVDisMod-doc-src) [OvDis.Mod](README.md#OvDisMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [OaP.Mod](README.md#OaPMod-doc-src) [OaG.Mod](README.md#OaGMod-doc-src) [OVP.Mod](README.md#OVPMod-doc-src) [OVG.Mod](README.md#OVGMod-doc-src) [OvP.Mod](README.md#OvPMod-doc-src) [OvG.Mod](README.md#OvGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORLinker.Mod](README.md#ORLinkerMod-doc-src) [BareMetalR.Mod](README.md#BareMetalRMod-doc-src) [BareMetalI.Mod](README.md#BareMetalIMod-doc-src) [BareMetalA.Mod](README.md#BareMetalAMod-doc-src) [BareMetala.Mod](README.md#BareMetalaMod-doc-src) [BareMetalV.Mod](README.md#BareMetalVMod-doc-src) [BareMetalv.Mod](README.md#BareMetalvMod-doc-src)  
+includes: [ORP.Mod](README.md#ORPMod-doc-src) [ORG.Mod](README.md#ORGMod-doc-src) [ORB.Mod](README.md#ORBMod-doc-src) [ORS.Mod](README.md#ORSMod-doc-src) [OXTool.Mod](README.md#OXToolMod-doc-src) [OXDis.Mod](README.md#OXDisMod-doc-src) [ORDis.Mod](README.md#ORDisMod-doc-src) [OIDis.Mod](README.md#OIDisMod-doc-src) [OADis.Mod](README.md#OADisMod-doc-src) [OaDis.Mod](README.md#OaDisMod-doc-src) [OvDis.Mod](README.md#OvDisMod-doc-src) [ORC.Mod](README.md#ORCMod-doc-src) [OIP.Mod](README.md#OIPMod-doc-src) [OIG.Mod](README.md#OIGMod-doc-src) [OAP.Mod](README.md#OAPMod-doc-src) [OAG.Mod](README.md#OAGMod-doc-src) [OaP.Mod](README.md#OaPMod-doc-src) [OaG.Mod](README.md#OaGMod-doc-src) [OVP.Mod](README.md#OVPMod-doc-src) [OVG.Mod](README.md#OVGMod-doc-src) [OvP.Mod](README.md#OvPMod-doc-src) [OvG.Mod](README.md#OvGMod-doc-src) [ODP.Mod](README.md#ODPMod-doc-src) [ODG.Mod](README.md#ODGMod-doc-src) [ORLinker.Mod](README.md#ORLinkerMod-doc-src) [BareMetalR.Mod](README.md#BareMetalRMod-doc-src) [BareMetalI.Mod](README.md#BareMetalIMod-doc-src) [BareMetalA.Mod](README.md#BareMetalAMod-doc-src) [BareMetala.Mod](README.md#BareMetalaMod-doc-src) [BareMetalV.Mod](README.md#BareMetalVMod-doc-src) [BareMetalv.Mod](README.md#BareMetalvMod-doc-src)  
 
 ### _Package Overview:_
 Oberon uses a one-pass compiler with four parts, each depending on the next for functionaltiy:
@@ -478,15 +478,14 @@ OXTool.DecBin Target.bin ~ (if a bare metal module)
 
 
   **imports:** ` SYSTEM Files Modules Input Texts Viewers MenuViewers TextFrames Oberon OXDis`
- (*ORDis OIDis OaDis OADis`
- *)
+
 
 
 #### OXDis.Mod [_doc_](https://github.com/io-orig/System/blob/main/OXDis.md) [_src_](https://github.com/io-orig/System/blob/main/OXDis.Mod)
 Module OXDis provides an interface for disassembling opcodes.
 
 
-  **imports:** ` SYSTEM Files ORDis OIDis OADis OaDis OVDis OvDis`
+  **imports:** ` SYSTEM Files ORDis OIDis OADis OaDis OvDis`
 
 
 
@@ -516,14 +515,6 @@ Module OADis disassembles aarch64 opcodes.
 
 #### OaDis.Mod [_doc_](https://github.com/io-orig/System/blob/main/OaDis.md) [_src_](https://github.com/io-orig/System/blob/main/OaDis.Mod)
 Module OaDis disassembles 32-bit ARM opcodes.
-
-
-  **imports:** ` SYSTEM Files Oberon`
-
-
-
-#### OVDis.Mod [_doc_](https://github.com/io-orig/System/blob/main/OVDis.md) [_src_](https://github.com/io-orig/System/blob/main/OVDis.Mod)
-Module OVDis disassembles 64-bit RISCV opcodes.
 
 
   **imports:** ` SYSTEM Files Oberon`

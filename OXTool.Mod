@@ -17,9 +17,9 @@ Any change to O[RIAa]G is likely to require a matching change in OXTool.
 
 end-module-develop-description *)
 MODULE OXTool;  (*NW 18.2.2013 / CP 2020*)
-  IMPORT SYSTEM, Files, Modules, Input, Texts, Viewers, MenuViewers, TextFrames, Oberon, OXDis; (*ORDis, OIDis, OaDis, OADis; *)
+  IMPORT SYSTEM, Files, Modules, Input, Texts, Viewers, MenuViewers, TextFrames, Oberon, OXDis;
   CONST 
-    BADARCH=0; RISC5=1; X8664=2; AARCH64=3; ARM32=4; RISCV64=5; RISCV32=6;
+    BADARCH=0; RISC5=1; X8664=2; AARCH64=3; ARM32=4; RISCV=5;
     BYTEORIENTED=0; WORDORIENTED=1;
     versionkey* = 1; maxTypTab = 64; 
     (* class values*) Head* = 0;
@@ -74,8 +74,8 @@ MODULE OXTool;  (*NW 18.2.2013 / CP 2020*)
       IF (s[e-3] = "i") & (s[e-2] = "6") & (s[e-1] = "4") THEN a:= X8664 END;
       IF (s[e-3] = "a") & (s[e-2] = "6") & (s[e-1] = "4") THEN a:= AARCH64 END;
       IF (s[e-3] = "a") & (s[e-2] = "3") & (s[e-1] = "2") THEN a:= ARM32 END;
-      IF (s[e-3] = "v") & (s[e-2] = "6") & (s[e-1] = "4") THEN a:= RISCV64 END;
-      IF (s[e-3] = "v") & (s[e-2] = "3") & (s[e-1] = "2") THEN a:= RISCV32 END
+      IF (s[e-3] = "v") & (s[e-2] = "6") & (s[e-1] = "4") THEN a:= RISCV END;
+      IF (s[e-3] = "v") & (s[e-2] = "3") & (s[e-1] = "2") THEN a:= RISCV END
     END
     RETURN a
   END ArchFromExt;
@@ -125,6 +125,28 @@ MODULE OXTool;  (*NW 18.2.2013 / CP 2020*)
     END ;
     Form := form; Texts.Write(W, "]")
   END ReadType;
+
+(* begin-section-description
+## ---------- Command Invocation
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**Option** checks if a new symbol file may be generated.
+  end-procedure-description *)
+  PROCEDURE Option(VAR S: Texts.Scanner):INTEGER;
+    VAR opt:INTEGER;
+  BEGIN opt := RISC5;
+    IF S.nextCh = "/" THEN
+      Texts.Scan(S); Texts.Scan(S);
+      IF (S.class = Texts.Name) & (S.s[0] = "I") THEN opt := X8664 END;
+      IF (S.class = Texts.Name) & (S.s[0] = "A") THEN opt := AARCH64 END;
+      IF (S.class = Texts.Name) & (S.s[0] = "a") THEN opt := ARM32 END;
+      IF (S.class = Texts.Name) & (S.s[0] = "V") THEN opt := RISCV END;
+      IF (S.class = Texts.Name) & (S.s[0] = "v") THEN opt := RISCV END
+    END
+  RETURN opt
+  END Option;
 
   PROCEDURE DecSym*;  (*decode symbol file*)
     VAR class, typno, k: INTEGER;
@@ -232,13 +254,15 @@ MODULE OXTool;  (*NW 18.2.2013 / CP 2020*)
   PROCEDURE DecBin*;   (*decode bare metal binary file*)
     VAR class, i, n, key, size, fix, adr, data, len, s, x, a: INTEGER;
       ch: CHAR;
-      name: ARRAY 32 OF CHAR;
+      fn: ARRAY 32 OF CHAR;
       F: Files.File; R: Files.Rider;
       S: Texts.Scanner;
   BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
     IF S.class = Texts.Name THEN
-      x:=ARM32; (* TODO: get architecture from flag *)
-      Texts.WriteString(W, "bin-decode "); Texts.WriteString(W, S.s); F := Files.Old(S.s);
+      fn:=S.s;
+      x:=Option(S);
+      
+      Texts.WriteString(W, "bin-decode "); Texts.WriteString(W, fn); F := Files.Old(fn);
       IF F # NIL THEN
         Files.Set(R, F, 0); 
         Texts.WriteString(W, "code"); Texts.WriteLn(W);

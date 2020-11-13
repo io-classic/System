@@ -10,13 +10,13 @@ The module sets up a state machine that operates on an input via repeated calls 
 
 
   ## Imports:
-` SYSTEM Files ORDis OIDis OADis OaDis OVDis OvDis`
+` SYSTEM Files ORDis OIDis OADis OaDis OvDis`
 
 ## Constants:
 ```
 
     OK* = 0; FINISH* = 1; BAD* = 2;
-    BADARCH=0; RISC5=1; X8664=2; AARCH64=3; ARM32=4; RISCV64=5; RISCV32=6;
+    BADARCH=0; RISC5=1; X8664=2; AARCH64=3; ARM32=4; RISCV=5; 
     BYTEORIENTED=0; WORDORIENTED=1;
 ```
 ## Types:
@@ -38,5 +38,5 @@ The module sets up a state machine that operates on an input via repeated calls 
 `  PROCEDURE decode*():INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/OXDis.Mod#L26)
 
 
-`  PROCEDURE originate*(r: Files.Rider; f: Files.File; offset, extent, index, arch: INTEGER): INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/OXDis.Mod#L82)
+`  PROCEDURE originate*(r: Files.Rider; f: Files.File; offset, extent, index, arch: INTEGER): INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/OXDis.Mod#L74)
 

@@ -17,12 +17,11 @@ Any change to O[RIAa]G is likely to require a matching change in OXTool.
 
   ## Imports:
 ` SYSTEM Files Modules Input Texts Viewers MenuViewers TextFrames Oberon OXDis`
- (*ORDis OIDis OaDis OADis`
- *)
+
 ## Constants:
 ```
  
-    BADARCH=0; RISC5=1; X8664=2; AARCH64=3; ARM32=4; RISCV64=5; RISCV32=6;
+    BADARCH=0; RISC5=1; X8664=2; AARCH64=3; ARM32=4; RISCV=5;
     BYTEORIENTED=0; WORDORIENTED=1;
     versionkey* = 1; maxTypTab = 64; 
     (* class values*) Head* = 0;
@@ -77,8 +76,8 @@ Any change to O[RIAa]G is likely to require a matching change in OXTool.
       IF (s[e-3] = "i") & (s[e-2] = "6") & (s[e-1] = "4") THEN a:= X8664 END;
       IF (s[e-3] = "a") & (s[e-2] = "6") & (s[e-1] = "4") THEN a:= AARCH64 END;
       IF (s[e-3] = "a") & (s[e-2] = "3") & (s[e-1] = "2") THEN a:= ARM32 END;
-      IF (s[e-3] = "v") & (s[e-2] = "6") & (s[e-1] = "4") THEN a:= RISCV64 END;
-      IF (s[e-3] = "v") & (s[e-2] = "3") & (s[e-1] = "2") THEN a:= RISCV32 END
+      IF (s[e-3] = "v") & (s[e-2] = "6") & (s[e-1] = "4") THEN a:= RISCV END;
+      IF (s[e-3] = "v") & (s[e-2] = "3") & (s[e-1] = "2") THEN a:= RISCV END
     END
     RETURN a
   END ArchFromExt;
@@ -128,6 +127,28 @@ Any change to O[RIAa]G is likely to require a matching change in OXTool.
     END ;
     Form := form; Texts.Write(W, "]")
   END ReadType;
+
+(* begin-section-description
+## ---------- Command Invocation
+  end-section-description *)
+
+  (* begin-procedure-description
+---
+**Option** checks if a new symbol file may be generated.
+  end-procedure-description *)
+  PROCEDURE Option(VAR S: Texts.Scanner):INTEGER;
+    VAR opt:INTEGER;
+  BEGIN opt := RISC5;
+    IF S.nextCh = "/" THEN
+      Texts.Scan(S); Texts.Scan(S);
+      IF (S.class = Texts.Name) & (S.s[0] = "I") THEN opt := X8664 END;
+      IF (S.class = Texts.Name) & (S.s[0] = "A") THEN opt := AARCH64 END;
+      IF (S.class = Texts.Name) & (S.s[0] = "a") THEN opt := ARM32 END;
+      IF (S.class = Texts.Name) & (S.s[0] = "V") THEN opt := RISCV END;
+      IF (S.class = Texts.Name) & (S.s[0] = "v") THEN opt := RISCV END
+    END
+  RETURN opt
+  END Option;
 
   PROCEDURE DecSym*;  (*decode symbol file*)
     VAR class, typno, k: INTEGER;
@@ -235,13 +256,15 @@ Any change to O[RIAa]G is likely to require a matching change in OXTool.
   PROCEDURE DecBin*;   (*decode bare metal binary file*)
     VAR class, i, n, key, size, fix, adr, data, len, s, x, a: INTEGER;
       ch: CHAR;
-      name: ARRAY 32 OF CHAR;
+      fn: ARRAY 32 OF CHAR;
       F: Files.File; R: Files.Rider;
       S: Texts.Scanner;
   BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
     IF S.class = Texts.Name THEN
-      x:=ARM32; (* TODO: get architecture from flag *)
-      Texts.WriteString(W, "bin-decode "); Texts.WriteString(W, S.s); F := Files.Old(S.s);
+      fn:=S.s;
+      x:=Option(S);
+      
+      Texts.WriteString(W, "bin-decode "); Texts.WriteString(W, fn); F := Files.Old(fn);
       IF F # NIL THEN
         Files.Set(R, F, 0); 
         Texts.WriteString(W, "code"); Texts.WriteLn(W);
@@ -365,30 +388,36 @@ END OXTool.
 
 `  PROCEDURE ReadType(VAR R: Files.Rider);` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L83)
 
+## ---------- Command Invocation
+---
+**Option** checks if a new symbol file may be generated.
 
-`  PROCEDURE DecSym*;  (*decode symbol file*)` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L129)
-
-
-`   PROCEDURE WriteHexBytes (x: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L170)
-
-
-`   PROCEDURE HighNib(b: BYTE): CHAR;` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L184)
+`  PROCEDURE Option(VAR S: Texts.Scanner):INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L137)
 
 
-`   PROCEDURE LowNib(b: BYTE): CHAR;` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L192)
+`  PROCEDURE DecSym*;  (*decode symbol file*)` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L151)
 
 
-`  PROCEDURE Sync(VAR R: Files.Rider);` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L200)
+`   PROCEDURE WriteHexBytes (x: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L192)
 
 
-`  PROCEDURE Write(VAR R: Files.Rider; x: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L205)
+`   PROCEDURE HighNib(b: BYTE): CHAR;` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L206)
 
 
-`  PROCEDURE decodeSection(VAR R: Files.Rider; VAR F: Files.File; VAR n,s,x: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L209)
+`   PROCEDURE LowNib(b: BYTE): CHAR;` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L214)
 
 
-`  PROCEDURE DecBin*;   (*decode bare metal binary file*)` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L232)
+`  PROCEDURE Sync(VAR R: Files.Rider);` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L222)
 
 
-`  PROCEDURE DecObj*;   (*decode object file*)` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L254)
+`  PROCEDURE Write(VAR R: Files.Rider; x: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L227)
+
+
+`  PROCEDURE decodeSection(VAR R: Files.Rider; VAR F: Files.File; VAR n,s,x: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L231)
+
+
+`  PROCEDURE DecBin*;   (*decode bare metal binary file*)` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L254)
+
+
+`  PROCEDURE DecObj*;   (*decode object file*)` [(source)](https://github.com/io-orig/System/blob/main/OXTool.Mod#L278)
 

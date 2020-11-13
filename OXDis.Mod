@@ -11,10 +11,10 @@ The module sets up a state machine that operates on an input via repeated calls 
 
 end-module-develop-description *)
 MODULE OXDis;   (*CP 2020*)
-  IMPORT SYSTEM, Files, ORDis, OIDis, OADis, OaDis, OVDis, OvDis;
+  IMPORT SYSTEM, Files, ORDis, OIDis, OADis, OaDis, OvDis;
   CONST
     OK* = 0; FINISH* = 1; BAD* = 2;
-    BADARCH=0; RISC5=1; X8664=2; AARCH64=3; ARM32=4; RISCV64=5; RISCV32=6;
+    BADARCH=0; RISC5=1; X8664=2; AARCH64=3; ARM32=4; RISCV=5; 
     BYTEORIENTED=0; WORDORIENTED=1;
   TYPE
 
@@ -59,15 +59,7 @@ MODULE OXDis;   (*CP 2020*)
       ibytes:=OaDis.ibytes;
       istr:=OaDis.istr;
     END;
-    IF Arch = RISCV64 THEN
-      e := OVDis.decode();
-      at:=OVDis.at;
-      pc:=OVDis.pc;
-      isz:=OVDis.isz;
-      ibytes:=OVDis.ibytes;
-      istr:=OVDis.istr;
-    END;
-    IF Arch = RISCV32 THEN
+    IF Arch = RISCV THEN
       e := OvDis.decode();
       at:=OvDis.at;
       pc:=OvDis.pc;
@@ -88,8 +80,7 @@ MODULE OXDis;   (*CP 2020*)
     IF Arch = X8664   THEN e := OIDis.originate(r,f,offset,extent,index); wo:=OIDis.wo END;
     IF Arch = AARCH64 THEN e := OADis.originate(r,f,offset,extent,index); wo:=OADis.wo END;
     IF Arch = ARM32   THEN e := OaDis.originate(r,f,offset,extent,index); wo:=OaDis.wo END;
-    IF Arch = RISCV64 THEN e := OVDis.originate(r,f,offset,extent,index); wo:=OVDis.wo END;
-    IF Arch = RISCV32 THEN e := OvDis.originate(r,f,offset,extent,index); wo:=OvDis.wo END;
+    IF Arch = RISCV   THEN e := OvDis.originate(r,f,offset,extent,index); wo:=OvDis.wo END;
     E:=e;
   RETURN e
   END originate;
