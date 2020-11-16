@@ -5,12 +5,12 @@ Module ORB manages the symbol table for the Oberon compiler and reads and writes
 end-module-use-description *)
 (* begin-module-develop-description
 
-(NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07)
+(NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07 / CP 11.2020)
 
 **ORB** is called from ORP and ORG and tracks the state of identifiers and objects as code compilation progresses.
 
 end-module-develop-description *)
-MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
+MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07 / CP 11.2020*)
   IMPORT Files, ORS;
   (*Definition of data types Object and Type, which together form the data structure
     called "symbol table". Contains procedures for creation of Objects, and for search:
@@ -25,10 +25,11 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
       Const* = 1; Var* = 2; Par* = 3; Fld* = 4; Typ* = 5;
       SProc* = 6; SFunc* = 7; Mod* = 8;
 
-    (* form values*)
-      Byte* = 1; Bool* = 2; Char* = 3; Int* = 4; Real* = 5; Set* = 6;
-      Pointer* = 7; NilTyp* = 8; NoTyp* = 9; Proc* = 10;
-      String* = 11; Array* = 12; Record* = 13;
+    (* form values*)  (* BYTE <= SHORTINT <= INTEGER <= LONGINT , FLOAT <= DOUBLE *)
+      Byte* = 1; Bool* = 2; Char* = 3; (*Sort*) Int* = 4; (*Long*) Real* = 5; (*Double*) Set* = 6;
+      Pointer* = 7; (*Interface*) NilTyp* = 8; NoTyp* = 9; Proc* = 10;
+      String* = 11; Array* = 12; Record* = 13; (*TProc*)
+      (* Ptrs* = {Pointer, Interface, NilTyp}; Procs* = {Proc, NoTyp}; *)
       
   TYPE 
     Object* = POINTER TO ObjDesc;
@@ -79,6 +80,7 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
   VAR 
     topScope*, universe, system*: Object;
     byteType*, boolType*, charType*: Type;
+ (* shortType*, longType*, doubleType*: Type; *)
     intType*, realType*, setType*, nilType*, noType*, strType*: Type;
     nofmod, Ref: INTEGER;
     typtab: ARRAY maxTypTab OF Type;
@@ -461,8 +463,11 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
     byteType := type(Byte, Int, 1);
     boolType := type(Bool, Bool, 1);
     charType := type(Char, Char,1);
+(*  shorType := type(Short, Short, 2); *)
     intType := type(Int, Int, 4);
+(*  longType := type(Long, Long, 8);   *)
     realType := type(Real, Real, 4);
+(*  doubleType := type(Double, Double, 8);   *)
     setType := type(Set, Set,4);
     nilType := type(NilTyp, NilTyp, 4);
     noType := type(NoTyp, NoTyp, 4);
@@ -502,6 +507,9 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07*)
     enter("REAL", Typ, realType, 0);
     enter("LONGINT", Typ, intType, 0);
     enter("INTEGER", Typ, intType, 0);
+(*    enter("LONGREAL", Typ, doubleType, 0); *)
+(*    enter("SHORT", Typ, shortType, 0);     *)
+(*    enter("LONGINT", Typ, longType, 0);     *)
     topScope := NIL; OpenScope; topScope.next := system; universe := topScope;
     
     system := NIL;  (* initialize "unsafe" pseudo-module SYSTEM*)
