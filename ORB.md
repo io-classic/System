@@ -4,7 +4,7 @@ Module ORB manages the symbol table for the Oberon compiler and reads and writes
 
 
 
-(NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07)
+(NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07 / CP 11.2020)
 
 **ORB** is called from ORP and ORG and tracks the state of identifiers and objects as code compilation progresses.
 
@@ -20,10 +20,11 @@ Module ORB manages the symbol table for the Oberon compiler and reads and writes
       Const* = 1; Var* = 2; Par* = 3; Fld* = 4; Typ* = 5;
       SProc* = 6; SFunc* = 7; Mod* = 8;
 
-    (* form values*)
-      Byte* = 1; Bool* = 2; Char* = 3; Int* = 4; Real* = 5; Set* = 6;
-      Pointer* = 7; NilTyp* = 8; NoTyp* = 9; Proc* = 10;
-      String* = 11; Array* = 12; Record* = 13;
+    (* form values*)  (* BYTE <= SHORTINT <= INTEGER <= LONGINT , FLOAT <= DOUBLE *)
+      Byte* = 1; Bool* = 2; Char* = 3; Short* = 4; Int* = 5; Long* = 6; Real* = 7; Double* = 8; Set* = 9;
+      Pointer* = 10; Interface* = 11; NilTyp* = 12; NoTyp* = 13; Proc* = 14;
+      String* = 15; Array* = 16; Record* = 17; (*TProc*)
+      Ptrs* = {Pointer, Interface, NilTyp}; Procs* = {Proc, NoTyp};
       
 ```
 ## Types:
@@ -80,6 +81,7 @@ Module ORB manages the symbol table for the Oberon compiler and reads and writes
  
     topScope*, universe, system*: Object;
     byteType*, boolType*, charType*: Type;
+    shortType*, longType*, doubleType*: Type; 
     intType*, realType*, setType*, nilType*, noType*, strType*: Type;
     nofmod, Ref: INTEGER;
     typtab: ARRAY maxTypTab OF Type;
@@ -89,89 +91,89 @@ Module ORB manages the symbol table for the Oberon compiler and reads and writes
 ---
 ## ---------- Scopes
 
-`  PROCEDURE NewObj*(VAR obj: Object; id: ORS.Ident; class: INTEGER);  (*insert new Object with name id*)` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L90)
+`  PROCEDURE NewObj*(VAR obj: Object; id: ORS.Ident; class: INTEGER);  (*insert new Object with name id*)` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L92)
 
 
-`  PROCEDURE thisObj*(): Object;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L101)
+`  PROCEDURE thisObj*(): Object;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L103)
 
 
-`  PROCEDURE thisimport*(mod: Object): Object;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L111)
+`  PROCEDURE thisimport*(mod: Object): Object;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L113)
 
 
-`  PROCEDURE thisfield*(rec: Type): Object;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L125)
+`  PROCEDURE thisfield*(rec: Type): Object;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L127)
 
 
-`  PROCEDURE OpenScope*;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L132)
+`  PROCEDURE OpenScope*;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L134)
 
 
-`  PROCEDURE CloseScope*;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L137)
+`  PROCEDURE CloseScope*;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L139)
 
 ## ---------- Import
 ---
 **MakeFileName**  ??
 
-`  PROCEDURE MakeFileName*(VAR FName: ORS.Ident; name, ext: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L151)
+`  PROCEDURE MakeFileName*(VAR FName: ORS.Ident; name, ext: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L153)
 
 ---
 **ThisModule** ??
 
-`  PROCEDURE ThisModule(name, orgname: ORS.Ident; decl: BOOLEAN; key: LONGINT): Object;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L163)
+`  PROCEDURE ThisModule(name, orgname: ORS.Ident; decl: BOOLEAN; key: LONGINT): Object;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L165)
 
 ---
 **Read** reads an adjusted byte in from the symbol file.
 
-`  PROCEDURE Read(VAR R: Files.Rider; VAR x: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L190)
+`  PROCEDURE Read(VAR R: Files.Rider; VAR x: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L192)
 
 ---
 **InType** reads a type in from the symbol file of an imported module.
 
-`  PROCEDURE InType(VAR R: Files.Rider; thismod: Object; VAR T: Type);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L200)
+`  PROCEDURE InType(VAR R: Files.Rider; thismod: Object; VAR T: Type);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L202)
 
 ---
 **Import** reads in the symbol file for an imported module so that its exported constants, types, variables, and procedures may be referenced. 
 
-`  PROCEDURE Import*(VAR modid, modid1: ORS.Ident);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L257)
+`  PROCEDURE Import*(VAR modid, modid1: ORS.Ident);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L259)
 
 ## ---------- Export
 ---
 **Write** delivers a byte from the integer to the symbol file.
 
-`  PROCEDURE Write(VAR R: Files.Rider; x: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L303)
+`  PROCEDURE Write(VAR R: Files.Rider; x: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L305)
 
 ---
 **OutType** writes a type to the symbol file
 
-`  PROCEDURE OutType(VAR R: Files.Rider; t: Type);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L311)
+`  PROCEDURE OutType(VAR R: Files.Rider; t: Type);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L313)
 
 
-`    PROCEDURE OutPar(VAR R: Files.Rider; par: Object; n: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L314)
+`    PROCEDURE OutPar(VAR R: Files.Rider; par: Object; n: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L316)
 
 
-`    PROCEDURE FindHiddenPointers(VAR R: Files.Rider; typ: Type; offset: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L325)
+`    PROCEDURE FindHiddenPointers(VAR R: Files.Rider; typ: Type; offset: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L327)
 
 ---
 **Export** writes out the symbol file for a module.
 
-`  PROCEDURE Export*(VAR modid: ORS.Ident; VAR newSF: BOOLEAN; VAR key: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L373)
+`  PROCEDURE Export*(VAR modid: ORS.Ident; VAR newSF: BOOLEAN; VAR key: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L375)
 
 ---
 **Clear** prepares the top scope of the program.
 
-`  PROCEDURE Clear*;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L426)
+`  PROCEDURE Clear*;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L428)
 
 ## ---------- Initialization
 ---
 **type** allocates a pre-defined type object
 
-`  PROCEDURE type(ref, form: INTEGER; size: LONGINT): Type;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L438)
+`  PROCEDURE type(ref, form: INTEGER; size: LONGINT): Type;` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L440)
 
 ---
 **Enter** introduces a pre-defined type, function, or procedure.
 
-`  PROCEDURE enter(name: ARRAY OF CHAR; cl: INTEGER; type: Type; n: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L448)
+`  PROCEDURE enter(name: ARRAY OF CHAR; cl: INTEGER; type: Type; n: LONGINT);` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L450)
 
 ---
 **Init** registers base Oberon types and populates the the object table with predeclared types,functions and procedures.
 
-`  PROCEDURE Init*(wordsize: INTEGER); ` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L459)
+`  PROCEDURE Init*(wordsize: INTEGER); ` [(source)](https://github.com/io-orig/System/blob/main/ORB.Mod#L461)
 

@@ -77,14 +77,14 @@ The module sets up a state machine that operates on an input via repeated calls 
 `  PROCEDURE strInt (x: LONGINT; VAR s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/OvDis.Mod#L101)
 
 
-`  PROCEDURE opcode(w: LONGINT; VAR s:ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/OvDis.Mod#L123)
+`  PROCEDURE opcode(w: LONGINT; VAR s:ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/OvDis.Mod#L121)
 
 
-`  PROCEDURE decode*():INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/OvDis.Mod#L264)
+`  PROCEDURE decode*():INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/OvDis.Mod#L262)
 
 
-`  PROCEDURE init*(VAR f: Files.File; i, o, e: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/OvDis.Mod#L283)
+`  PROCEDURE init*(VAR f: Files.File; i, o, e: INTEGER);` [(source)](https://github.com/io-orig/System/blob/main/OvDis.Mod#L281)
 
 
-`  PROCEDURE originate*(r: Files.Rider; f: Files.File; offset, extent, index: INTEGER): INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/OvDis.Mod#L294)
+`  PROCEDURE originate*(r: Files.Rider; f: Files.File; offset, extent, index: INTEGER): INTEGER;` [(source)](https://github.com/io-orig/System/blob/main/OvDis.Mod#L292)
 

@@ -26,10 +26,10 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07 / CP 11.202
       SProc* = 6; SFunc* = 7; Mod* = 8;
 
     (* form values*)  (* BYTE <= SHORTINT <= INTEGER <= LONGINT , FLOAT <= DOUBLE *)
-      Byte* = 1; Bool* = 2; Char* = 3; (*Sort*) Int* = 4; (*Long*) Real* = 5; (*Double*) Set* = 6;
-      Pointer* = 7; (*Interface*) NilTyp* = 8; NoTyp* = 9; Proc* = 10;
-      String* = 11; Array* = 12; Record* = 13; (*TProc*)
-      (* Ptrs* = {Pointer, Interface, NilTyp}; Procs* = {Proc, NoTyp}; *)
+      Byte* = 1; Bool* = 2; Char* = 3; Short* = 4; Int* = 5; Long* = 6; Real* = 7; Double* = 8; Set* = 9;
+      Pointer* = 10; Interface* = 11; NilTyp* = 12; NoTyp* = 13; Proc* = 14;
+      String* = 15; Array* = 16; Record* = 17; (*TProc*)
+      Ptrs* = {Pointer, Interface, NilTyp}; Procs* = {Proc, NoTyp};
       
   TYPE 
     Object* = POINTER TO ObjDesc;
@@ -80,7 +80,7 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07 / CP 11.202
   VAR 
     topScope*, universe, system*: Object;
     byteType*, boolType*, charType*: Type;
- (* shortType*, longType*, doubleType*: Type; *)
+    shortType*, longType*, doubleType*: Type; 
     intType*, realType*, setType*, nilType*, noType*, strType*: Type;
     nofmod, Ref: INTEGER;
     typtab: ARRAY maxTypTab OF Type;
@@ -463,18 +463,18 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07 / CP 11.202
     byteType := type(Byte, Int, 1);
     boolType := type(Bool, Bool, 1);
     charType := type(Char, Char,1);
-(*  shorType := type(Short, Short, 2); *)
+    shortType := type(Short, Short, 2); 
     intType := type(Int, Int, 4);
-(*  longType := type(Long, Long, 8);   *)
+    longType := type(Long, Long, 8);   
     realType := type(Real, Real, 4);
-(*  doubleType := type(Double, Double, 8);   *)
+    doubleType := type(Double, Double, 8);   
     setType := type(Set, Set,4);
     nilType := type(NilTyp, NilTyp, 4);
     noType := type(NoTyp, NoTyp, 4);
     strType := type(String, String, 8);
       
     (*initialize universe with data types and in-line procedures;
-      LONGINT is synonym to INTEGER, LONGREAL to REAL.
+      LONGINT is synonym to INTEGER, LONGREAL to REAL in 32-bit systems.
       LED, ADC, SBC; LDPSR, LDREG, REG, COND are not in language definition*)
     system := NIL;  (*n = procno*10 + nofpar*)
     enter("UML", SFunc, intType, 132);  (*functions*)
@@ -503,13 +503,13 @@ MODULE ORB;   (*NW 25.6.2014  / AP 4.3.2020 / 8.3.2019  in Oberon-07 / CP 11.202
     enter("BOOLEAN", Typ, boolType, 0);
     enter("BYTE", Typ, byteType, 0);
     enter("CHAR", Typ, charType, 0);
-    enter("LONGREAL", Typ, realType, 0);
+    IF wordsize = 4 THEN enter("LONGREAL", Typ, realType, 0) END;
+    IF wordsize = 8 THEN enter("LONGREAL", Typ, doubleType, 0) END;
     enter("REAL", Typ, realType, 0);
-    enter("LONGINT", Typ, intType, 0);
+    IF wordsize = 4 THEN enter("LONGINT", Typ, intType, 0) END;
+    IF wordsize = 8 THEN enter("LONGINT", Typ, longType, 0) END;
     enter("INTEGER", Typ, intType, 0);
-(*    enter("LONGREAL", Typ, doubleType, 0); *)
-(*    enter("SHORT", Typ, shortType, 0);     *)
-(*    enter("LONGINT", Typ, longType, 0);     *)
+    IF wordsize = 8 THEN enter("SHORTINT", Typ, shortType, 0) END;
     topScope := NIL; OpenScope; topScope.next := system; universe := topScope;
     
     system := NIL;  (* initialize "unsafe" pseudo-module SYSTEM*)

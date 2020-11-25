@@ -40,7 +40,7 @@ The module sets up a state machine that operates on an input via repeated calls 
 ## Procedures:
 ---
 
-`  PROCEDURE WriteReg(r: LONGINT; p: INTEGER; VAR s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORDis.Mod#L31)
+`  PROCEDURE WriteReg(r: INTEGER; p: INTEGER; VAR s: ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORDis.Mod#L31)
 
 
 `  PROCEDURE opcode(w: LONGINT; VAR s:ARRAY OF CHAR);` [(source)](https://github.com/io-orig/System/blob/main/ORDis.Mod#L42)

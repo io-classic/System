@@ -28,7 +28,7 @@ MODULE ORDis;   (*CP 2020*)
     R*: Files.Rider;
     F*: Files.File;
 
-  PROCEDURE WriteReg(r: LONGINT; p: INTEGER; VAR s: ARRAY OF CHAR);
+  PROCEDURE WriteReg(r: INTEGER; p: INTEGER; VAR s: ARRAY OF CHAR);
   BEGIN 
     IF r < 10 THEN s[p]:="R"; s[p+1]:= CHR(ORD("0")+((r MOD 16) MOD 10)); s[p+2]:=" "
     ELSIF r < 12 THEN s[p]:="R"; s[p+1]:= CHR(ORD("0")+((r MOD 16) DIV 10));s[p+2]:= CHR(ORD("0")+((r MOD 16) MOD 10));

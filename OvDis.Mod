@@ -117,8 +117,6 @@ MODULE OvDis;   (*CP 2020*)
   END strInt;
 
 
-
-
 (* RV32G *)
   PROCEDURE opcode(w: LONGINT; VAR s:ARRAY OF CHAR);
     VAR 
