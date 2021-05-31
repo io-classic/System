@@ -1,25 +1,3 @@
-(* begin-module-use-description
-Module ORS does lexical analysis of the Oberon source code and defines symbols and operations
-
-end-module-use-description *)
-(* begin-module-develop-description
-
-(NW 19.9.93 / 20.3.2017  Scanner in Oberon-07)
-
-**ORS** is called from ORP, ORG, and ORB and converts the source text to symbols for their consumption.
-
-Oberon Scanner does lexical analysis. Input is Oberon-Text, output is
-sequence of symbols, i.e identifiers, numbers, strings, and special symbols.
-Recognises all Oberon keywords and skips comments. The keywords are recorded in a table.
-
-`Get(sym)` delivers next symbol from input text with Reader R.
-
-`Mark(msg)` records error and delivers error message with Writer W.
-
-If Get delivers ident, then the identifier (a string) is in variable id, 
-if int or char in ival, if real in rval, and if string in str (and slen) 
-
-end-module-develop-description *)
 MODULE ORS; (* NW 19.9.93 / 15.3.2017  Scanner in Oberon-07*)
   IMPORT SYSTEM, Texts, Oberon;
 
@@ -32,8 +10,7 @@ MODULE ORS; (* NW 19.9.93 / 15.3.2017  Scanner in Oberon-07*)
   If Get delivers ident, then the identifier (a string) is in variable id, if int or char
   in ival, if real in rval, and if string in str (and slen) *)
   
-  CONST 
-    IdLen* = 32;
+  CONST IdLen* = 32;
     NKW = 34;  (*nof keywords*)
     maxExp = 38; stringBufSize = 256;
   
@@ -53,14 +30,14 @@ MODULE ORS; (* NW 19.9.93 / 15.3.2017  Scanner in Oberon-07*)
     array* = 60; record* = 61; pointer* = 62; const* = 63; type* = 64;
     var* = 65; procedure* = 66; begin* = 67; import* = 68; module* = 69; eot = 70;
 
-  TYPE 
-    Ident* = ARRAY IdLen OF CHAR;
+  TYPE Ident* = ARRAY IdLen OF CHAR;
 
   VAR ival*, slen*: LONGINT;  (*results of Get*)
     rval*: REAL;
     id*: Ident;  (*for identifiers*)
     str*: ARRAY stringBufSize OF CHAR;
     errcnt*: INTEGER;
+
     ch: CHAR;  (*last character read*)
     errpos: LONGINT;
     R: Texts.Reader;
@@ -70,30 +47,14 @@ MODULE ORS; (* NW 19.9.93 / 15.3.2017  Scanner in Oberon-07*)
     keyTab: ARRAY NKW OF
         RECORD sym: INTEGER; id: ARRAY 12 OF CHAR END;
   
-  (* begin-section-description
-## ---------- Lexer
-  end-section-description *)
-
-  (* begin-procedure-description
----
-**CopyId** duplicates an identifier.
-  end-procedure-description *)
   PROCEDURE CopyId*(VAR ident: Ident);
   BEGIN ident := id
   END CopyId;
 
-  (* begin-procedure-description
----
-**Pos** reports the location in the source text not couting the most current character.
-  end-procedure-description *)
   PROCEDURE Pos*(): LONGINT;
   BEGIN RETURN Texts.Pos(R) - 1
   END Pos;
 
-  (* begin-procedure-description
----
-**Mark** reports an error to the Oberon system log.
-  end-procedure-description *)
   PROCEDURE Mark*(msg: ARRAY OF CHAR);
     VAR p: LONGINT;
   BEGIN p := Pos();
@@ -104,10 +65,6 @@ MODULE ORS; (* NW 19.9.93 / 15.3.2017  Scanner in Oberon-07*)
     INC(errcnt); errpos := p + 4
   END Mark;
 
-  (* begin-procedure-description
----
-**Identifier** matches an alphanumeric identifier.
-  end-procedure-description *)
   PROCEDURE Identifier(VAR sym: INTEGER);
     VAR i, k: INTEGER;
   BEGIN i := 0;
@@ -123,10 +80,6 @@ MODULE ORS; (* NW 19.9.93 / 15.3.2017  Scanner in Oberon-07*)
     END
   END Identifier;
 
-  (* begin-procedure-description
----
-**String** matches a quote delimeted string.
-  end-procedure-description *)
   PROCEDURE String;
     VAR i: INTEGER;
   BEGIN i := 0; Texts.Read(R, ch);
@@ -139,10 +92,6 @@ MODULE ORS; (* NW 19.9.93 / 15.3.2017  Scanner in Oberon-07*)
     str[i] := 0X; INC(i); Texts.Read(R, ch); slen := i
   END String;
 
-  (* begin-procedure-description
----
-**HexString** matches a hex string.
-  end-procedure-description *)
   PROCEDURE HexString;
     VAR i, m, n: INTEGER;
   BEGIN i := 0; Texts.Read(R, ch);
@@ -163,10 +112,6 @@ MODULE ORS; (* NW 19.9.93 / 15.3.2017  Scanner in Oberon-07*)
     Texts.Read(R, ch); slen := i  (*no 0X appended!*)
   END HexString;
 
-  (* begin-procedure-description
----
-**Ten** ??
-  end-procedure-description *)
   PROCEDURE Ten(e: LONGINT): REAL;
     VAR x, t: REAL;
   BEGIN x := 1.0; t := 10.0;
@@ -177,10 +122,6 @@ MODULE ORS; (* NW 19.9.93 / 15.3.2017  Scanner in Oberon-07*)
     RETURN x
   END Ten;
 
-  (* begin-procedure-description
----
-**Number** matches a number.
-  end-procedure-description *)
   PROCEDURE Number(VAR sym: INTEGER);
     CONST max = 2147483647 (*2^31 - 1*);
     VAR i, k, e, n, s, h: LONGINT; x: REAL;
@@ -250,10 +191,6 @@ MODULE ORS; (* NW 19.9.93 / 15.3.2017  Scanner in Oberon-07*)
     END
   END Number;
 
-  (* begin-procedure-description
----
-**Comment** matches comments.
-  end-procedure-description *)
   PROCEDURE comment;
   BEGIN Texts.Read(R, ch);
     REPEAT
@@ -268,10 +205,6 @@ MODULE ORS; (* NW 19.9.93 / 15.3.2017  Scanner in Oberon-07*)
     IF ~R.eot THEN Texts.Read(R, ch) ELSE Mark("unterminated comment") END
   END comment;
 
-  (* begin-procedure-description
----
-**Get** gets the next symbol from the source text.
-  end-procedure-description *)
   PROCEDURE Get*(VAR sym: INTEGER);
   BEGIN
     REPEAT
@@ -327,32 +260,14 @@ MODULE ORS; (* NW 19.9.93 / 15.3.2017  Scanner in Oberon-07*)
     UNTIL sym # null
   END Get;
 
-  (* begin-section-description
-## ---------- Initialization
-  end-section-description *)
-
-  (*instruction assemblers according to formats*)
-
-  (* begin-procedure-description
----
-**Init** opens the source text for reading and gets the first character.
-  end-procedure-description *)
   PROCEDURE Init*(T: Texts.Text; pos: LONGINT);
   BEGIN errpos := pos; errcnt := 0; Texts.OpenReader(R, T, pos); Texts.Read(R, ch)
   END Init;
 
-  (* begin-procedure-description
----
-**EnterKW** adds a symbol to the keyword table.
-  end-procedure-description *)
   PROCEDURE EnterKW(sym: INTEGER; name: ARRAY OF CHAR);
   BEGIN keyTab[k].id := name; keyTab[k].sym := sym; INC(k)
   END EnterKW;
 
-  (* begin-procedure-description
----
-**The initialzation code for this module** populats the table of reserved keywords.
-  end-procedure-description *)
 BEGIN Texts.OpenWriter(W); k := 0; KWX[0] := 0; KWX[1] := 0;
   EnterKW(if, "IF");
   EnterKW(do, "DO");
