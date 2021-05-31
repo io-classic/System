@@ -1,3 +1,7 @@
+(* begin-module-short-description
+powers off an emulated Oberon.
+end-module-short-description *)
+
 (* begin-module-use-description
 Module Halt halts the processor in some emulators of RISC Oberon.
 

@@ -1,3 +1,7 @@
+(* begin-module-short-description
+implements  the menus above user text or graphics frames.
+end-module-short-description *)
+
 (* begin-module-use-description
 Module MenuViewers implements the top-of-pane 'menu' functionality of the Oberon user interface. 
 
@@ -8,7 +12,7 @@ end-module-use-description *)
 MODULE MenuViewers; (*JG 26.8.90 / 16.9.93 / NW 10.3.2013*)
   IMPORT Input, Display, Viewers, Oberon;
 
-  CONST extend* = 0; reduce* = 1; FrameColor = Display.white;
+  CONST extend* = 0; reduce* = 1; FrameColor = 1 (*Display.white*);
 
   TYPE Viewer* = POINTER TO ViewerDesc;
 

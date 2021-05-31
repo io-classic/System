@@ -1,27 +1,12 @@
-(* begin-package-description
-### _Package Overview:_
-The System package collects the expected set of modules and tools that allows the Oberon user to perform typical computing tasks.
-
-### _Package Use:_
-
-### _Modules in this package:_
-end-package-description *)
-
-(* begin-module-use-description
-Module System presents the Oberon user with tools and commands for interacting Displays and Tracks and Files and other miscelaneous features.
-
-end-module-use-description *)
 MODULE System; (*JG 3.10.90 / NW 12.10.93 / NW 20.6.2016*)
-  IMPORT SYSTEM, Kernel, FileDir, Files, Modules, Input, Display, Viewers, Fonts, Texts, Oberon, MenuViewers, TextFrames;
+  IMPORT SYSTEM, Kernel, FileDir, Files, Modules,
+    Input, Display, Viewers, Fonts, Texts, Oberon, MenuViewers, TextFrames;
 
   CONST
     StandardMenu = "System.Close System.Copy System.Grow Edit.Search Edit.Store";
-    LogMenu = "Edit.Locate Edit.Search System.Copy System.Grow System.Clear Halt.Now";
+    LogMenu = "Edit.Locate Edit.Search System.Copy System.Grow System.Clear";
 
-  TYPE
-
-  VAR 
-    W: Texts.Writer;
+  VAR W: Texts.Writer;
     pat: ARRAY 32 OF CHAR;
 
   PROCEDURE GetArg(VAR S: Texts.Scanner);
