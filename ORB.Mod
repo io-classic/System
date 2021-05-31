@@ -395,7 +395,8 @@ BEGIN
   enter("FLOOR", SFunc, intType, 21);
   enter("ODD", SFunc, boolType, 11);
   enter("ABS", SFunc, intType, 1);
-  enter("LED", SProc, noType, 81);  (*procedures*)
+  enter("OUCH", SProc, noType, 91); (*procedures*)
+  enter("LED", SProc, noType, 81);  
   enter("UNPK", SProc, noType, 72);
   enter("PACK", SProc, noType, 62);
   enter("NEW", SProc, noType, 51);

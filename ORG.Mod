@@ -872,6 +872,10 @@ MODULE ORG; (* N.Wirth, 16.4.2016 / 4.4.2017 / 17.9.2018  Oberon compiler; code 
   BEGIN load(x); Put1(Mov, RH, 0, -60); Put2(Str, x.r, RH, 0); DEC(RH)
   END Led;
 
+  PROCEDURE Ouch*(VAR x: Item);
+  BEGIN load(x); Put1(Mov, RH, 0, -28); Put2(Str, x.r, RH, 0); DEC(RH)
+  END Ouch;
+
   PROCEDURE Get*(VAR x, y: Item);
   BEGIN load(x); x.type := y.type; x.mode := RegI; x.a := 0; Store(y, x)
   END Get;

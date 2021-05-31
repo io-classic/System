@@ -450,6 +450,8 @@ MODULE ORP; (*N. Wirth 1.7.97 / 17.9.2018  Oberon compiler for RISC in Oberon-07
       ELSIF pno = 7 THEN CheckReal(x); CheckInt(y); CheckReadOnly(x); ORG.Unpk(x, y)
       ELSIF pno = 8 THEN
         IF x.type.form <= ORB.Set THEN ORG.Led(x) ELSE ORS.Mark("bad type") END
+      ELSIF pno = 9 THEN
+        IF x.type.form <= ORB.Set THEN ORG.Ouch(x) ELSE ORS.Mark("bad type") END
       ELSIF pno = 10 THEN CheckInt(x); ORG.Get(x, y)
       ELSIF pno = 11 THEN CheckInt(x); ORG.Put(x, y)
       ELSIF pno = 12 THEN CheckInt(x); CheckInt(y); CheckInt(z); ORG.Copy(x, y, z)
