@@ -51,6 +51,35 @@ MODULE Input; (*NW 5.10.86 / 15.11.90 Ceres-2; PDR 21.4.12 / NW 15.5.2013 Ceres-
     Recd := FALSE
   END Read;
 
+  PROCEDURE ReadUnicode*(VAR codepoint: INTEGER);
+  VAR ch: CHAR;
+  BEGIN
+    WHILE ~Recd DO Peek() END ;
+    IF kbdCode = 58H THEN
+      IF    extCode = 75H THEN (*up*)    codepoint := -1
+      ELSIF extCode = 6BH THEN (*left*)  codepoint := -2
+      ELSIF extCode = 72H THEN (*down*)  codepoint := -3
+      ELSIF extCode = 74H THEN (*right*) codepoint := -4
+      ELSIF extCode = 7DH THEN (*pu*)    codepoint := -5
+      ELSIF extCode = 7AH THEN (*pd*)    codepoint := -6
+      ELSIF extCode = 7FH THEN (*lcmd*)  codepoint := -7
+      ELSIF extCode = 27H THEN (*rcmd*)  codepoint := -8
+      ELSIF extCode = 70H THEN (*ins*)   codepoint := -9
+      ELSIF extCode = 71H THEN (*del*)   codepoint := -10
+      ELSIF extCode = 6CH THEN (*home*)  codepoint := -11
+      ELSIF extCode = 69H THEN (*end*)   codepoint := -12
+      END;
+      Recd := FALSE;
+    ELSE
+      IF Shift OR Ctrl THEN INC(kbdCode, 80H) END; (*ctrl implies shift*)
+      (* ch := kbdTab[kbdCode]; *)
+      SYSTEM.GET(KTabAdr + kbdCode, ch);
+      IF Ctrl THEN ch := CHR(ORD(ch) MOD 20H) END;
+      Recd := FALSE;
+      codepoint := ORD(ch);
+    END
+  END ReadUnicode;
+
   PROCEDURE Mouse*(VAR keys: SET; VAR x, y: INTEGER);
     VAR w: INTEGER;
   BEGIN SYSTEM.GET(msAdr, w);
