@@ -396,7 +396,7 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     SYSTEM.LDREG(14, Kernel.stackOrg); (*reset stack pointer*) Loop
   END Reset;
 
-BEGIN 
+BEGIN   OUCH(79);  OUCH(66);  OUCH(69);  OUCH(82);  OUCH(79);  OUCH(78);  OUCH(10); 
   LED(128);
   User[0] := 0X;
   Arrow.Fade := FlipArrow; Arrow.Draw := FlipArrow;

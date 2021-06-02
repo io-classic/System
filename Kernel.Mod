@@ -15,7 +15,20 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
     list0, list1, list2, list3: INTEGER;  (*lists of free blocks of size n*256, 128, 64, 32 bytes*)
     data: INTEGER; (*SPI data in*)
     sectorMap: ARRAY mapsize DIV 32 OF SET;
-    
+
+(*    
+  PROCEDURE Klog*(s: ARRAY OF CHAR);
+    VAR v,i,l: INTEGER;
+  BEGIN i:=0; WHILE s[i] # 0X DO v:=ORD(s[i]); OUCH(v); INC(i) END
+  END Klog; 
+
+  PROCEDURE Klogln*(s: ARRAY OF CHAR);
+  BEGIN
+    Klog(s);
+    OUCH(10)
+   END Klogln;
+*)
+
 (* ---------- New: heap allocation ----------*)
 
   PROCEDURE GetBlock(VAR p: LONGINT; len: LONGINT);
@@ -268,7 +281,8 @@ MODULE Kernel;  (*NW/PR  11.4.86 / 27.12.95 / 4.2.2014*)
   END Trap;
 
   PROCEDURE Init*;
-  BEGIN LED(4); Install(SYSTEM.ADR(Trap), 20H);  (*install temporary trap*)
+  BEGIN OUCH(75); OUCH(69);  OUCH(82);  OUCH(78);  OUCH(69);  OUCH(76);  OUCH(10); 
+    LED(4); Install(SYSTEM.ADR(Trap), 20H);  (*install temporary trap*)
     LED(8); SYSTEM.GET(12, MemLim); SYSTEM.GET(24, heapOrg);
     stackOrg := heapOrg; stackSize := 8000H; heapLim := MemLim;
     list1 := 0; list2 := 0; list3 := 0; list0 := heapOrg;

@@ -164,6 +164,23 @@ MODULE System; (*JG 3.10.90 / NW 12.10.93 / NW 20.6.2016*)
     Oberon.Collect(0)
   END Free;
 
+
+  PROCEDURE Link*;
+    VAR
+      T: Texts.Text;
+      S: Texts.Scanner;  
+  BEGIN
+    Texts.WriteString(W, "Linking ");
+    Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
+    IF S.class = Texts.Name THEN
+        NEW(T); Texts.Open(T, S.s);
+        Texts.WriteString(W, S.s); EndLine;
+        Modules.Link(S.s);
+    END;
+    Oberon.Collect(0)
+  END Link;
+
+
   PROCEDURE FreeFonts*;
   BEGIN Texts.WriteString(W, "System.FreeFonts"); Fonts.Free; EndLine
   END FreeFonts;
@@ -412,7 +429,8 @@ MODULE System; (*JG 3.10.90 / NW 12.10.93 / NW 20.6.2016*)
     Texts.WriteLn(W); Texts.Append(Oberon.Log, W.buf); Oberon.Reset
   END Abort;
   
-BEGIN Texts.OpenWriter(W);
+BEGIN  OUCH(83);  OUCH(89);  OUCH(83);  OUCH(84);  OUCH(69);  OUCH(77);  OUCH(10);  
+  Texts.OpenWriter(W);
   Oberon.OpenLog(TextFrames.Text("")); OpenViewers;
   Kernel.Install(SYSTEM.ADR(Trap), 20H); Kernel.Install(SYSTEM.ADR(Abort), 0);
 END System.
