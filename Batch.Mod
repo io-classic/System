@@ -1,3 +1,7 @@
+(* begin-module-short-description
+provides for batching commands.
+end-module-short-description *)
+
 (* begin-module-use-description
 Module Batch provides for automatic sequential execution of Oberon commands.
 
@@ -55,9 +59,9 @@ MODULE Batch;
     Texts.OpenWriter(W);
     WHILE go DO
       Texts.Scan(S);
-      IF (S.class = Texts.Char) & (S.c = "\") THEN
+      IF (S.class = Texts.Char) & (S.codepoint = ORD("\")) THEN
         nl := FALSE
-      ELSIF (S.class = Texts.Char) & (S.c = "*") THEN
+      ELSIF (S.class = Texts.Char) & (S.codepoint = ORD("*")) THEN
         V := Viewers.This(Display.Width - 10, Display.Height - 10);
         TextFrames.Show(V.dsc.next(TextFrames.Frame), Oberon.Log.len);
       ELSIF S.class = Texts.Int THEN

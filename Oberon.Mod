@@ -18,7 +18,7 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
       id*: INTEGER;
       keys*: SET;
       X*, Y*: INTEGER;
-      ch*: CHAR;
+      codepoint*: INTEGER;
       fnt*: Fonts.Font;
       col*, voff*: INTEGER
     END;
@@ -359,16 +359,16 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
 
   PROCEDURE Loop*;
     VAR V: Viewers.Viewer; M: InputMsg; N: ControlMsg;
-       prevX, prevY, X, Y, t: INTEGER; keys: SET; ch: CHAR;
+       prevX, prevY, X, Y, t: INTEGER; keys: SET; codepoint: INTEGER;
   BEGIN
     REPEAT
       Input.Mouse(keys, X, Y);
-      IF Input.Available() > 0 THEN Input.Read(ch);
-        IF ch = ESC THEN
+      IF Input.Available() > 0 THEN Input.ReadUnicode(codepoint);
+        IF codepoint = ORD(ESC) THEN
           N.id := neutralize; Viewers.Broadcast(N); FadeCursor(Pointer); LED(0)
-        ELSIF ch = SETSTAR THEN
+        ELSIF codepoint = ORD(SETSTAR) THEN
           N.id := mark; N.X := X; N.Y := Y; V := Viewers.This(X, Y); V.handle(V, N)
-        ELSE M.id := consume; M.ch := ch; M.fnt := CurFnt; M.col := CurCol; M.voff := CurOff;
+        ELSE M.id := consume; M.codepoint := codepoint; M.fnt := CurFnt; M.col := CurCol; M.voff := CurOff;
           FocusViewer.handle(FocusViewer, M); DEC(ActCnt)
         END
       ELSIF keys # {} THEN
@@ -396,7 +396,7 @@ MODULE Oberon; (*JG 6.9.90 / 23.9.93 / 13.8.94 / NW 14.4.2013 / 22.12.2015*)
     SYSTEM.LDREG(14, Kernel.stackOrg); (*reset stack pointer*) Loop
   END Reset;
 
-BEGIN   OUCH(79);  OUCH(66);  OUCH(69);  OUCH(82);  OUCH(79);  OUCH(78);  OUCH(10); 
+BEGIN   OUCH(79);  OUCH(66);  OUCH(69);  OUCH(82);  OUCH(79);  OUCH(78);  OUCH(10);  
   LED(128);
   User[0] := 0X;
   Arrow.Fade := FlipArrow; Arrow.Draw := FlipArrow;
