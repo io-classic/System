@@ -1,9 +1,15 @@
-MODULE Draw; (*NW 29.6.88 / 12.11.94 / 18.11.2013*)
+(* begin-module-short-description
+provides a 2d line drawing document interface to Oberon.
+end-module-short-description *)
 
-  IMPORT Files, Fonts, Viewers, Texts, Oberon,
-    TextFrames, MenuViewers, Graphics, GraphicFrames;
+MODULE Draw; (*NW 29.6.88 / 12.11.94 / 18.11.2013*)
+             (*MS 1.2019 adapted for Unicode*)
+
+  IMPORT Files, Fonts, Viewers, Texts, Oberon, TextFrames, MenuViewers, Graphics, GraphicFrames;
 
   CONST Menu = "System.Close  System.Copy  System.Grow  Draw.Delete  Draw.Ticks  Draw.Restore  Draw.Store";
+
+  TYPE
 
   VAR W: Texts.Writer;
 
@@ -21,7 +27,7 @@ MODULE Draw; (*NW 29.6.88 / 12.11.94 / 18.11.2013*)
       S: Texts.Scanner;
       text: Texts.Text;
   BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
-    IF (S.class = Texts.Char) & (S.c = "^") THEN
+    IF (S.class = Texts.Char) & (S.codepoint = ORD("^")) THEN
       Oberon.GetSelection(text, beg, end, t);
       IF t >= 0 THEN Texts.OpenScanner(S, text, beg); Texts.Scan(S) END
     END ;
@@ -45,7 +51,7 @@ MODULE Draw; (*NW 29.6.88 / 12.11.94 / 18.11.2013*)
   PROCEDURE GetArg(VAR S: Texts.Scanner);
     VAR T: Texts.Text; beg, end, time: LONGINT;
   BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
-    IF (S.class = Texts.Char) & (S.c = "^") THEN
+    IF (S.class = Texts.Char) & (S.codepoint = ORD("^")) THEN
       Oberon.GetSelection(T, beg, end, time);
       IF time >= 0 THEN Texts.OpenScanner(S, T, beg); Texts.Scan(S) END
     END

@@ -966,10 +966,10 @@ MODULE ORP; (*N. Wirth 1.7.97 / 17.9.2018  Oberon compiler for RISC in Oberon-07
       S: Texts.Scanner;
   BEGIN Texts.OpenScanner(S, Oberon.Par.text, Oberon.Par.pos); Texts.Scan(S);
     IF S.class = Texts.Char THEN
-      IF S.c = "@" THEN
+      IF S.codepoint = ORD("@") THEN
         Option(S); Oberon.GetSelection(T, beg, end, time);
         IF time >= 0 THEN ORS.Init(T, beg); Module END
-      ELSIF S.c = "^" THEN
+      ELSIF S.codepoint = ORD("^") THEN
         Option(S); Oberon.GetSelection(T, beg, end, time);
         IF time >= 0 THEN
           Texts.OpenScanner(S, T, beg); Texts.Scan(S);

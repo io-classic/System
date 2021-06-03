@@ -9,6 +9,8 @@ MODULE Net; (*NW 3.7.88 / 25.8.91 / PR 7.8.13 / 9.12.13*)
     SND = 41H; REC = 42H; MSG = 44H;
     TRQ = 46H; TIM = 47H; (*time requests*)
 
+  TYPE
+
   VAR W: Texts.Writer;
      Server: Oberon.Task;
      head0, head1: SCC.Header;
@@ -212,7 +214,7 @@ System.Date");
   PROCEDURE GetPar(VAR S: Texts.Scanner; VAR end: LONGINT);
     VAR T: Texts.Text; beg, tm: LONGINT;
   BEGIN Texts.Scan(S);
-    IF (S.class = Texts.Char) & (S.c = "^") THEN
+    IF (S.class = Texts.Char) & (S.codepoint = ORD("^")) THEN
       Oberon.GetSelection(T, beg, end, tm);
       IF tm >= 0 THEN Texts.OpenScanner(S, T, beg); Texts.Scan(S) END
     ELSE end := Oberon.Par.text.len
